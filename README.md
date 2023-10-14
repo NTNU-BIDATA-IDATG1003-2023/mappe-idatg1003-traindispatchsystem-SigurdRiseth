@@ -8,7 +8,7 @@ STUDENT ID = 106991
 ## Project description
 
 [//]: # (TODO: Write a short description of your project/product here.)
-A system for displaying traindepartures from a single station. Shows planned departuretime, delays (if any), line and destination, train number and what track the train will arrive at. 
+A system for displaying traindepartures from a single station. Shows planned departure time, delays (if any), line name and destination, train number and what track the train will arrive at. 
 
 The system is limited by the fact that it does not consider the date or if there are any departures the next day. It only supports one station, and the clock has to be manually updated from the UI.
 
