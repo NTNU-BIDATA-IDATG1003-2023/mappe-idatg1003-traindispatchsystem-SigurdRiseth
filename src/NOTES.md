@@ -31,3 +31,21 @@ Tekstbasert UI i form av meny, med følgende fuksjoner
 * Søke etter togavgang på destinasjon (linje?)
 * Oppdatere klokken
 * Avslutte applikasjon
+
+En togavgang skal automatisk fjernes fra oversikten dersom avreisetidspunktet (pluss eventuell
+forsinkelse) er tidligere enn klokken (tidspunktet på dagen).
+
+Klokken skal kun kunne stilles fram i tid. 
+
+#### Tavlekrav
+
+NB! I følgende rekkefølge
+
+* Avgangstid "hh:mm"
+* Linje
+* Tognummer
+* Destinasjon
+* Evt. forsinkelse. Skal kun vises ved forsinkelse
+* Spor. Hvis ikke tildelt skal den ikke vises.
+
+## Del 1
