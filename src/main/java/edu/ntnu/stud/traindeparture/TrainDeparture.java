@@ -22,7 +22,7 @@ public class TrainDeparture {
 
     public TrainDeparture(int track, int trainNumber, ){
         this.setTrack(track);
-        this.setTrainNumber
+        this.setTrainNumber(trainNumber)
     }
 
 }
