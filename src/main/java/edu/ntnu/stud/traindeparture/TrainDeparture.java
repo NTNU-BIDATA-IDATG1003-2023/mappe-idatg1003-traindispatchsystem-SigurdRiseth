@@ -1,5 +1,7 @@
 package edu.ntnu.stud.traindeparture;
 
+import java.time.LocalTime;
+
 /**
  * Class for the train departures.
  *
@@ -14,8 +16,13 @@ public class TrainDeparture {
     private int track;
     private int trainNumber;
     private String line;
-    private Clock departureTime; // use a Clock class to store departureTime and delay.
-    private Clock delay;
     private String destination;
+    private LocalTime departureTime; // use a Clock class to store departureTime and delay.
+    private LocalTime delay;
+
+    public TrainDeparture(int track, int trainNumber, ){
+        this.setTrack(track);
+        this.setTrainNumber
+    }
 
 }
