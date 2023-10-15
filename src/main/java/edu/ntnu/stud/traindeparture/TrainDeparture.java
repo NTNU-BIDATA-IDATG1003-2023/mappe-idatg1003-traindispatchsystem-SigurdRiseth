@@ -29,7 +29,7 @@ public class TrainDeparture {
      * @param destination the ends destination of the train
      * @param departureTime the time the train is set to depart
      */
-    public TrainDeparture(int track, int trainNumber, int line, String destination,
+    public TrainDeparture(int track, int trainNumber, String line, String destination,
                           LocalTime departureTime) {
         this.setTrack(track);
         this.setTrainNumber(trainNumber);
@@ -60,7 +60,7 @@ public class TrainDeparture {
     /**
      * Sets the line.
      */
-    public void setLine(int line) {
+    public void setLine(String line) {
         this.line = line;
     }
 
