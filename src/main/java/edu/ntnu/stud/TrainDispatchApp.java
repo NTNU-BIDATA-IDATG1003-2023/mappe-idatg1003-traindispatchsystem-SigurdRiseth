@@ -9,6 +9,7 @@ import java.time.LocalTime;
  */
 public class TrainDispatchApp {
   // TODO: Fill in the main method and any other methods you need.
+
   public static void main(String[] args) {
       TrainDeparture train1 = new TrainDeparture(1, 1, "3", "Moholt", LocalTime.of(5, 40));
 
