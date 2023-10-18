@@ -2,7 +2,6 @@ package edu.ntnu.stud.station;
 import edu.ntnu.stud.traindeparture.TrainDeparture;
 import java.time.LocalTime;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Class for the train station.
