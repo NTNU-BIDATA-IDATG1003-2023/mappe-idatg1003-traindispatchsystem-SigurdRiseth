@@ -1,5 +1,6 @@
 package edu.ntnu.stud.traindeparture;
 
+import edu.ntnu.stud.station.Station;
 import java.time.LocalTime;
 
 /**
@@ -48,9 +49,10 @@ public class TrainDeparture {
 
   /**
    * Sets the train number.
+   * <p>Also checks if the trainNumber is above 0 and not already stored in Stations HashMap.</p>
    */
   public void setTrainNumber(int trainNumber) {
-    if (trainNumber > 0) { // må gjøre slik at tognummer ikke kan dupliseres.
+    if ((trainNumber > 0) && !Station.trainExists(trainNumber)) { // må gjøre slik at tognummer ikke kan dupliseres.
       this.trainNumber = trainNumber;
     } else {
       this.trainNumber = -1;

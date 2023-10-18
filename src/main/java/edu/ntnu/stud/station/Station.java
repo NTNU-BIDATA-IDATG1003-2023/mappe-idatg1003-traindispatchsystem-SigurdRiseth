@@ -2,6 +2,7 @@ package edu.ntnu.stud.station;
 import edu.ntnu.stud.traindeparture.TrainDeparture;
 import java.time.LocalTime;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Class for the train station.
@@ -38,9 +39,14 @@ public class Station {
 
   /**
    * Adds a TrainDeparture to the trainDepartures HashMap.
-   * @param trainDeparture
+   * @param trainDeparture An instance of the class TrainDeparture
    */
   public void addTrainDeparture(TrainDeparture trainDeparture) {
     this.trainDepartures.put(trainDeparture.getTrainNumber(), trainDeparture);
   }
+
+  public boolean trainExists(int trainNumber) {
+    return trainDepartures.containsKey(trainNumber);
+  }
+
 }
