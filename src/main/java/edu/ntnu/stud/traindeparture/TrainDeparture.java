@@ -79,10 +79,20 @@ public class TrainDeparture {
   }
 
   /**
+   * Sets the delay.
+   *
+   * @param delay
+   */
+  public void setDelay(LocalTime delay) {
+    this.delay = delay;
+  }
+
+  /**
    * Retrieves the track number as an integer.
    *
    * @return An integer representing the track number.
    */
+
   public int getTrack() {
     return track;
   }
