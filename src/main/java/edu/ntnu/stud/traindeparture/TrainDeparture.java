@@ -52,7 +52,7 @@ public class TrainDeparture {
    * <p>Also checks if the trainNumber is above 0 and not already stored in Stations HashMap.</p>
    */
   public void setTrainNumber(int trainNumber, Station station) {
-    if ((trainNumber > 0) && !station.trainExists(trainNumber)) { // må gjøre slik at tognummer ikke kan dupliseres.
+    if ((trainNumber > 0) && !station.trainExists(trainNumber)) {
       this.trainNumber = trainNumber;
     } else {
       this.trainNumber = -1;
@@ -83,7 +83,7 @@ public class TrainDeparture {
   /**
    * Sets the delay.
    *
-   * @param delay
+   * @param delay delay to be set
    */
   public void setDelay(LocalTime delay) {
     this.delay = delay;
