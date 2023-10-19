@@ -14,7 +14,11 @@ public class UserInterface {
     System.out.println("The time is now " + station.getClock());
     System.out.println("Here is a list of all the trains that are yet to depart:");
     System.out.println("Train number\tLine\tDestination\tDeparture time\tTrack");
-    Iterator it = station.getTrainDeparturesSorted().iterator();
+    Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
+    while (iterator.hasNext()) {
+      TrainDeparture trainDeparture = iterator.next();
+      System.out.println(trainDeparture.getTrainNumber() + "\t\t\t" + trainDeparture.getLine() + "\t\t" + trainDeparture.getDestination() + "\t\t" + trainDeparture.getDepartureTime() + "\t\t" + trainDeparture.getTrack());
+    }
   }
 
   public void init(){

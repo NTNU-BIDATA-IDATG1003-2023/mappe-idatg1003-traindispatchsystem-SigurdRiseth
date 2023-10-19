@@ -1,12 +1,10 @@
 package edu.ntnu.stud.station;
 
 import edu.ntnu.stud.traindeparture.TrainDeparture;
-import java.lang.reflect.Array;
+import java.util.List;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 /**
@@ -17,6 +15,7 @@ public class Station {
 
   private LocalTime time;
   private HashMap<Integer, TrainDeparture> trainDepartures;
+  private List<TrainDeparture> trainDeparturesSorted;
 
   /**
    * Constructor that sets the time to midnight and creates a new HashMap for the train departures.
@@ -54,18 +53,21 @@ public class Station {
     this.trainDepartures.put(trainDeparture.getTrainNumber(), trainDeparture);
   }
 
-  public ArrayList getTrainDeparturesSorted() {
+  public List getTrainDeparturesSorted() {
     return this.trainDeparturesSorted;
   }
 
   /**
    * Returns a list of all TrainDepartures yet to depart.
    */
+  // sort the hashmap of trainDepartures by departureTime and return it as a list
   public void sortByDepartureTime() {
-    this.trainDeparturesSorted = this.trainDepartures.entrySet().stream()
-        .sorted(Comparator.comparing(e -> e.getValue().getDepartureTime()))
-        .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (e1, e2) -> e2, HashMap::new));
+    this.trainDeparturesSorted = this.trainDepartures.values().stream()
+        .sorted(Comparator.comparing(TrainDeparture::getDepartureTime))
+        .collect(Collectors.toList());
   }
+
+
 
   public boolean trainExists(int trainNumber) {
     return trainDepartures.containsKey(trainNumber);
