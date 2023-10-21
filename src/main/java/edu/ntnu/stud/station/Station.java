@@ -1,6 +1,7 @@
 package edu.ntnu.stud.station;
 
 import edu.ntnu.stud.traindeparture.TrainDeparture;
+import java.util.Iterator;
 import java.util.List;
 import java.time.LocalTime;
 import java.util.Comparator;
@@ -53,22 +54,37 @@ public class Station {
     this.trainDepartures.put(trainDeparture.getTrainNumber(), trainDeparture);
   }
 
+  /**
+   * Returns a list of all TrainDepartures yet to depart.
+   *
+   * @return trainDeparturesSorted
+   */
   public List getTrainDeparturesSorted() {
+    Iterator<TrainDeparture> iterator = this.trainDeparturesSorted.iterator();
+    while (iterator.hasNext()) {
+      TrainDeparture trainDeparture = iterator.next();
+      if (trainDeparture.getDepartureTime().isBefore(this.time)) {
+        iterator.remove();
+      }
+    }
     return this.trainDeparturesSorted;
   }
 
   /**
-   * Returns a list of all TrainDepartures yet to depart.
+   * Sorts the trainDepartures HashMap by departure time and stores the sorted list in trainDeparturesSorted.
    */
-  // sort the hashmap of trainDepartures by departureTime and return it as a list
   public void sortByDepartureTime() {
     this.trainDeparturesSorted = this.trainDepartures.values().stream()
         .sorted(Comparator.comparing(TrainDeparture::getDepartureTime))
         .collect(Collectors.toList());
   }
 
-
-
+  /**
+   * Returns a boolean value indicating whether a train with the given train number exists.
+   *
+   * @param trainNumber
+   * @return
+   */
   public boolean trainExists(int trainNumber) {
     return trainDepartures.containsKey(trainNumber);
   }

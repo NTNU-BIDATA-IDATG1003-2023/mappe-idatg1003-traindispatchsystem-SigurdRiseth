@@ -13,11 +13,18 @@ public class UserInterface {
     System.out.println("Welcome to the train dispatch app!");
     System.out.println("The time is now " + station.getClock());
     System.out.println("Here is a list of all the trains that are yet to depart:");
-    System.out.println("Train number\tLine\tDestination\tDeparture time\tTrack");
+    System.out.println("Train number\tLine\tDestination\t\t\tDeparture time\tTrack");
     Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
-      System.out.println(trainDeparture.getTrainNumber() + "\t\t\t" + trainDeparture.getLine() + "\t\t" + trainDeparture.getDestination() + "\t\t" + trainDeparture.getDepartureTime() + "\t\t" + trainDeparture.getTrack());
+      String formattedLine = String.format("%-15s%-5s%-20s%-15s%-10s",
+          trainDeparture.getTrainNumber(),
+          trainDeparture.getLine(),
+          trainDeparture.getDestination(),
+          trainDeparture.getDepartureTime(),
+          trainDeparture.getTrack()
+      );
+      System.out.println(formattedLine);
     }
   }
 
@@ -29,6 +36,10 @@ public class UserInterface {
     station.addTrainDeparture(trainDeparture2);
     TrainDeparture trainDeparture3 = new TrainDeparture(3, 3, "L3", "Bergen", LocalTime.of(4, 0), station);
     station.addTrainDeparture(trainDeparture3);
+    TrainDeparture trainDeparture4 = new TrainDeparture(4, 4, "L4", "Stavanger", LocalTime.of(3, 17), station);
+    station.addTrainDeparture(trainDeparture4);
+    TrainDeparture trainDeparture5 = new TrainDeparture(5, 5, "L5", "Kristiansand", LocalTime.of(5, 0), station);
+    station.addTrainDeparture(trainDeparture5);
     station.sortByDepartureTime();
 
   }
