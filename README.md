@@ -20,6 +20,8 @@ The system is limited by the fact that it does not consider the date or if there
 
 [//]: # (TODO: Include a link to your repository here.)
 
+https://github.com/NTNU-BIDATA-IDATG1003-2023/mappe-idatg1003-traindispatchsystem-SigurdRiseth
+
 ## How to run the project
 
 [//]: # (TODO: Describe how to run your project here. What is the main class? What is the main method?
