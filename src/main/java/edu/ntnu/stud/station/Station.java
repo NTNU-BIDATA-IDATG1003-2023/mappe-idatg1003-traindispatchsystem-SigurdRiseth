@@ -89,4 +89,43 @@ public class Station {
     return trainDepartures.containsKey(trainNumber);
   }
 
+  /**
+   * Changes the track of a train with the given train number. Returns a string indicating whether the track was changed or not.
+   * @param trainNumber
+   * @param track
+   * @return
+   */
+  public String changeTrackByTrainNumber(int trainNumber, int track) {
+    if (trainExists(trainNumber)) {
+      trainDepartures.get(trainNumber).setTrack(track);
+      return "Track changed.";
+    } else {
+      return "Train does not exist.";
+    }
+  }
+
+  /**
+   * Changes the delay of a train with the given train number. Returns a string indicating whether the delay was changed or not.
+   * @param trainNumber
+   * @param delay
+   * @return
+   */
+  public String changeDelaybyTrainNumber(int trainNumber, LocalTime delay) {
+    if (trainExists(trainNumber)) {
+      trainDepartures.get(trainNumber).setDelay(delay);
+      //TODO: bruk parse() for å få LocalTime fra String på formatet "HH:MM"
+      return "Delay changed.";
+    } else {
+      return "Train does not exist.";
+    }
+  }
+
+  public TrainDeparture getTrainDepartureByTrainNumber(int trainNumber) {
+    if (trainExists(trainNumber)){
+      return trainDepartures.get(trainNumber);
+    } else {
+      return null;
+    }
+  }
+
 }
