@@ -131,12 +131,13 @@ public class TrainDeparture {
 
 
   /**
-   * Retrieves the departure time as a LocalTime object.
+   * Retrieves the departure time (delay included) as a LocalTime object.
    *
    * @return The LocalTime object representing the departure time.
    */
   public LocalTime getDepartureTime() {
-    return departureTime;
+    return this.departureTime.plusHours(this.delay.getHour())
+        .plusMinutes(this.delay.getMinute());
   }
 
   /**

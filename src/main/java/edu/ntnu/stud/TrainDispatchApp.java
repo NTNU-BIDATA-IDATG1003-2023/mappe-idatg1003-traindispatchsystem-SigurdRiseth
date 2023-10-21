@@ -1,9 +1,6 @@
 package edu.ntnu.stud;
 
-import edu.ntnu.stud.station.Station;
-import edu.ntnu.stud.traindeparture.TrainDeparture;
 import edu.ntnu.stud.userInterface.UserInterface;
-import java.time.LocalTime;
 
 /**
  * This is the main class for the train dispatch application.

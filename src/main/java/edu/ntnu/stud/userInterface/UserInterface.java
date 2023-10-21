@@ -40,6 +40,7 @@ public class UserInterface {
     station.addTrainDeparture(trainDeparture4);
     TrainDeparture trainDeparture5 = new TrainDeparture(5, 5, "L5", "Kristiansand", LocalTime.of(5, 0), station);
     station.addTrainDeparture(trainDeparture5);
+    trainDeparture2.setDelay(LocalTime.of(0, 20));
     station.sortByDepartureTime();
 
   }
