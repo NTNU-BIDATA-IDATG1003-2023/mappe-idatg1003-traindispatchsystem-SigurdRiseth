@@ -110,7 +110,7 @@ public class Station {
    * @param delay
    * @return
    */
-  public String changeDelaybyTrainNumber(int trainNumber, LocalTime delay) {
+  public String changeDelayByTrainNumber(int trainNumber, LocalTime delay) {
     if (trainExists(trainNumber)) {
       trainDepartures.get(trainNumber).setDelay(delay);
       //TODO: bruk parse() for å få LocalTime fra String på formatet "HH:MM"
@@ -120,12 +120,33 @@ public class Station {
     }
   }
 
+  /**
+   * Returns a TrainDeparture with the given train number.
+   * @param trainNumber
+   * @return
+   */
   public TrainDeparture getTrainDepartureByTrainNumber(int trainNumber) {
     if (trainExists(trainNumber)){
       return trainDepartures.get(trainNumber);
     } else {
       return null;
     }
+  }
+
+  /**
+   * Returns the first train departure with the provided destination.
+   * @param destination
+   * @return
+   */
+  public TrainDeparture getTrainDepartureByDestination(String destination) {
+    Iterator<TrainDeparture> iterator = this.trainDeparturesSorted.iterator();
+    while (iterator.hasNext()) {
+      TrainDeparture trainDeparture = iterator.next();
+      if (trainDeparture.getDestination().equals(destination)) {
+        return trainDeparture;
+      }
+    }
+    return null;
   }
 
 }

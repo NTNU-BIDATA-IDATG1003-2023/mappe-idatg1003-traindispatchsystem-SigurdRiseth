@@ -4,6 +4,7 @@ import edu.ntnu.stud.station.Station;
 import edu.ntnu.stud.traindeparture.TrainDeparture;
 import java.time.LocalTime;
 import java.util.Iterator;
+import javax.swing.JDesktopPane;
 
 public class UserInterface {
 
@@ -26,6 +27,9 @@ public class UserInterface {
       );
       System.out.println(formattedLine);
     }
+
+    String departure = station.getTrainDepartureByDestination("Trondheim").getDestination();
+    System.out.println("The next train to " + station.getTrainDepartureByDestination(departure).getDestination() + " departs at " + station.getTrainDepartureByDestination(departure).getDepartureTime() + " from track " + station.getTrainDepartureByDestination(departure).getTrack());
   }
 
   public void init(){
