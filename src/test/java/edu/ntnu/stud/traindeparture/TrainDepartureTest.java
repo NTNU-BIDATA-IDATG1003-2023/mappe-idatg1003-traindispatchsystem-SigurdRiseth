@@ -79,7 +79,19 @@ class TrainDepartureTest {
   void setDepartureTimeBeforeCurrentTime() {
     station.setClock(LocalTime.of(5, 0));
     trainDeparture1.setDepartureTime(LocalTime.of(4, 40), station);
-    assertEquals(LocalTime.of(5, 20), trainDeparture1.getDepartureTime(), "Departure time should be 05:20");
+    assertEquals(LocalTime.of(5, 20), trainDeparture1.getDepartureTime(), "Departure time should be unchanged. 05:20");
+  }
+
+  @Test
+  void setDelayValid() {
+    trainDeparture1.setDelay(LocalTime.of(0, 20));
+    assertEquals(LocalTime.of(0, 20), trainDeparture1.getDelay(), "Delay should be 00:20");
+  }
+
+  @Test
+  void setDelayNull() {
+    trainDeparture1.setDelay(null);
+    assertEquals(LocalTime.of(0,0), trainDeparture1.getDelay(), "Delay should be 00:00");
   }
 
 }

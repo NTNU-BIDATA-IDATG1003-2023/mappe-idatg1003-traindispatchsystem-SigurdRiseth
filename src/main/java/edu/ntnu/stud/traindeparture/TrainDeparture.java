@@ -100,11 +100,16 @@ public class TrainDeparture {
 
   /**
    * Sets the delay.
+   * If the delay is null the delay is set to 00:00.
    *
    * @param delay delay to be set
    */
   public void setDelay(LocalTime delay) {
-    this.delay = delay;
+    if (delay != null) {
+      this.delay = delay;
+    } else {
+      this.delay = LocalTime.of(0, 0);
+    }
   }
 
   /**
