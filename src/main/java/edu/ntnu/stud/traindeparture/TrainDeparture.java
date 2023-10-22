@@ -101,12 +101,17 @@ public class TrainDeparture {
   /**
    * Sets the delay.
    * If the delay is null the delay is set to 00:00.
+   * Removed from station if delayed over midnight
    *
    * @param delay delay to be set
    */
   public void setDelay(LocalTime delay) {
     if (delay != null) {
-      this.delay = delay;
+      if (this.departureTime.getHour() + delay.getHour() + (this.departureTime.getMinute() + delay.getMinute()) / 60 > 23) {
+        this.delay = LocalTime.of(0, 0);
+      } else {
+        this.delay = delay;
+      }
     } else {
       this.delay = LocalTime.of(0, 0);
     }

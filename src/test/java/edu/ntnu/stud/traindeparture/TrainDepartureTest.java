@@ -94,4 +94,11 @@ class TrainDepartureTest {
     assertEquals(LocalTime.of(0,0), trainDeparture1.getDelay(), "Delay should be 00:00");
   }
 
+  @Test
+  void setDelayOverMidnight() {
+    trainDeparture1.setDepartureTime(LocalTime.of(23, 0), station);
+    trainDeparture1.setDelay(LocalTime.of(1, 20));
+    assertEquals(LocalTime.of(23, 0), trainDeparture1.getDepartureTime(), "Departure time should be 00:20");
+  }
+
 }
