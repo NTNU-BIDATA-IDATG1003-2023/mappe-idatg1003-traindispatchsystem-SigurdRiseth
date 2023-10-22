@@ -11,6 +11,20 @@ class TrainDepartureTest {
   private Station station = new Station();
   private TrainDeparture trainDeparture1 = new TrainDeparture(1, 1, "L1", "Oslo", LocalTime.of(5, 20), station);
 
+
+  @Test
+  void setTrackValid() {
+    trainDeparture1.setTrack(2);
+    assertEquals(2, trainDeparture1.getTrack(), "Track should be 2");
+  }
+
+  @Test
+  void setTrackInvalid() {
+    trainDeparture1.setTrack(-2);
+    assertEquals(-1, trainDeparture1.getTrack(), "Track should be -1");
+  }
+
+
   @Test
   void setTrainNumberValid() {
     trainDeparture1.setTrainNumber(2, station);
@@ -18,9 +32,54 @@ class TrainDepartureTest {
   }
 
   @Test
-  void setTrainNumberInvalid() {
-    trainDeparture1.setTrainNumber(1, station);
+  void setTrainNumberUnderOne() {
+    trainDeparture1.setTrainNumber(-2, station);
     assertEquals(-1, trainDeparture1.getTrainNumber(), "Train number should be -1");
+  }
+
+  @Test
+  void setTrainNumberAlreadyExists() {
+    TrainDeparture trainDeparture2 = new TrainDeparture(2, 2, "L2", "Trondheim", LocalTime.of(5, 40), station);
+    station.addTrainDeparture(trainDeparture2);
+    trainDeparture1.setTrainNumber(2, station);
+    assertEquals(-1, trainDeparture1.getTrainNumber(), "Train number should be -1");
+  }
+
+  @Test
+  void setLineValid() {
+    trainDeparture1.setLine("L2");
+    assertEquals("L2", trainDeparture1.getLine(), "Line should be L2");
+  }
+
+  @Test
+  void setLineNull() {
+    trainDeparture1.setLine(null);
+    assertEquals(null, trainDeparture1.getLine(), "Line should be null");
+  }
+
+  @Test
+  void setDestinationValid() {
+    trainDeparture1.setDestination("Trondheim");
+    assertEquals("Trondheim", trainDeparture1.getDestination(), "Destination should be Trondheim");
+  }
+
+  @Test
+  void setDestinationNull() {
+    trainDeparture1.setDestination(null);
+    assertEquals("Invalid destination", trainDeparture1.getDestination(), "Destination should be Invalid destination");
+  }
+
+  @Test
+  void setDepartureTimeValid() {
+    trainDeparture1.setDepartureTime(LocalTime.of(5, 40), station);
+    assertEquals(LocalTime.of(5, 40), trainDeparture1.getDepartureTime(), "Departure time should be 05:40");
+  }
+
+  @Test
+  void setDepartureTimeBeforeCurrentTime() {
+    station.setClock(LocalTime.of(5, 0));
+    trainDeparture1.setDepartureTime(LocalTime.of(4, 40), station);
+    assertEquals(LocalTime.of(5, 20), trainDeparture1.getDepartureTime(), "Departure time should be 05:20");
   }
 
 }

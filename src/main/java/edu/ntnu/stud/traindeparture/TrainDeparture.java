@@ -43,14 +43,20 @@ public class TrainDeparture {
 
   /**
    * Sets the track.
+   * If the track is under 1 the value is set to -1.
    */
   public void setTrack(int track) {
-    this.track = track;
+    if (track > 0) {
+      this.track = track;
+    } else {
+      this.track = -1;
+    }
   }
 
   /**
    * Sets the train number.
-   * <p>Also checks if the trainNumber is above 0 and not already stored in Stations HashMap.</p>
+   * <p>Also checks if the trainNumber is above 0 and not already stored in Stations HashMap.
+   * If a train already exists with that number or it is under 1 the value is set to -1.</p>
    */
   public void setTrainNumber(int trainNumber, Station station) {
     if ((trainNumber > 0) && !station.trainExists(trainNumber)) {
