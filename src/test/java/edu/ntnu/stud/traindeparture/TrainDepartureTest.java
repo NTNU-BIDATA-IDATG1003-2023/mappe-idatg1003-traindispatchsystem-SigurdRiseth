@@ -84,21 +84,21 @@ class TrainDepartureTest {
 
   @Test
   void setDelayValid() {
-    trainDeparture1.setDelay(LocalTime.of(0, 20));
+    trainDeparture1.setDelay(LocalTime.of(0, 20), station);
     assertEquals(LocalTime.of(0, 20), trainDeparture1.getDelay(), "Delay should be 00:20");
   }
 
   @Test
   void setDelayNull() {
-    trainDeparture1.setDelay(null);
+    trainDeparture1.setDelay(null, station);
     assertEquals(LocalTime.of(0,0), trainDeparture1.getDelay(), "Delay should be 00:00");
   }
 
   @Test
   void setDelayOverMidnight() {
     trainDeparture1.setDepartureTime(LocalTime.of(23, 0), station);
-    trainDeparture1.setDelay(LocalTime.of(1, 20));
-    assertEquals(LocalTime.of(23, 0), trainDeparture1.getDepartureTime(), "Departure time should be 00:20");
+    trainDeparture1.setDelay(LocalTime.of(1, 20), station);
+    assertEquals(false, station.trainExists(trainDeparture1.getTrainNumber()), "Train should be removed from station");
   }
 
 }

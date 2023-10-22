@@ -105,10 +105,10 @@ public class TrainDeparture {
    *
    * @param delay delay to be set
    */
-  public void setDelay(LocalTime delay) {
+  public void setDelay(LocalTime delay, Station station) {
     if (delay != null) {
       if (this.departureTime.getHour() + delay.getHour() + (this.departureTime.getMinute() + delay.getMinute()) / 60 > 23) {
-        this.delay = LocalTime.of(0, 0);
+        station.removeTrainDepartureByTrainNumber(this.trainNumber);
       } else {
         this.delay = delay;
       }

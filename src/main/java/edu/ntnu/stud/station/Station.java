@@ -110,9 +110,9 @@ public class Station {
    * @param delay
    * @return
    */
-  public String changeDelayByTrainNumber(int trainNumber, LocalTime delay) {
+  public String changeDelayByTrainNumber(int trainNumber, LocalTime delay, Station station) {
     if (trainExists(trainNumber)) {
-      trainDepartures.get(trainNumber).setDelay(delay);
+      trainDepartures.get(trainNumber).setDelay(delay, station);
       //TODO: bruk parse() for å få LocalTime fra String på formatet "HH:MM"
       return "Delay changed.";
     } else {
@@ -147,6 +147,16 @@ public class Station {
       }
     }
     return null;
+  }
+
+  /**
+   * Removes a train departure with the given train number from the trainDepartures HashMap.
+   * @param trainNumber
+   */
+  public void removeTrainDepartureByTrainNumber(int trainNumber) {
+    if (trainExists(trainNumber)) {
+      trainDepartures.remove(trainNumber);
+    }
   }
 
 }
