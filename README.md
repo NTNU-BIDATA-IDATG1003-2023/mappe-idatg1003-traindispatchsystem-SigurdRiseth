@@ -8,9 +8,9 @@ STUDENT ID = 106991
 ## Project description
 
 [//]: # (TODO: Write a short description of your project/product here.)
-A system for displaying traindepartures from a single station. Shows planned departure time, delays (if any), line name and destination, train number and what track the train will depart from. The system is limited by the fact that it does not consider the date or if there are any departures the next day. It only supports one station, and the clock has to be manually updated from the UI.
+A system for displaying traindepartures from a single station. Shows planned departure time, delays (if any), line name and destination, train number and what track the train will arrive at. 
 
-This project is the final exam for the course IDATG1003 and was developed between October 12. and December 12. 2023. 
+The system is limited by the fact that it does not consider the date or if there are any departures the next day. It only supports one station, and the clock has to be manually updated from the UI.
 
 ## Project structure
 

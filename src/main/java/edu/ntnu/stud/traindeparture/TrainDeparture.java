@@ -2,6 +2,7 @@ package edu.ntnu.stud.traindeparture;
 
 import edu.ntnu.stud.station.Station;
 import java.time.LocalTime;
+import java.util.Objects;
 
 /**
  * Class for the train departures.
@@ -36,7 +37,7 @@ public class TrainDeparture {
     this.setTrainNumber(trainNumber, station);
     this.setLine(line);
     this.setDestination(destination);
-    this.setDepartureTime(departureTime);
+    this.setDepartureTime(departureTime, station);
     this.delay = LocalTime.of(0, 0);
   }
 
@@ -61,6 +62,9 @@ public class TrainDeparture {
 
   /**
    * Sets the line.
+   * Can also be set to null.
+   *
+   * @param line line to be set
    */
   public void setLine(String line) {
     this.line = line;
@@ -68,16 +72,24 @@ public class TrainDeparture {
 
   /**
    * Sets the destination.
+   * If destination is null, it will be set to "Invalid destination".
+   *
+   * @param destination destination to be set
    */
   public void setDestination(String destination) {
-    this.destination = destination;
+    this.destination = Objects.requireNonNullElse(destination, "Invalid destination");
   }
 
   /**
    * Sets the departure time.
+   * Can only be set to a time after the current time.
+   *
+   * @param departureTime departure time to be set
    */
-  public void setDepartureTime(LocalTime departureTime) {
-    this.departureTime = departureTime;
+  public void setDepartureTime(LocalTime departureTime, Station station) {
+    if (departureTime.isAfter(station.getClock())) {
+      this.departureTime = departureTime;
+    }
   }
 
   /**
