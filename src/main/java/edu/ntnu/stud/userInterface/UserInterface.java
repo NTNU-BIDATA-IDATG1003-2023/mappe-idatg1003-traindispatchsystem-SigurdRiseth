@@ -13,6 +13,7 @@ public class UserInterface {
   public void start(){
     System.out.println("Welcome to the train dispatch app!");
     System.out.println("The time is now " + station.getClock());
+    System.out.println(station.setClock(LocalTime.of(3, 0)));
     System.out.println("Here is a list of all the trains that are yet to depart:");
     System.out.println("Train number\tLine\tDestination\t\t\tDeparture time\tTrack");
     Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();

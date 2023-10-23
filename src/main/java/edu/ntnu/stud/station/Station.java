@@ -32,8 +32,13 @@ public class Station {
    * @param time The time to be set
    *
    */
-  public void setClock(LocalTime time) {
-    this.time = time;
+  public String setClock(LocalTime time) {
+    if (this.time.isBefore(time)) {
+      this.time = time;
+      return "Time set to " + time.toString();
+    } else {
+      return "Time cannot be set to a time before the current time.";
+    }
   }
 
   /**
@@ -55,7 +60,7 @@ public class Station {
   }
 
   /**
-   * Returns a list of all TrainDepartures yet to depart.
+   * Returns a list of all TrainDepartures yet to depart, sorted by departure time.
    *
    * @return trainDeparturesSorted
    */
