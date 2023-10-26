@@ -23,7 +23,8 @@ public class TrainDeparture {
   private LocalTime delay;
 
   /**
-   * Constructor that sets all parameters of the class except delay.
+   * Constructor that sets all parameters of the class to the given parameter
+   * except delay which is default 00:00.
    *
    * @param track         track the train will depart from
    * @param trainNumber   unique train ID
@@ -107,7 +108,8 @@ public class TrainDeparture {
    */
   public void setDelay(LocalTime delay, Station station) {
     if (delay != null) {
-      if (this.departureTime.getHour() + delay.getHour() + (this.departureTime.getMinute() + delay.getMinute()) / 60 > 23) {
+      if (this.departureTime.getHour() + delay.getHour()
+          + (this.departureTime.getMinute() + delay.getMinute()) / 60 > 23) {
         station.removeTrainDepartureByTrainNumber(this.trainNumber);
       } else {
         this.delay = delay;

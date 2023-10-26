@@ -1,10 +1,9 @@
-package edu.ntnu.stud.userInterface;
+package edu.ntnu.stud.userinterface;
 
 import edu.ntnu.stud.station.Station;
 import edu.ntnu.stud.traindeparture.TrainDeparture;
 import java.time.LocalTime;
 import java.util.Iterator;
-import javax.swing.JDesktopPane;
 
 public class UserInterface {
 
