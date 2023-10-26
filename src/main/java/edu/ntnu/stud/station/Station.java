@@ -77,7 +77,9 @@ public class Station {
    * list in trainDeparturesSorted.
    */
   public void sortByDepartureTime() {
-    this.trainDeparturesSorted = this.trainDepartures.values().stream()
+    this.trainDeparturesSorted = this.trainDepartures
+        .values()
+        .stream()
         .sorted(Comparator.comparing(TrainDeparture::getDepartureTime))
         .collect(Collectors.toList());
   }
