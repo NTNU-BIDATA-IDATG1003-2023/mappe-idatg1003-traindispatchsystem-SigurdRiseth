@@ -12,7 +12,7 @@ public class UserInterface {
   public void start(){
     System.out.println("Welcome to the train dispatch app!");
     System.out.println("The time is now " + station.getClock());
-    System.out.println(station.setClock(LocalTime.of(3, 0)));
+    System.out.println(station.setClock(LocalTime.of(3, 30)));
     System.out.println("Here is a list of all the trains that are yet to depart:");
     System.out.println("Train number\tLine\tDestination\t\t\tDeparture time\tTrack");
     Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
@@ -23,7 +23,7 @@ public class UserInterface {
           trainDeparture.getLine(),
           trainDeparture.getDestination(),
           trainDeparture.getDepartureTime(),
-          trainDeparture.getTrack()
+          trainDeparture.getTrack() // TODO: Hvis track == -1 skal "-" vises i tavlen
       );
       System.out.println(formattedLine);
     }
@@ -45,6 +45,8 @@ public class UserInterface {
     TrainDeparture trainDeparture5 = new TrainDeparture(5, 5, "L5", "Kristiansand", LocalTime.of(5, 0), station);
     station.addTrainDeparture(trainDeparture5);
     trainDeparture2.setDelay(LocalTime.of(0, 20), station);
+    TrainDeparture trainDeparture6 = new TrainDeparture(3, 6, "L2", "Trondheim", LocalTime.of(4, 20), station);
+    station.addTrainDeparture(trainDeparture6);
     station.sortByDepartureTime();
 
   }
