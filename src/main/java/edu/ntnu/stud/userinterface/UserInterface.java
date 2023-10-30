@@ -31,15 +31,17 @@ public class UserInterface {
           break;
         case "2":
           System.out.println("Please enter a destination:");
+          String destination = scanner.nextLine();
+          printAllDeparturesToDestination(destination);
           break;
         case "3":
           System.out.println("Please enter a destination:");
-          String destination = scanner.nextLine();
+          String destination2 = scanner.nextLine();
           System.out.println(
-              "The next train to " + station.getTrainDepartureByDestination(destination).getDestination()
-                  + " departs at " + station.getTrainDepartureByDestination(destination)
+              "The next train to " + station.getTrainDepartureByDestination(destination2).getDestination()
+                  + " departs at " + station.getTrainDepartureByDestination(destination2)
                   .getDepartureTime() + " from track " + station.getTrainDepartureByDestination(
-                  destination).getTrack());
+                  destination2).getTrack());
           break;
         case "4":
           System.out.println("Please enter a time in the format hh:mm");
@@ -58,11 +60,39 @@ public class UserInterface {
     }
   }
 
+  private void printAllDeparturesToDestination(String destination) {
+    destination = destination.substring(0, 1).toUpperCase() + destination.substring(1).toLowerCase(); // Make it so it doesn't matter if the user types "oslo" or "Oslo"
+    Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
+    boolean firstRun = true;
+    while (iterator.hasNext()) {
+      TrainDeparture trainDeparture = iterator.next();
+      if (trainDeparture.getDestination().equals(destination)) {
+        if (firstRun) {
+          System.out.println("Here is a list of all the trains that are yet to depart to " + destination
+              + ":");
+          System.out.println("Train number\tLine\tDestination\t\t\tDeparture time\tTrack");
+          firstRun = false;
+        }
+        String formattedLine = String.format("%-15s%-5s%-20s%-15s%-10s",
+            trainDeparture.getTrainNumber(),
+            trainDeparture.getLine(),
+            trainDeparture.getDestination(),
+            trainDeparture.getDepartureTime(),
+            trainDeparture.getTrack() // TODO: Hvis track == -1 skal "-" vises i tavlen
+        );
+        if (formattedLine.isEmpty()) {
+          formattedLine = "No trains to " + destination + " found.";
+        }
+        System.out.println(formattedLine);
+      }
+    }
+  }
+
   private void printAllDepartures() {
     System.out.println("Here is a list of all the trains that are yet to depart:");
     System.out.println("Train number\tLine\tDestination\t\t\tDeparture time\tTrack");
     Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
-    while (iterator.hasNext()) {
+    while (iterator.hasNext()) { // TODO: Er dette duplisert kode??? (printAllDeparturesToDestination)
       TrainDeparture trainDeparture = iterator.next();
       String formattedLine = String.format("%-15s%-5s%-20s%-15s%-10s",
           trainDeparture.getTrainNumber(),
@@ -90,7 +120,6 @@ public class UserInterface {
     trainDeparture2.setDelay(LocalTime.of(0, 20), station);
     TrainDeparture trainDeparture6 = new TrainDeparture(3, 6, "L2", "Trondheim", LocalTime.of(4, 20), station);
     station.addTrainDeparture(trainDeparture6);
-    station.sortByDepartureTime();
 
     System.out.println("-------------------------------------------");
     System.out.println("Welcome to the train dispatch app!");

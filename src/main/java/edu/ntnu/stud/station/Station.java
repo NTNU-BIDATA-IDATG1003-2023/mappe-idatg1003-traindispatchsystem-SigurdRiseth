@@ -68,6 +68,7 @@ public class Station {
    * @return trainDeparturesSorted
    */
   public List getTrainDeparturesSorted() {
+    this.sortByDepartureTime();
     Iterator<TrainDeparture> iterator = this.trainDeparturesSorted.iterator();
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
