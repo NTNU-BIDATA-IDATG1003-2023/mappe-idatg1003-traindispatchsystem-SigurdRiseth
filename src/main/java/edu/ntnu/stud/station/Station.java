@@ -109,7 +109,7 @@ public class Station {
    * @param track
    * @return
    */
-  public String changeTrackByTrainNumber(int trainNumber, int track) {
+  public String changeTrackByTrainNumber(int trainNumber, String track) {
     if (trainExists(trainNumber)) {
       trainDepartures.get(trainNumber).setTrack(track);
       return "Track changed.";

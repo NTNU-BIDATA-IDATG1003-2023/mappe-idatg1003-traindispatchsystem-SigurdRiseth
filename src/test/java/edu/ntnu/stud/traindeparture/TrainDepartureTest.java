@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class TrainDepartureTest {
 
   private Station station = new Station();
-  private TrainDeparture trainDeparture1 = new TrainDeparture(1, 1, "L1", "Oslo", LocalTime.of(5, 20), station);
+  private TrainDeparture trainDeparture1 = new TrainDeparture("1", 1, "L1", "Oslo", LocalTime.of(5, 20), station);
 
   /**
    * Test that track is set to the parameter when it is above 0.
@@ -17,7 +17,7 @@ class TrainDepartureTest {
    */
   @Test
   void setTrackValid() {
-    trainDeparture1.setTrack(2);
+    trainDeparture1.setTrack("2");
     assertEquals(2, trainDeparture1.getTrack(), "Track should be 2");
   }
 
@@ -27,7 +27,7 @@ class TrainDepartureTest {
    */
   @Test
   void setTrackInvalid() {
-    trainDeparture1.setTrack(-2);
+    trainDeparture1.setTrack("-2");
     assertEquals(-1, trainDeparture1.getTrack(), "Track should be -1");
   }
 
@@ -57,7 +57,7 @@ class TrainDepartureTest {
    */
   @Test
   void setTrainNumberAlreadyExists() {
-    TrainDeparture trainDeparture2 = new TrainDeparture(2, 2, "L2", "Trondheim", LocalTime.of(5, 40), station);
+    TrainDeparture trainDeparture2 = new TrainDeparture("2", 2, "L2", "Trondheim", LocalTime.of(5, 40), station);
     station.addTrainDeparture(trainDeparture2);
     trainDeparture1.setTrainNumber(2, station);
     assertEquals(-1, trainDeparture1.getTrainNumber(), "Train number should be -1");

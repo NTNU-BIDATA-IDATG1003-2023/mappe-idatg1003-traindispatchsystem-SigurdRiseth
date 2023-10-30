@@ -32,7 +32,7 @@ public class TrainDeparture {
    * @param destination   the ends destination of the train
    * @param departureTime the time the train is set to depart
    */
-  public TrainDeparture(int track, int trainNumber, String line, String destination,
+  public TrainDeparture(String track, int trainNumber, String line, String destination,
       LocalTime departureTime, Station station) {
     this.setTrack(track);
     this.setTrainNumber(trainNumber, station);
@@ -46,10 +46,15 @@ public class TrainDeparture {
    * Sets the track.
    * If the track is under 1 the value is set to -1.
    */
-  public void setTrack(int track) {
-    if (track > 0) {
-      this.track = track;
-    } else {
+  public void setTrack(String track) {
+    try {
+      if (Integer.parseInt(track) > 0) {
+        this.track = Integer.parseInt(track);
+      } else {
+        this.track = -1;
+      }
+    }
+    catch (Exception e) {
       this.track = -1;
     }
   }
