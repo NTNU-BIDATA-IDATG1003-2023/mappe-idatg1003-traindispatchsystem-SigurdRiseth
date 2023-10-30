@@ -21,6 +21,7 @@ public class UserInterface {
       System.out.println("2: Print all upcoming departures to a given destination");
       System.out.println("3: Print the next departure to a given destination");
       System.out.println("4: Add a new train departure");
+      System.out.println("5: Set delay for a train departure");
       System.out.println(": Set the clock"); // TODO: Oppdater index her og i switch
       System.out.println(": Exit");
       System.out.println("Please enter a number between 1 and 5:");
@@ -64,6 +65,7 @@ public class UserInterface {
           String line = scanner.nextLine();
           System.out.println("Please enter a destination:");
           String destination3 = scanner.nextLine();
+          destination3 = destination3.substring(0, 1).toUpperCase() + destination3.substring(1).toLowerCase();
           System.out.println("Please enter a departure time:");
           String departureTime = scanner.nextLine();
           System.out.println("Please enter a track (type \"none\" if you do not wish to assign one):");
@@ -73,12 +75,20 @@ public class UserInterface {
           station.addTrainDeparture(trainDeparture);
           System.out.println("Train departure has been added!");
           break;
-        case "5":
+        case "5": // TODO: må være defensiv!
+          System.out.println("Please enter a train number:");
+          int trainNumber2 = scanner.nextInt();
+          scanner.nextLine();
+          System.out.println("Please enter a delay (hh:mm):");
+          String delay = scanner.nextLine();
+          System.out.println(station.changeDelayByTrainNumber(trainNumber2, LocalTime.parse(delay), station));
+          break;
+        case "6":
           System.out.println("Please enter a time in the format hh:mm");
           String time = scanner.nextLine();
           System.out.println(station.setClock(time));
           break;
-        case "6":
+        case "7":
           running = false;
           System.out.println("Thank you for using the train dispatch app!");
           System.out.println("The application has now been terminated.");
@@ -111,7 +121,7 @@ public class UserInterface {
             (trainDeparture.getTrack() == -1) ? "-" : String.valueOf(trainDeparture.getTrack())
         );
 
-        if (formattedLine.isEmpty()) {
+        if (formattedLine.isEmpty()) { // TODO: This does not work
           formattedLine = "No trains to " + destination + " found.";
         }
         System.out.println(formattedLine);
@@ -130,7 +140,7 @@ public class UserInterface {
           trainDeparture.getLine(),
           trainDeparture.getDestination(),
           trainDeparture.getDepartureTime(),
-          trainDeparture.getTrack() // TODO: Hvis track == -1 skal "-" vises i tavlen
+          (trainDeparture.getTrack() == -1) ? "-" : String.valueOf(trainDeparture.getTrack())
       );
       System.out.println(formattedLine);
     }

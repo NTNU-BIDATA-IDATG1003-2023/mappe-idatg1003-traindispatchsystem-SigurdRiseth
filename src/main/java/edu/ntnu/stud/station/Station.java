@@ -132,7 +132,7 @@ public class Station {
       //TODO: bruk parse() for å få LocalTime fra String på formatet "HH:MM"
       return "Delay changed.";
     } else {
-      return "Train does not exist.";
+      return "Train does not exist. Please try again.";
     }
   }
 
