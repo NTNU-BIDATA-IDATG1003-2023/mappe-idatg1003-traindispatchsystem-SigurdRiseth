@@ -16,6 +16,7 @@ public class UserInterface {
 
     boolean running = true;
     while (running) {
+      System.out.println("-------------------------------------------");
       System.out.println("1: Print all departures");
       System.out.println("2: Print all departures to a given destination");
       System.out.println("3: Print the next departure to a given destination");
@@ -42,8 +43,8 @@ public class UserInterface {
           break;
         case "4":
           System.out.println("Please enter a time in the format hh:mm");
-          LocalTime time = LocalTime.parse(scanner.nextLine());
-          station.setClock(time);
+          String time = scanner.nextLine();
+          System.out.println(station.setClock(time));
           break;
         case "5":
           running = false;
@@ -51,7 +52,7 @@ public class UserInterface {
           System.out.println("The application has now been terminated.");
           break;
         default:
-          System.out.println("Please enter a valid number.");
+          System.out.println("Please enter a valid number. The number should be between 1 and 5");
           break;
       }
     }
@@ -91,6 +92,7 @@ public class UserInterface {
     station.addTrainDeparture(trainDeparture6);
     station.sortByDepartureTime();
 
+    System.out.println("-------------------------------------------");
     System.out.println("Welcome to the train dispatch app!");
     System.out.println("The time is now " + station.getClock());
 
