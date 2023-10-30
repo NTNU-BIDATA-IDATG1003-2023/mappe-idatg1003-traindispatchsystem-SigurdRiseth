@@ -4,15 +4,60 @@ import edu.ntnu.stud.station.Station;
 import edu.ntnu.stud.traindeparture.TrainDeparture;
 import java.time.LocalTime;
 import java.util.Iterator;
+import java.util.Scanner;
 
 public class UserInterface {
 
   private Station station;
 
   public void start(){
-    System.out.println("Welcome to the train dispatch app!");
-    System.out.println("The time is now " + station.getClock());
-    System.out.println(station.setClock(LocalTime.of(3, 30)));
+
+    Scanner scanner = new Scanner(System.in);
+
+    boolean running = true;
+    while (running) {
+      System.out.println("1: Print all departures");
+      System.out.println("2: Print all departures to a given destination");
+      System.out.println("3: Print the next departure to a given destination");
+      System.out.println("4: Set the clock");
+      System.out.println("5: Exit");
+      System.out.println("Please enter a number between 1 and 5:");
+      String input = scanner.nextLine();
+
+      switch (input) {
+        case "1":
+          printAllDepartures();
+          break;
+        case "2":
+          System.out.println("Please enter a destination:");
+          break;
+        case "3":
+          System.out.println("Please enter a destination:");
+          String destination = scanner.nextLine();
+          System.out.println(
+              "The next train to " + station.getTrainDepartureByDestination(destination).getDestination()
+                  + " departs at " + station.getTrainDepartureByDestination(destination)
+                  .getDepartureTime() + " from track " + station.getTrainDepartureByDestination(
+                  destination).getTrack());
+          break;
+        case "4":
+          System.out.println("Please enter a time in the format hh:mm");
+          LocalTime time = LocalTime.parse(scanner.nextLine());
+          station.setClock(time);
+          break;
+        case "5":
+          running = false;
+          System.out.println("Thank you for using the train dispatch app!");
+          System.out.println("The application has now been terminated.");
+          break;
+        default:
+          System.out.println("Please enter a valid number.");
+          break;
+      }
+    }
+  }
+
+  private void printAllDepartures() {
     System.out.println("Here is a list of all the trains that are yet to depart:");
     System.out.println("Train number\tLine\tDestination\t\t\tDeparture time\tTrack");
     Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
@@ -27,9 +72,6 @@ public class UserInterface {
       );
       System.out.println(formattedLine);
     }
-
-    String departure = station.getTrainDepartureByDestination("Trondheim").getDestination();
-    System.out.println("The next train to " + station.getTrainDepartureByDestination(departure).getDestination() + " departs at " + station.getTrainDepartureByDestination(departure).getDepartureTime() + " from track " + station.getTrainDepartureByDestination(departure).getTrack());
   }
 
   public void init(){
@@ -48,6 +90,9 @@ public class UserInterface {
     TrainDeparture trainDeparture6 = new TrainDeparture(3, 6, "L2", "Trondheim", LocalTime.of(4, 20), station);
     station.addTrainDeparture(trainDeparture6);
     station.sortByDepartureTime();
+
+    System.out.println("Welcome to the train dispatch app!");
+    System.out.println("The time is now " + station.getClock());
 
   }
 
