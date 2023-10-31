@@ -47,14 +47,14 @@ public class UserInterface {
           break;
         case "4":
           int trainNumber;
+          boolean trainExists = true;
 
-          while (true) {
+          while (trainExists) {
             System.out.println("Please enter a train number:");
             trainNumber = scanner.nextInt();
 
             if (!station.trainExists(trainNumber)) {
-              // The train number is not in use, so we break out of the loop.
-              break;
+              trainExists = false;
             } else {
               System.out.println("Train number already exists. Please try again.");
             }
