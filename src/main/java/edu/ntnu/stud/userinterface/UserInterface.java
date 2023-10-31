@@ -22,6 +22,8 @@ public class UserInterface {
       System.out.println("3: Print the next departure to a given destination");
       System.out.println("4: Add a new train departure");
       System.out.println("5: Set delay for a train departure");
+      System.out.println("6: Set track for a train departure");
+      System.out.println("7: Get train by train number");
       System.out.println(": Set the clock"); // TODO: Oppdater index her og i switch
       System.out.println(": Exit");
       System.out.println("Please enter a number between 1 and 5:");
@@ -46,7 +48,7 @@ public class UserInterface {
                   destination2).getTrack());
           break;
         case "4":
-          int trainNumber;
+          int trainNumber = -1;
           boolean trainExists = true;
 
           while (trainExists) {
@@ -84,11 +86,34 @@ public class UserInterface {
           System.out.println(station.changeDelayByTrainNumber(trainNumber2, LocalTime.parse(delay), station));
           break;
         case "6":
+          System.out.println("Please enter a train number:");
+          int trainNumber4 = scanner.nextInt();
+          scanner.nextLine();
+          System.out.println("Please enter a track:");
+          String track2 = scanner.nextLine();
+          System.out.println(station.changeTrackByTrainNumber(trainNumber4, track2));
+          break;
+        case "7":
+          System.out.println("Please enter a train number:");
+          int trainNumber3 = scanner.nextInt();
+          scanner.nextLine();
+          TrainDeparture train = station.getTrainDepartureByTrainNumber(trainNumber3);
+          if (train != null) {
+            System.out.println("Train number: " + train.getTrainNumber());
+            System.out.println("Line: " + train.getLine());
+            System.out.println("Destination: " + train.getDestination());
+            System.out.println("Departure time: " + train.getDepartureTime());
+            System.out.println("Track: " + train.getTrack());
+          } else {
+            System.out.println("Train does not exist. Please try again.");
+          }
+          break;
+        case "8":
           System.out.println("Please enter a time in the format hh:mm");
           String time = scanner.nextLine();
           System.out.println(station.setClock(time));
           break;
-        case "7":
+        case "9":
           running = false;
           System.out.println("Thank you for using the train dispatch app!");
           System.out.println("The application has now been terminated.");
