@@ -24,8 +24,8 @@ public class UserInterface {
       System.out.println("5: Set delay for a train departure");
       System.out.println("6: Set track for a train departure");
       System.out.println("7: Get train by train number");
-      System.out.println(": Set the clock"); // TODO: Oppdater index her og i switch
-      System.out.println(": Exit");
+      System.out.println("8: Set the clock"); // TODO: Oppdater index her og i switch
+      System.out.println("9: Exit");
       System.out.println("Please enter a number between 1 and 5:");
       String input = scanner.nextLine();
 
