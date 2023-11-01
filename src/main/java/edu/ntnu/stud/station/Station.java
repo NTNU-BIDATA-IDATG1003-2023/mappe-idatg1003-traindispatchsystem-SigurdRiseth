@@ -29,7 +29,7 @@ public class Station {
    * @param time The time to be set
    *
    */
-  public String setClock(String time) {
+  public String setClock(String time) { // TODO: funker ikke for tider før current time?
     try {
       LocalTime newTime = LocalTime.parse(time);
       if (this.time.isBefore(newTime)) {

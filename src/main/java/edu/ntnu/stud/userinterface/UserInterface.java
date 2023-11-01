@@ -24,9 +24,10 @@ public class UserInterface {
       System.out.println("5: Set delay for a train departure");
       System.out.println("6: Set track for a train departure");
       System.out.println("7: Get train by train number");
-      System.out.println(": Set the clock"); // TODO: Oppdater index her og i switch
-      System.out.println(": Exit");
-      System.out.println("Please enter a number between 1 and 5:");
+      System.out.println("8: Remove train departure");
+      System.out.println("9: Set the clock"); // TODO: Oppdater index her og i switch
+      System.out.println("10: Exit the application");
+      System.out.println("Please enter a number between 1 and 10:");
       String input = scanner.nextLine();
 
       switch (input) {
@@ -109,11 +110,18 @@ public class UserInterface {
           }
           break;
         case "8":
+          System.out.println("Which train number do you want to remove?");
+          int trainNumber5 = scanner.nextInt();
+          scanner.nextLine();
+          station.removeTrainDepartureByTrainNumber(trainNumber5);
+          System.out.println("Train departure has been removed!");
+          break;
+        case "9":
           System.out.println("Please enter a time in the format hh:mm");
           String time = scanner.nextLine();
           System.out.println(station.setClock(time));
           break;
-        case "9":
+        case "10":
           running = false;
           System.out.println("Thank you for using the train dispatch app!");
           System.out.println("The application has now been terminated.");
