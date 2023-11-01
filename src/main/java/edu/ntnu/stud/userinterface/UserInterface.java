@@ -71,12 +71,18 @@ public class UserInterface {
           station.addTrainDeparture(trainDeparture);
           System.out.println("Train departure has been added!");
           break;
-        case "5": // TODO: må være defensiv!
+        case "5":
           System.out.println("Please enter a train number:");
           int trainNumber2 = scanner.nextInt();
           scanner.nextLine();
           System.out.println("Please enter a delay (hh:mm):");
           String delay = scanner.nextLine();
+          try {
+            LocalTime.parse(delay);
+          } catch (Exception e) {
+            System.out.println("Please try again and enter a valid time.");
+            break;
+          }
           System.out.println(station.changeDelayByTrainNumber(trainNumber2, LocalTime.parse(delay), station));
           break;
         case "6":
@@ -120,7 +126,7 @@ public class UserInterface {
           System.out.println("The application has now been terminated.");
           break;
         default:
-          System.out.println("Please enter a valid number. The number should be between 1 and 5");
+          System.out.println("Please enter a valid number. The number should be between 1 and 10");
           break;
       }
     }

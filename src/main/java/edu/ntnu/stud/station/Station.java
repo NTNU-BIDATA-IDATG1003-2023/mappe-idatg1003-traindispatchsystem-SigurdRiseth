@@ -107,7 +107,7 @@ public class Station {
    *
    * @param trainNumber
    * @param track
-   * @return
+   * @return String
    */
   public String changeTrackByTrainNumber(int trainNumber, String track) {
     if (trainExists(trainNumber)) {
@@ -124,7 +124,7 @@ public class Station {
    *
    * @param trainNumber
    * @param delay
-   * @return
+   * @return String
    */
   public String changeDelayByTrainNumber(int trainNumber, LocalTime delay, Station station) {
     if (trainExists(trainNumber)) {
