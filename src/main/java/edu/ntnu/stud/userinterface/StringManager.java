@@ -6,6 +6,12 @@ import java.util.Iterator;
 
 public class StringManager {
 
+  private Station station;
+
+  public StringManager(Station station) {
+    this.station = station;
+  }
+
   public String options() {
     String[] menuStrings = {
         "-------------------------------------------",
@@ -25,7 +31,7 @@ public class StringManager {
     return String.join("\n", menuStrings);
   }
 
-  public String getAllDepartures(Station station) {
+  public String getAllDepartures() {
     StringBuilder result = new StringBuilder();
     result.append("Here is a list of all the trains that are yet to depart:\n");
     result.append("Train number\tLine\tDestination\t\t\tDeparture time\tTrack\n");
@@ -43,7 +49,7 @@ public class StringManager {
       result.append(formattedLine).append("\n");
     }
 
-    return result.toString();
+    return String.valueOf(result);
   }
 
 }

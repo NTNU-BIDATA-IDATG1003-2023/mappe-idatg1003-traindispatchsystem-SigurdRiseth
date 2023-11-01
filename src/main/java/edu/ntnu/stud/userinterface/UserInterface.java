@@ -15,6 +15,9 @@ public class UserInterface {
 
     Scanner scanner = new Scanner(System.in);
 
+    String trainNumberAsk = "Please enter a train number: ";
+    String destinationAsk = "Please enter a destination: ";
+
     boolean running = true;
     while (running) {
       System.out.println(stringManager.options());
@@ -22,15 +25,15 @@ public class UserInterface {
 
       switch (input) {
         case "1":
-          System.out.println(stringManager.getAllDepartures(station));
+          System.out.println(stringManager.getAllDepartures());
           break;
         case "2":
-          System.out.println("Please enter a destination:");
-          String destination = scanner.nextLine();
-          printAllDeparturesToDestination(destination);
+          System.out.println(destinationAsk);
+          String destination1 = scanner.nextLine();
+          printAllDeparturesToDestination(destination1);
           break;
         case "3":
-          System.out.println("Please enter a destination:");
+          System.out.println(destinationAsk);
           String destination2 = scanner.nextLine();
           System.out.println(
               "The next train to " + station.getTrainDepartureByDestination(destination2).getDestination()
@@ -43,7 +46,7 @@ public class UserInterface {
           boolean trainExists = true;
 
           while (trainExists) {
-            System.out.println("Please enter a train number:");
+            System.out.println(trainNumberAsk);
             trainNumber = scanner.nextInt();
 
             if (!station.trainExists(trainNumber)) {
@@ -56,7 +59,7 @@ public class UserInterface {
           scanner.nextLine();
           System.out.println("Please enter a line:");
           String line = scanner.nextLine();
-          System.out.println("Please enter a destination:");
+          System.out.println(destinationAsk);
           String destination3 = scanner.nextLine();
           destination3 = destination3.substring(0, 1).toUpperCase() + destination3.substring(1).toLowerCase();
           System.out.println("Please enter a departure time:");
@@ -77,7 +80,7 @@ public class UserInterface {
           System.out.println(station.changeDelayByTrainNumber(trainNumber2, LocalTime.parse(delay), station));
           break;
         case "6":
-          System.out.println("Please enter a train number:");
+          System.out.println(trainNumberAsk);
           int trainNumber4 = scanner.nextInt();
           scanner.nextLine();
           System.out.println("Please enter a track:");
@@ -85,7 +88,7 @@ public class UserInterface {
           System.out.println(station.changeTrackByTrainNumber(trainNumber4, track2));
           break;
         case "7":
-          System.out.println("Please enter a train number:");
+          System.out.println(trainNumberAsk);
           int trainNumber3 = scanner.nextInt();
           scanner.nextLine();
           TrainDeparture train = station.getTrainDepartureByTrainNumber(trainNumber3);
@@ -154,7 +157,7 @@ public class UserInterface {
 
   public void init(){
     this.station = new Station();
-    this.stringManager = new StringManager();
+    this.stringManager = new StringManager(station);
     TrainDeparture trainDeparture = new TrainDeparture("1", 1, "L1", "Oslo", LocalTime.of(5, 20), station);
     station.addTrainDeparture(trainDeparture);
     TrainDeparture trainDeparture2 = new TrainDeparture("2", 2, "L2", "Trondheim", LocalTime.of(5, 40), station);
