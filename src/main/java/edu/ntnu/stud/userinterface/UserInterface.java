@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class UserInterface {
 
   private Station station;
+  private StringManager stringManager;
 
   public void start(){
 
@@ -16,23 +17,12 @@ public class UserInterface {
 
     boolean running = true;
     while (running) {
-      System.out.println("-------------------------------------------");
-      System.out.println("1: Print all upcoming departures");
-      System.out.println("2: Print all upcoming departures to a given destination");
-      System.out.println("3: Print the next departure to a given destination");
-      System.out.println("4: Add a new train departure");
-      System.out.println("5: Set delay for a train departure");
-      System.out.println("6: Set track for a train departure");
-      System.out.println("7: Get train by train number");
-      System.out.println("8: Remove train by train number");
-      System.out.println("9: Set the clock");
-      System.out.println("10: Exit");
-      System.out.println("Please enter a number between 1 and 10:");
+      System.out.println(stringManager.options());
       String input = scanner.nextLine();
 
       switch (input) {
         case "1":
-          printAllDepartures();
+          System.out.println(stringManager.getAllDepartures(station));
           break;
         case "2":
           System.out.println("Please enter a destination:");
@@ -162,25 +152,9 @@ public class UserInterface {
     }
   }
 
-  private void printAllDepartures() {
-    System.out.println("Here is a list of all the trains that are yet to depart:");
-    System.out.println("Train number\tLine\tDestination\t\t\tDeparture time\tTrack");
-    Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
-    while (iterator.hasNext()) { // TODO: Er dette duplisert kode??? (printAllDeparturesToDestination)
-      TrainDeparture trainDeparture = iterator.next();
-      String formattedLine = String.format("%-15s%-5s%-20s%-15s%-10s",
-          trainDeparture.getTrainNumber(),
-          trainDeparture.getLine(),
-          trainDeparture.getDestination(),
-          trainDeparture.getDepartureTime(),
-          (trainDeparture.getTrack() == -1) ? "-" : String.valueOf(trainDeparture.getTrack())
-      );
-      System.out.println(formattedLine);
-    }
-  }
-
   public void init(){
     this.station = new Station();
+    this.stringManager = new StringManager();
     TrainDeparture trainDeparture = new TrainDeparture("1", 1, "L1", "Oslo", LocalTime.of(5, 20), station);
     station.addTrainDeparture(trainDeparture);
     TrainDeparture trainDeparture2 = new TrainDeparture("2", 2, "L2", "Trondheim", LocalTime.of(5, 40), station);
