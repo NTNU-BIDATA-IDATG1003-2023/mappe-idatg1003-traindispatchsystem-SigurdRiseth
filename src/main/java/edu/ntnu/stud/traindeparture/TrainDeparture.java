@@ -112,9 +112,11 @@ public class TrainDeparture {
    * @param delay delay to be set
    */
   public void setDelay(LocalTime delay, Station station) {
+    // TODO: delay burde kanskje ikke være 00:00 om man får inn null?
+    // TODO: Kan man endre delay slik at reel deparutre time blir før klokken?
     if (delay != null) {
-      if (this.departureTime.getHour() + delay.getHour()
-          + (this.departureTime.getMinute() + delay.getMinute()) / 60 > 23) {
+      if ((this.departureTime.getHour() + delay.getHour()) * 60
+          + this.departureTime.getMinute() + delay.getMinute() >= 1440) {
         station.removeTrainDepartureByTrainNumber(this.trainNumber);
       } else {
         this.delay = delay;
