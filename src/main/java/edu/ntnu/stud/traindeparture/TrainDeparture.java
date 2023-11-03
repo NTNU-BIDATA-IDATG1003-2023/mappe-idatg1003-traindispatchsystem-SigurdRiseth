@@ -21,6 +21,7 @@ public class TrainDeparture {
   private String destination;
   private LocalTime departureTime; // use a Clock class to store departureTime and delay.
   private LocalTime delay;
+  private Station station;
 
   /**
    * Constructor that sets all parameters of the class to the given parameter
@@ -34,11 +35,12 @@ public class TrainDeparture {
    */
   public TrainDeparture(String track, int trainNumber, String line, String destination,
       LocalTime departureTime, Station station) {
+    this.station = station;
     this.setTrack(track);
     this.setTrainNumber(trainNumber, station);
     this.setLine(line);
     this.setDestination(destination);
-    this.setDepartureTime(departureTime, station);
+    this.setDepartureTime(departureTime);
     this.delay = LocalTime.of(0, 0);
   }
 
@@ -98,7 +100,7 @@ public class TrainDeparture {
    *
    * @param departureTime departure time to be set
    */
-  public void setDepartureTime(LocalTime departureTime, Station station) {
+  public void setDepartureTime(LocalTime departureTime) {
     if (departureTime.isAfter(station.getClock())) {
       this.departureTime = departureTime;
     }
@@ -111,7 +113,7 @@ public class TrainDeparture {
    *
    * @param delay delay to be set
    */
-  public void setDelay(LocalTime delay, Station station) {
+  public void setDelay(LocalTime delay) {
     // TODO: delay burde kanskje ikke være 00:00 om man får inn null?
     // TODO: Kan man endre delay slik at reel deparutre time blir før klokken?
     if (delay != null) {

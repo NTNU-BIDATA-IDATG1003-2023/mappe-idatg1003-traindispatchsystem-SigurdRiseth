@@ -109,7 +109,7 @@ class TrainDepartureTest {
    */
   @Test
   void setDepartureTimeValid() {
-    trainDeparture1.setDepartureTime(LocalTime.of(5, 40), station);
+    trainDeparture1.setDepartureTime(LocalTime.of(5, 40));
     assertEquals(LocalTime.of(5, 40), trainDeparture1.getDepartureTime(), "Departure time should be 05:40");
   }
 
@@ -120,7 +120,7 @@ class TrainDepartureTest {
   @Test
   void setDepartureTimeBeforeCurrentTime() {
     station.setClock("05:00");
-    trainDeparture1.setDepartureTime(LocalTime.of(4, 40), station);
+    trainDeparture1.setDepartureTime(LocalTime.of(4, 40));
     assertEquals(LocalTime.of(5, 20), trainDeparture1.getDepartureTime(), "Departure time should be unchanged. 05:20");
   }
 
@@ -130,7 +130,7 @@ class TrainDepartureTest {
    */
   @Test
   void setDelayValid() {
-    trainDeparture1.setDelay(LocalTime.of(0, 20), station);
+    trainDeparture1.setDelay(LocalTime.of(0, 20));
     assertEquals(LocalTime.of(0, 20), trainDeparture1.getDelay(), "Delay should be 00:20");
   }
 
@@ -140,7 +140,7 @@ class TrainDepartureTest {
    */
   @Test
   void setDelayNull() {
-    trainDeparture1.setDelay(null, station);
+    trainDeparture1.setDelay(null);
     assertEquals(LocalTime.of(0,0), trainDeparture1.getDelay(), "Delay should be 00:00");
   }
 
@@ -150,8 +150,8 @@ class TrainDepartureTest {
    */
   @Test
   void setDelayOverMidnight() {
-    trainDeparture1.setDepartureTime(LocalTime.of(23, 0), station);
-    trainDeparture1.setDelay(LocalTime.of(1, 20), station);
+    trainDeparture1.setDepartureTime(LocalTime.of(23, 0));
+    trainDeparture1.setDelay(LocalTime.of(1, 20));
     assertEquals(false, station.trainExists(trainDeparture1.getTrainNumber()), "Train should be removed from station");
   }
 

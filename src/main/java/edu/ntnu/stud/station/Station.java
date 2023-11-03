@@ -126,9 +126,9 @@ public class Station {
    * @param delay
    * @return String
    */
-  public String changeDelayByTrainNumber(int trainNumber, LocalTime delay, Station station) {
+  public String changeDelayByTrainNumber(int trainNumber, LocalTime delay) {
     if (trainExists(trainNumber)) {
-      trainDepartures.get(trainNumber).setDelay(delay, station);
+      trainDepartures.get(trainNumber).setDelay(delay);
       //TODO: bruk parse() for å få LocalTime fra String på formatet "HH:MM"
       return "Delay changed.";
     } else {

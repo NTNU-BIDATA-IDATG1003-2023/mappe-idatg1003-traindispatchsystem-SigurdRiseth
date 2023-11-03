@@ -83,7 +83,7 @@ public class UserInterface {
             System.out.println("Please try again and enter a valid time.");
             break;
           }
-          System.out.println(station.changeDelayByTrainNumber(trainNumber2, LocalTime.parse(delay), station));
+          System.out.println(station.changeDelayByTrainNumber(trainNumber2, LocalTime.parse(delay)));
           break;
         case "6":
           System.out.println(trainNumberAsk);
@@ -174,7 +174,7 @@ public class UserInterface {
     station.addTrainDeparture(trainDeparture4);
     TrainDeparture trainDeparture5 = new TrainDeparture("5", 5, "L5", "Kristiansand", LocalTime.of(5, 0), station);
     station.addTrainDeparture(trainDeparture5);
-    trainDeparture2.setDelay(LocalTime.of(0, 20), station);
+    trainDeparture2.setDelay(LocalTime.of(0, 20));
     TrainDeparture trainDeparture6 = new TrainDeparture("3", 6, "L2", "Trondheim", LocalTime.of(4, 20), station);
     station.addTrainDeparture(trainDeparture6);
 
