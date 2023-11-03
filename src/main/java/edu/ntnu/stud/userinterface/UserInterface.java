@@ -35,11 +35,7 @@ public class UserInterface {
         case "3":
           System.out.println(destinationAsk);
           String destination2 = scanner.nextLine();
-          System.out.println(
-              "The next train to " + station.getTrainDepartureByDestination(destination2).getDestination()
-                  + " departs at " + station.getTrainDepartureByDestination(destination2)
-                  .getDepartureTime() + " from track " + station.getTrainDepartureByDestination(
-                  destination2).getTrack());
+          System.out.println(stringManager.getNextDepartureToDestination(destination2));
           break;
         case "4":
           int trainNumber = -1;

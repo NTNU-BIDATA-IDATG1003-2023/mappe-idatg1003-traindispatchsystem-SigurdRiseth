@@ -4,14 +4,25 @@ import edu.ntnu.stud.station.Station;
 import edu.ntnu.stud.traindeparture.TrainDeparture;
 import java.util.Iterator;
 
+/**
+ * Class for managing all the methods creating strings used in the UI.
+ */
 public class StringManager {
 
   private Station station;
 
+  /**
+   * Constructor that sets the station.
+   * @param station The station to be set
+   */
   public StringManager(Station station) {
     this.station = station;
   }
 
+  /**
+   * Returns a String of the menu options.
+   * @return String
+   */
   public String options() {
     String[] menuStrings = {
         "-------------------------------------------",
@@ -31,6 +42,10 @@ public class StringManager {
     return String.join("\n", menuStrings);
   }
 
+  /**
+   * Returns a String of all departures yet to depart.
+   * @return String
+   */
   public String getAllDepartures() {
     StringBuilder result = new StringBuilder();
     result.append("Here is a list of all the trains that are yet to depart:\n");
@@ -52,8 +67,17 @@ public class StringManager {
     return String.valueOf(result);
   }
 
+  /**
+   * Return all departures to a given destination.
+   * The destination can be given in any capitalisation.
+   * If no departures are found, a message is returned.
+   *
+   * @param destination
+   * @return String
+   */
   public String printAllDeparturesToDestination(String destination) {
-    destination = destination.substring(0, 1).toUpperCase() + destination.substring(1).toLowerCase(); // Make it so it doesn't matter if the user types "oslo" or "Oslo"
+    destination = destination.substring(0, 1).toUpperCase()
+        + destination.substring(1).toLowerCase();
     Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
     StringBuilder result = new StringBuilder();
     boolean foundDeparture = false;
@@ -78,6 +102,20 @@ public class StringManager {
       return "No trains to " + destination + " found.";
     }
     return String.valueOf(result);
+  }
+
+  public String getNextDepartureToDestination(String destination2) { // TODO: Dumt å kalle metoden flere ganger istedet for å lagre trainnumber og heller kalle get funksjonen til det spesifikke toget?
+    destination2 = destination2.substring(0, 1).toUpperCase() + destination2.substring(1).toLowerCase();
+    try {
+      return (
+          "The next train to " + station.getTrainDepartureByDestination(destination2)
+              .getDestination()
+              + " departs at " + station.getTrainDepartureByDestination(destination2)
+              .getDepartureTime() + " from track " + station.getTrainDepartureByDestination(
+              destination2).getTrack());
+    } catch (Exception e) {
+      return "No train to " + destination2 + " was found.";
+    }
   }
 
 }
