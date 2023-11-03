@@ -30,7 +30,7 @@ public class UserInterface {
         case "2":
           System.out.println(destinationAsk);
           String destination1 = scanner.nextLine();
-          printAllDeparturesToDestination(destination1);
+          System.out.println(stringManager.printAllDeparturesToDestination(destination1));
           break;
         case "3":
           System.out.println(destinationAsk);
@@ -128,35 +128,6 @@ public class UserInterface {
         default:
           System.out.println("Please enter a valid number. The number should be between 1 and 10");
           break;
-      }
-    }
-  }
-
-  private void printAllDeparturesToDestination(String destination) {
-    destination = destination.substring(0, 1).toUpperCase() + destination.substring(1).toLowerCase(); // Make it so it doesn't matter if the user types "oslo" or "Oslo"
-    Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
-    boolean firstRun = true;
-    while (iterator.hasNext()) {
-      TrainDeparture trainDeparture = iterator.next();
-      if (trainDeparture.getDestination().equals(destination)) {
-        if (firstRun) {
-          System.out.println("Here is a list of all the trains that are yet to depart to " + destination
-              + ":");
-          System.out.println("Train number\tLine\tDestination\t\t\tDeparture time\tTrack");
-          firstRun = false;
-        }
-        String formattedLine = String.format("%-15s%-5s%-20s%-15s%-10s",
-            trainDeparture.getTrainNumber(),
-            trainDeparture.getLine(),
-            trainDeparture.getDestination(),
-            trainDeparture.getDepartureTime(),
-            (trainDeparture.getTrack() == -1) ? "-" : String.valueOf(trainDeparture.getTrack())
-        );
-
-        if (formattedLine.isEmpty()) { // TODO: This does not work
-          formattedLine = "No trains to " + destination + " found.";
-        }
-        System.out.println(formattedLine);
       }
     }
   }

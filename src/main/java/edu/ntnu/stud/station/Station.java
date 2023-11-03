@@ -155,7 +155,7 @@ public class Station {
    * @return
    */
   public TrainDeparture getTrainDepartureByDestination(String destination) {
-    Iterator<TrainDeparture> iterator = this.trainDeparturesSorted.iterator();
+    Iterator<TrainDeparture> iterator = getTrainDeparturesSorted().iterator();
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
       if (trainDeparture.getDestination().equals(destination)) {
