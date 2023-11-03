@@ -3,7 +3,6 @@ package edu.ntnu.stud.userinterface;
 import edu.ntnu.stud.station.Station;
 import edu.ntnu.stud.traindeparture.TrainDeparture;
 import java.time.LocalTime;
-import java.util.Iterator;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -39,13 +38,18 @@ public class UserInterface {
           break;
         case "4":
           int trainNumber = -1;
-          boolean trainExists = true;
+          boolean trainExists = true; // TODO: bad practise å gjenbruke boolean på neste while?
+          boolean validTime = false;
+          String departureTime = null;
 
           while (trainExists) {
             System.out.println(trainNumberAsk);
             trainNumber = scanner.nextInt();
 
-            if (!station.trainExists(trainNumber)) {
+            if (trainNumber < 1) {
+              System.out.println("The train number must be a whole number above 0. Please try again.");
+            }
+            else if (!station.trainExists(trainNumber)) {
               trainExists = false;
             } else {
               System.out.println("Train number already exists. Please try again.");
@@ -58,8 +62,16 @@ public class UserInterface {
           System.out.println(destinationAsk);
           String destination3 = scanner.nextLine();
           destination3 = destination3.substring(0, 1).toUpperCase() + destination3.substring(1).toLowerCase();
-          System.out.println("Please enter a departure time:");
-          String departureTime = scanner.nextLine();
+          while (!validTime) {
+            System.out.println("Please enter a departure time (hh:mm):");
+            departureTime = scanner.nextLine();
+            try {
+              LocalTime.parse(departureTime);
+              validTime = true;
+            } catch (Exception e) {
+              System.out.println("Please try again and enter a valid time.");
+            }
+          }
           System.out.println("Please enter a track (type \"none\" if you do not wish to assign one):");
           String track = scanner.nextLine();
           TrainDeparture trainDeparture = new TrainDeparture(track, trainNumber, line, destination3,

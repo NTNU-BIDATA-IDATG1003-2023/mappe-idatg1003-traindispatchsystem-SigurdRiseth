@@ -21,7 +21,7 @@ public class TrainDeparture {
   private String destination;
   private LocalTime departureTime; // use a Clock class to store departureTime and delay.
   private LocalTime delay;
-  private Station station;
+  private final Station station;
 
   /**
    * Constructor that sets all parameters of the class to the given parameter
