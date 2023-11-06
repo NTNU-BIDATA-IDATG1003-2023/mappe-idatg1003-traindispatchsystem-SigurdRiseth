@@ -13,6 +13,7 @@ public class StringManager {
 
   /**
    * Constructor that sets the station.
+   *
    * @param station The station to be set
    */
   public StringManager(Station station) {
@@ -21,6 +22,7 @@ public class StringManager {
 
   /**
    * Returns a String of the menu options.
+   *
    * @return String
    */
   public String options() {
@@ -43,6 +45,7 @@ public class StringManager {
 
   /**
    * Returns a String of all departures yet to depart.
+   *
    * @return String
    */
   public String getAllDepartures() {
@@ -67,9 +70,8 @@ public class StringManager {
   }
 
   /**
-   * Return all departures to a given destination.
-   * The destination can be given in any capitalisation.
-   * If no departures are found, a message is returned.
+   * Return all departures to a given destination. The destination can be given in any
+   * capitalisation. If no departures are found, a message is returned.
    *
    * @param destination
    * @return String
@@ -104,15 +106,16 @@ public class StringManager {
   }
 
   /**
-   * Returns the next departure to a given destination.
-   * The destination can be given in any capitalisation.
-   * If no departures are found, a message is returned.
+   * Returns the next departure to a given destination. The destination can be given in any
+   * capitalisation. If no departures are found, a message is returned.
    *
    * @param destination2
    * @return String
    */
-  public String getNextDepartureToDestination(String destination2) { // TODO: Dumt å kalle metoden flere ganger istedet for å lagre trainnumber og heller kalle get funksjonen til det spesifikke toget?
-    destination2 = destination2.substring(0, 1).toUpperCase() + destination2.substring(1).toLowerCase();
+  public String getNextDepartureToDestination(
+      String destination2) { // TODO: Dumt å kalle metoden flere ganger istedet for å lagre trainnumber og heller kalle get funksjonen til det spesifikke toget?
+    destination2 =
+        destination2.substring(0, 1).toUpperCase() + destination2.substring(1).toLowerCase();
     try {
       return (
           "The next train to " + station.getTrainDepartureByDestination(destination2)

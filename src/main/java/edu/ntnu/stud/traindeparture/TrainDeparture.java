@@ -24,8 +24,8 @@ public class TrainDeparture {
   private final Station station;
 
   /**
-   * Constructor that sets all parameters of the class to the given parameter
-   * except delay which is default 00:00.
+   * Constructor that sets all parameters of the class to the given parameter except delay which is
+   * default 00:00.
    *
    * @param track         track the train will depart from
    * @param trainNumber   unique train ID
@@ -45,8 +45,7 @@ public class TrainDeparture {
   }
 
   /**
-   * Sets the track.
-   * If the track is under 1 the value is set to -1.
+   * Sets the track. If the track is under 1 the value is set to -1.
    */
   public void setTrack(String track) {
     try {
@@ -55,8 +54,7 @@ public class TrainDeparture {
       } else {
         this.track = -1;
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       this.track = -1;
     }
   }
@@ -75,8 +73,7 @@ public class TrainDeparture {
   }
 
   /**
-   * Sets the line.
-   * Can also be set to null.
+   * Sets the line. Can also be set to null.
    *
    * @param line line to be set
    */
@@ -85,8 +82,7 @@ public class TrainDeparture {
   }
 
   /**
-   * Sets the destination.
-   * If destination is null, it will be set to "Invalid destination".
+   * Sets the destination. If destination is null, it will be set to "Invalid destination".
    *
    * @param destination destination to be set
    */
@@ -95,8 +91,7 @@ public class TrainDeparture {
   }
 
   /**
-   * Sets the departure time.
-   * Can only be set to a time after the current time.
+   * Sets the departure time. Can only be set to a time after the current time.
    *
    * @param departureTime departure time to be set
    */
@@ -107,9 +102,8 @@ public class TrainDeparture {
   }
 
   /**
-   * Sets the delay.
-   * If the delay is null the delay is set to 00:00.
-   * Removed from station if delayed over midnight
+   * Sets the delay. If the delay is null the delay is set to 00:00. Removed from station if delayed
+   * over midnight
    *
    * @param delay delay to be set
    */

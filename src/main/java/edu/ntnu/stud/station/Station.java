@@ -27,7 +27,6 @@ public class Station {
    * Sets the time.
    *
    * @param time The time to be set
-   *
    */
   public String setClock(String time) {
     try {
@@ -80,8 +79,8 @@ public class Station {
   }
 
   /**
-   * Sorts the trainDepartures HashMap by departure time and stores the sorted
-   * list in trainDeparturesSorted.
+   * Sorts the trainDepartures HashMap by departure time and stores the sorted list in
+   * trainDeparturesSorted.
    */
   public void sortByDepartureTime() { // TODO: filter out departures that have already departed here?
     this.trainDeparturesSorted = this.trainDepartures
@@ -102,8 +101,8 @@ public class Station {
   }
 
   /**
-   * Changes the track of a train with the given train number.
-   * Returns a string indicating whether the track was changed or not.
+   * Changes the track of a train with the given train number. Returns a string indicating whether
+   * the track was changed or not.
    *
    * @param trainNumber
    * @param track
@@ -119,8 +118,8 @@ public class Station {
   }
 
   /**
-   * Changes the delay of a train with the given train number.
-   * Returns a string indicating whether the delay was changed or not.
+   * Changes the delay of a train with the given train number. Returns a string indicating whether
+   * the delay was changed or not.
    *
    * @param trainNumber
    * @param delay
@@ -138,11 +137,12 @@ public class Station {
 
   /**
    * Returns a TrainDeparture with the given train number.
+   *
    * @param trainNumber
    * @return
    */
   public TrainDeparture getTrainDepartureByTrainNumber(int trainNumber) {
-    if (trainExists(trainNumber)){
+    if (trainExists(trainNumber)) {
       return trainDepartures.get(trainNumber);
     } else {
       return null;
@@ -151,6 +151,7 @@ public class Station {
 
   /**
    * Returns the first train departure with the provided destination.
+   *
    * @param destination
    * @return
    */
@@ -167,6 +168,7 @@ public class Station {
 
   /**
    * Removes a train departure with the given train number from the trainDepartures HashMap.
+   *
    * @param trainNumber
    */
   public void removeTrainDepartureByTrainNumber(int trainNumber) {

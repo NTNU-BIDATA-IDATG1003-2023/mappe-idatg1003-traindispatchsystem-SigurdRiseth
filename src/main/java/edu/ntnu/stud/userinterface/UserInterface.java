@@ -10,7 +10,7 @@ public class UserInterface {
   private Station station;
   private StringManager stringManager;
 
-  public void start(){
+  public void start() {
 
     Scanner scanner = new Scanner(System.in);
 
@@ -47,9 +47,9 @@ public class UserInterface {
             trainNumber = scanner.nextInt();
 
             if (trainNumber < 1) {
-              System.out.println("The train number must be a whole number above 0. Please try again.");
-            }
-            else if (!station.trainExists(trainNumber)) {
+              System.out.println(
+                  "The train number must be a whole number above 0. Please try again.");
+            } else if (!station.trainExists(trainNumber)) {
               trainExists = false;
             } else {
               System.out.println("Train number already exists. Please try again.");
@@ -61,7 +61,8 @@ public class UserInterface {
           String line = scanner.nextLine();
           System.out.println(destinationAsk);
           String destination3 = scanner.nextLine();
-          destination3 = destination3.substring(0, 1).toUpperCase() + destination3.substring(1).toLowerCase();
+          destination3 =
+              destination3.substring(0, 1).toUpperCase() + destination3.substring(1).toLowerCase();
           while (!validTime) {
             System.out.println("Please enter a departure time (hh:mm):");
             departureTime = scanner.nextLine();
@@ -72,7 +73,8 @@ public class UserInterface {
               System.out.println("Please try again and enter a valid time.");
             }
           }
-          System.out.println("Please enter a track (type \"none\" if you do not wish to assign one):");
+          System.out.println(
+              "Please enter a track (type \"none\" if you do not wish to assign one):");
           String track = scanner.nextLine();
           TrainDeparture trainDeparture = new TrainDeparture(track, trainNumber, line, destination3,
               LocalTime.parse(departureTime), station);
@@ -91,7 +93,8 @@ public class UserInterface {
             System.out.println("Please try again and enter a valid time.");
             break;
           }
-          System.out.println(station.changeDelayByTrainNumber(trainNumber2, LocalTime.parse(delay)));
+          System.out.println(
+              station.changeDelayByTrainNumber(trainNumber2, LocalTime.parse(delay)));
           break;
         case "6":
           System.out.println(trainNumberAsk);
@@ -140,21 +143,27 @@ public class UserInterface {
     }
   }
 
-  public void init(){
+  public void init() {
     this.station = new Station();
     this.stringManager = new StringManager(station);
-    TrainDeparture trainDeparture = new TrainDeparture("1", 1, "L1", "Oslo", LocalTime.of(5, 20), station);
+    TrainDeparture trainDeparture = new TrainDeparture("1", 1, "L1", "Oslo", LocalTime.of(5, 20),
+        station);
     station.addTrainDeparture(trainDeparture);
-    TrainDeparture trainDeparture2 = new TrainDeparture("2", 2, "L2", "Trondheim", LocalTime.of(5, 40), station);
+    TrainDeparture trainDeparture2 = new TrainDeparture("2", 2, "L2", "Trondheim",
+        LocalTime.of(5, 40), station);
     station.addTrainDeparture(trainDeparture2);
-    TrainDeparture trainDeparture3 = new TrainDeparture("3", 3, "L3", "Bergen", LocalTime.of(4, 0), station);
+    TrainDeparture trainDeparture3 = new TrainDeparture("3", 3, "L3", "Bergen", LocalTime.of(4, 0),
+        station);
     station.addTrainDeparture(trainDeparture3);
-    TrainDeparture trainDeparture4 = new TrainDeparture("4", 4, "L4", "Stavanger", LocalTime.of(3, 17), station);
+    TrainDeparture trainDeparture4 = new TrainDeparture("4", 4, "L4", "Stavanger",
+        LocalTime.of(3, 17), station);
     station.addTrainDeparture(trainDeparture4);
-    TrainDeparture trainDeparture5 = new TrainDeparture("5", 5, "L5", "Kristiansand", LocalTime.of(5, 0), station);
+    TrainDeparture trainDeparture5 = new TrainDeparture("5", 5, "L5", "Kristiansand",
+        LocalTime.of(5, 0), station);
     station.addTrainDeparture(trainDeparture5);
     trainDeparture2.setDelay(LocalTime.of(0, 20));
-    TrainDeparture trainDeparture6 = new TrainDeparture("3", 6, "L2", "Trondheim", LocalTime.of(4, 20), station);
+    TrainDeparture trainDeparture6 = new TrainDeparture("3", 6, "L2", "Trondheim",
+        LocalTime.of(4, 20), station);
     station.addTrainDeparture(trainDeparture6);
 
     System.out.println("-------------------------------------------");
