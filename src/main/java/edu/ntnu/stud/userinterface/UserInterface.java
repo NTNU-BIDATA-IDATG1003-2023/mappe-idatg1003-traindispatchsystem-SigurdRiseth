@@ -60,8 +60,8 @@ public class UserInterface {
           String line = scanner.nextLine();
           System.out.println(destinationAsk);
           String destination3 = scanner.nextLine();
-          destination3 =
-              destination3.substring(0, 1).toUpperCase() + destination3.substring(1).toLowerCase();
+          destination3 = destination3.substring(0, 1).toUpperCase()
+              + destination3.substring(1).toLowerCase();
           while (!flag) {
             System.out.println("Please enter a departure time (hh:mm):");
             departureTime = scanner.nextLine();
@@ -147,9 +147,15 @@ public class UserInterface {
   public void init() {
     this.station = new Station();
     this.stringManager = new StringManager(station);
-    TrainDeparture trainDeparture = new TrainDeparture("1", 1, "L1", "Oslo", LocalTime.of(5, 20),
+    createTrains();
+    welcomeMessage();
+
+  }
+
+  private void createTrains() {
+    TrainDeparture trainDeparture1 = new TrainDeparture("1", 1, "L1", "Oslo", LocalTime.of(5, 20),
         station);
-    station.addTrainDeparture(trainDeparture);
+    station.addTrainDeparture(trainDeparture1);
     TrainDeparture trainDeparture2 = new TrainDeparture("2", 2, "L2", "Trondheim",
         LocalTime.of(5, 40), station);
     station.addTrainDeparture(trainDeparture2);
@@ -166,11 +172,12 @@ public class UserInterface {
     TrainDeparture trainDeparture6 = new TrainDeparture("3", 6, "L2", "Trondheim",
         LocalTime.of(4, 20), station);
     station.addTrainDeparture(trainDeparture6);
+  }
 
+  private void welcomeMessage() {
     System.out.println("-------------------------------------------");
     System.out.println("Welcome to the train dispatch app!");
     System.out.println("The time is now " + station.getClock());
-
   }
 
 }
