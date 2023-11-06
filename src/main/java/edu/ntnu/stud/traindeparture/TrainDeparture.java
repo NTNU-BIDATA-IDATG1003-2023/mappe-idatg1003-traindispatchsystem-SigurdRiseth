@@ -37,7 +37,7 @@ public class TrainDeparture {
       LocalTime departureTime, Station station) {
     this.station = station;
     this.setTrack(track);
-    this.setTrainNumber(trainNumber, station);
+    this.setTrainNumber(trainNumber);
     this.setLine(line);
     this.setDestination(destination);
     this.setDepartureTime(departureTime);
@@ -66,8 +66,8 @@ public class TrainDeparture {
    * <p>Also checks if the trainNumber is above 0 and not already stored in Stations HashMap.
    * If a train already exists with that number or it is under 1 the value is set to -1.</p>
    */
-  public void setTrainNumber(int trainNumber, Station station) {
-    if ((trainNumber > 0) && !station.trainExists(trainNumber)) {
+  public void setTrainNumber(int trainNumber) {
+    if ((trainNumber > 0) && !this.station.trainExists(trainNumber)) {
       this.trainNumber = trainNumber;
     } else {
       this.trainNumber = -1;

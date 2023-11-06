@@ -37,7 +37,7 @@ class TrainDepartureTest {
    */
   @Test
   void setTrainNumberValid() {
-    trainDeparture1.setTrainNumber(2, station);
+    trainDeparture1.setTrainNumber(2);
     assertEquals(2, trainDeparture1.getTrainNumber(), "Train number should be 2");
   }
 
@@ -47,7 +47,7 @@ class TrainDepartureTest {
    */
   @Test
   void setTrainNumberUnderOne() {
-    trainDeparture1.setTrainNumber(-2, station);
+    trainDeparture1.setTrainNumber(-2);
     assertEquals(-1, trainDeparture1.getTrainNumber(), "Train number should be -1");
   }
 
@@ -59,7 +59,7 @@ class TrainDepartureTest {
   void setTrainNumberAlreadyExists() {
     TrainDeparture trainDeparture2 = new TrainDeparture("2", 2, "L2", "Trondheim", LocalTime.of(5, 40), station);
     station.addTrainDeparture(trainDeparture2);
-    trainDeparture1.setTrainNumber(2, station);
+    trainDeparture1.setTrainNumber(2);
     assertEquals(-1, trainDeparture1.getTrainNumber(), "Train number should be -1");
   }
 

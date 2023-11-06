@@ -83,7 +83,7 @@ public class Station {
    * Sorts the trainDepartures HashMap by departure time and stores the sorted
    * list in trainDeparturesSorted.
    */
-  public void sortByDepartureTime() {
+  public void sortByDepartureTime() { // TODO: filter out departures that have already departed here?
     this.trainDeparturesSorted = this.trainDepartures
         .values()
         .stream()
