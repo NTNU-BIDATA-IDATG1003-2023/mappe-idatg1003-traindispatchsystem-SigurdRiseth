@@ -38,11 +38,10 @@ public class UserInterface {
           break;
         case "4":
           int trainNumber = -1;
-          boolean trainExists = true; // TODO: bad practise å gjenbruke boolean på neste while?
-          boolean validTime = false;
+          boolean flag = true;
           String departureTime = null;
 
-          while (trainExists) {
+          while (flag) {
             System.out.println(trainNumberAsk);
             trainNumber = scanner.nextInt();
 
@@ -50,7 +49,7 @@ public class UserInterface {
               System.out.println(
                   "The train number must be a whole number above 0. Please try again.");
             } else if (!station.trainExists(trainNumber)) {
-              trainExists = false;
+              flag = false;
             } else {
               System.out.println("Train number already exists. Please try again.");
             }
@@ -63,12 +62,12 @@ public class UserInterface {
           String destination3 = scanner.nextLine();
           destination3 =
               destination3.substring(0, 1).toUpperCase() + destination3.substring(1).toLowerCase();
-          while (!validTime) {
+          while (!flag) {
             System.out.println("Please enter a departure time (hh:mm):");
             departureTime = scanner.nextLine();
             try {
               LocalTime.parse(departureTime);
-              validTime = true;
+              flag = true;
             } catch (Exception e) {
               System.out.println("Please try again and enter a valid time.");
             }
@@ -81,6 +80,7 @@ public class UserInterface {
           station.addTrainDeparture(trainDeparture);
           System.out.println("Train departure has been added!");
           break;
+
         case "5":
           System.out.println("Please enter a train number:");
           int trainNumber2 = scanner.nextInt();
@@ -96,6 +96,7 @@ public class UserInterface {
           System.out.println(
               station.changeDelayByTrainNumber(trainNumber2, LocalTime.parse(delay)));
           break;
+
         case "6":
           System.out.println(trainNumberAsk);
           int trainNumber4 = scanner.nextInt();
