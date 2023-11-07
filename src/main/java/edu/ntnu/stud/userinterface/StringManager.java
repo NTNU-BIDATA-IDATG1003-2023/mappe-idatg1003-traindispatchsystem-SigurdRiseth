@@ -34,11 +34,12 @@ public class StringManager {
         "4: Add a new train departure",
         "5: Set delay for a train departure",
         "6: Set track for a train departure",
-        "7: Get train by train number",
-        "8: Remove train by train number",
-        "9: Set the clock",
-        "10: Exit",
-        "Please enter a number between 1 and 10:"
+        "7: Remove track for a train departure",
+        "8: Get train by train number",
+        "9: Remove train by train number",
+        "10: Set the clock",
+        "0: Exit",
+        "Please enter a number between 0 and 10:"
     );
   }
 

@@ -97,7 +97,7 @@ public class UserInterface {
               station.changeDelayByTrainNumber(trainNumber2, LocalTime.parse(delay)));
           break;
 
-        case "6":
+        case "6": // TODO: kan ikke være 0 eller negativ
           System.out.println(trainNumberAsk);
           int trainNumber4 = scanner.nextInt();
           scanner.nextLine();
@@ -106,6 +106,12 @@ public class UserInterface {
           System.out.println(station.changeTrackByTrainNumber(trainNumber4, track2));
           break;
         case "7":
+          System.out.println(trainNumberAsk);
+          int trainNumber6 = scanner.nextInt();
+          scanner.nextLine();
+          System.out.println(station.changeTrackByTrainNumber(trainNumber6, "-1"));
+          break;
+        case "8":
           System.out.println(trainNumberAsk);
           int trainNumber3 = scanner.nextInt();
           scanner.nextLine();
@@ -120,19 +126,19 @@ public class UserInterface {
             System.out.println("Train does not exist. Please try again.");
           }
           break;
-        case "8":
+        case "9":
           System.out.println("Please enter a train number:");
           int trainNumber5 = scanner.nextInt();
           scanner.nextLine();
           station.removeTrainDepartureByTrainNumber(trainNumber5);
           System.out.println("Train has been removed.");
           break;
-        case "9":
+        case "10":
           System.out.println("Please enter a time in the format hh:mm");
           String time = scanner.nextLine();
           System.out.println(station.setClock(time));
           break;
-        case "10":
+        case "0":
           running = false;
           System.out.println("Thank you for using the train dispatch app!");
           System.out.println("The application has now been terminated.");
