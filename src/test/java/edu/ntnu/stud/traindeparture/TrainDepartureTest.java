@@ -119,7 +119,7 @@ class TrainDepartureTest {
    */
   @Test
   void setDepartureTimeBeforeCurrentTime() {
-    station.setClock("05:00");
+    station.setClock(LocalTime.of(5, 0));
     trainDeparture1.setDepartureTime(LocalTime.of(4, 40));
     assertEquals(LocalTime.of(5, 20), trainDeparture1.getDepartureTime(), "Departure time should be unchanged. 05:20");
   }

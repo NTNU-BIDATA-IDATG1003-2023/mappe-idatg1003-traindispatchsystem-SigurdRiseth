@@ -41,7 +41,7 @@ public class UserInterface {
           System.out.println(stringManager.getNextDepartureToDestination(destination2));
           break;
         case "4":
-          int trainNumber = getTrainNumberInUse(scanner);
+          int trainNumber = getTrainNumberUnused(scanner);
 
           scanner.nextLine();
           System.out.println("Please enter a line:");
@@ -72,21 +72,9 @@ public class UserInterface {
           break;
 
         case "5":
-
           int trainNumber2 = getTrainNumberInUse(scanner);
-
-          String delay = null;
-          while (!departureTimeValid(delay)) {
-            System.out.println("Please enter a delay (hh:mm):");
-            delay = scanner.nextLine();
-            if (departureTimeValid(delay)) {
-              System.out.println(
-                  station.changeDelayByTrainNumber(trainNumber2, LocalTime.parse(delay)));
-              break;
-            } else {
-              System.out.println("Please try again and enter a valid time.");
-            }
-          }
+          LocalTime delay = getLocalTimeFromString(scanner);
+          System.out.println(station.changeDelayByTrainNumber(trainNumber2, delay));
           break;
 
         case "6": // TODO: kan ikke være 0 eller negativ
@@ -126,8 +114,7 @@ public class UserInterface {
           System.out.println("Train has been removed.");
           break;
         case "10":
-          System.out.println("Please enter a time in the format hh:mm");
-          String time = scanner.nextLine();
+          LocalTime time = getLocalTimeFromString(scanner);
           System.out.println(station.setClock(time));
           break;
         case "0":
@@ -145,10 +132,11 @@ public class UserInterface {
   private LocalTime getLocalTimeFromString(Scanner scanner) {
     LocalTime departureTime = null;
     while (departureTime == null) {
-      System.out.println("Please enter a departure time (hh:mm):");
+      System.out.println("Please enter time in format (hh:mm): ");
       String inputDepartureTime = scanner.nextLine();
       if (departureTimeValid(inputDepartureTime)) {
         departureTime = LocalTime.parse(inputDepartureTime);
+        return departureTime;
       } else {
         System.out.println("Please try again and enter a valid time.");
       }
@@ -157,6 +145,26 @@ public class UserInterface {
   }
 
   private int getTrainNumberInUse(Scanner scanner) {
+    int trainNumber = -1;
+
+    while (trainNumber < 1) {
+      System.out.println("Please enter a train number: ");
+      trainNumber = scanner.nextInt();
+      scanner.nextLine();
+
+      if (trainNumber < 1) {
+        System.out.println(
+            "The train number must be a whole number above 0. Please try again.");
+      } else if (!station.trainExists(trainNumber)) {
+        System.out.println("The train number does not exist. Please try again.");
+        trainNumber = -1;
+      }
+    }
+    return trainNumber;
+  }
+
+
+  private int getTrainNumberUnused(Scanner scanner) {
     int trainNumber = -1;
 
     while (trainNumber < 1) {
