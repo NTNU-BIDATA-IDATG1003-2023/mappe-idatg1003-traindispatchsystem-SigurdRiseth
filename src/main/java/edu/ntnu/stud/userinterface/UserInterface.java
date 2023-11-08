@@ -24,7 +24,9 @@ public class UserInterface {
 
       switch (input) { // TODO: endre navn på casene til private final String PRINT_ALL_UPCOMING_DEPARTURES = "1"; osv.
         // flytte de over til en egen pakke guiutility og klasse ConfigurationOptions og gjøre de static.
-        // kan da skrive "case configurationOptions.PRINT_ALL_UPCOMING_DEPARTURES:"
+        // kan da skrive "case ConfigurationOptions.PRINT_ALL_UPCOMING_DEPARTURES:"
+        // skriv og static final når du initialiserer den i UI så du slipper opprette objekt.
+        // kan også ha StringManager i samme pakke og gjøre det samme der. Hvor statiske strings blir lagret.
         case "1":
           System.out.println(stringManager.getAllDepartures());
           break;
@@ -40,20 +42,17 @@ public class UserInterface {
           break;
         case "4":
           int trainNumber = -1;
-          boolean flag = true;
-          String departureTime = null;
 
-          while (flag) {
+          while (trainNumber < 1) {
             System.out.println(trainNumberAsk);
             trainNumber = scanner.nextInt();
 
             if (trainNumber < 1) {
               System.out.println(
                   "The train number must be a whole number above 0. Please try again.");
-            } else if (!station.trainExists(trainNumber)) {
-              flag = false;
-            } else {
-              System.out.println("Train number already exists. Please try again.");
+            } else if (station.trainExists(trainNumber)) {
+              System.out.println("The train number is already in use. Please try again.");
+              trainNumber = -1;
             }
           }
 
@@ -64,6 +63,18 @@ public class UserInterface {
           String destination3 = scanner.nextLine();
           destination3 = destination3.substring(0, 1).toUpperCase()
               + destination3.substring(1).toLowerCase();
+
+          LocalTime departureTime = null;
+          while (departureTime == null) {
+            System.out.println("Please enter a departure time (hh:mm):");
+            String inputDepartureTime = scanner.nextLine();
+            if (departureTimeValid(inputDepartureTime)) {
+              departureTime = LocalTime.parse(inputDepartureTime);
+            } else {
+              System.out.println("Please try again and enter a valid time.");
+            }
+          }
+          /*
           while (!flag) { // TODO: Feil bruk av flag!
             System.out.println("Please enter a departure time (hh:mm):");
             departureTime = scanner.nextLine();
@@ -74,11 +85,11 @@ public class UserInterface {
               System.out.println("Please try again and enter a valid time.");
             }
           }
+          */
           System.out.println(
               "Please enter a track (type \"none\" if you do not wish to assign one):");
           String track = scanner.nextLine();
-          station.addTrainDeparture(new TrainDeparture(track, trainNumber, line, destination3,
-              LocalTime.parse(departureTime), station));
+          station.addTrainDeparture(new TrainDeparture(track, trainNumber, line, destination3, departureTime, station));
           System.out.println("Train departure has been added!");
           break;
 
@@ -148,6 +159,15 @@ public class UserInterface {
           System.out.println("Please enter a valid number. The number should be between 0 and 10");
           break;
       }
+    }
+  }
+
+  private boolean departureTimeValid(String inputDepartureTime) {
+    try {
+      LocalTime.parse(inputDepartureTime);
+      return true;
+    } catch (Exception e) {
+      return false;
     }
   }
 
