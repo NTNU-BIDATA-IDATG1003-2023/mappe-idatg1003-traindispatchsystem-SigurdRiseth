@@ -9,12 +9,13 @@ public class UserInterface {
 
   private Station station;
   private StringManager stringManager;
+  private final String trainNumberAsk = "Please enter a train number: ";
+
 
   public void start() {
 
     Scanner scanner = new Scanner(System.in);
 
-    final String trainNumberAsk = "Please enter a train number: ";
     final String destinationAsk = "Please enter a destination: ";
 
     boolean running = true;
@@ -52,18 +53,7 @@ public class UserInterface {
               + destination3.substring(1).toLowerCase();
 
           LocalTime departureTime = getLocalTimeFromString(scanner);
-          /*
-          while (!flag) { // TODO: Feil bruk av flag!
-            System.out.println("Please enter a departure time (hh:mm):");
-            departureTime = scanner.nextLine();
-            try {
-              LocalTime.parse(departureTime);
-              flag = true;
-            } catch (Exception e) {
-              System.out.println("Please try again and enter a valid time.");
-            }
-          }
-          */
+
           System.out.println(
               "Please enter a track (type \"none\" if you do not wish to assign one):");
           String track = scanner.nextLine();
@@ -148,7 +138,7 @@ public class UserInterface {
     int trainNumber = -1;
 
     while (trainNumber < 1) {
-      System.out.println("Please enter a train number: ");
+      System.out.println(trainNumberAsk);
       trainNumber = scanner.nextInt();
       scanner.nextLine();
 
@@ -168,7 +158,7 @@ public class UserInterface {
     int trainNumber = -1;
 
     while (trainNumber < 1) {
-      System.out.println("Please enter a train number: ");
+      System.out.println(trainNumberAsk);
       trainNumber = scanner.nextInt();
 
       if (trainNumber < 1) {

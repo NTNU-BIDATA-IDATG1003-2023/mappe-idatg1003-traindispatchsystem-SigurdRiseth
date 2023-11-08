@@ -51,6 +51,7 @@ public class StringManager {
    */
   public String getAllDepartures() {
     StringBuilder result = new StringBuilder();
+    result.append("The time is now " + station.getClock() + "\n");
     result.append("Here is a list of all the trains that are yet to depart:\n");
     result.append("Train number\tLine\tDestination\t\t\tDeparture time\tTrack\n");
 
@@ -83,6 +84,7 @@ public class StringManager {
     Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
     StringBuilder result = new StringBuilder();
     boolean foundDeparture = false;
+    result.append("The time is now " + station.getClock() + "\n");
     result.append("Here is a list of all the trains that are yet to depart to " + destination
         + ":\n");
     result.append("Train number\tLine\tDestination\t\t\tDeparture time\tTrack\n");
