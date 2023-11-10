@@ -64,7 +64,7 @@ public class Station {
   public void createTrainDeparture(String track, int trainNumber, String line, String destination,
       LocalTime departureTime, Station station) {
     TrainDeparture trainDeparture = new TrainDeparture(track, trainNumber, line, destination,
-        departureTime, station);
+        departureTime);
     this.addTrainDeparture(trainDeparture);
   }
 

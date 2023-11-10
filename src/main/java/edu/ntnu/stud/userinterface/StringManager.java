@@ -7,17 +7,17 @@ import java.util.Iterator;
 /**
  * Class for managing all the methods creating strings used in the UI.
  */
-public class StringManager {
+public class StringManager { // TODO: kan metoder være static og la være å opprette denne klassen?
 
-  private final Station station;
+  private final Station station; //TODO: Riktig å kalle denne for final? den kan endres ved å legge til/endre togavganger.
 
   /**
    * Constructor that sets the station.
    *
    * @param station The station to be set
    */
-  public StringManager(Station station) {
-    this.station = station;
+  public StringManager() {
+    this.station = UserInterface.getStation();
   }
 
   /**

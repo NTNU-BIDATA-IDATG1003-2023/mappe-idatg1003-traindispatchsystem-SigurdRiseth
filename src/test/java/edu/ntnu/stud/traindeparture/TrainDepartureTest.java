@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class TrainDepartureTest {
 
   private Station station = new Station();
-  private TrainDeparture trainDeparture1 = new TrainDeparture("1", 1, "L1", "Oslo", LocalTime.of(5, 20), station);
+  private TrainDeparture trainDeparture1 = new TrainDeparture("1", 1, "L1", "Oslo", LocalTime.of(5, 20));
 
   /**
    * Test that track is set to the parameter when it is above 0.

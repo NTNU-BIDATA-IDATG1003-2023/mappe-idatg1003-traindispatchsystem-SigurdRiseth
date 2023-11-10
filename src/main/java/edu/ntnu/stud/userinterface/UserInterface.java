@@ -6,7 +6,7 @@ import java.time.LocalTime;
 
 public class UserInterface {
 
-  private Station station;
+  private static final Station station = new Station();
   private StringManager stringManager;
   private InputHandler inputHandler;
   private final String trainNumberAsk = "Please enter a train number: ";
@@ -127,8 +127,7 @@ public class UserInterface {
   }
 
   public void init() {
-    this.station = new Station();
-    this.stringManager = new StringManager(station);
+    this.stringManager = new StringManager();
     this.inputHandler = new InputHandler(stringManager);
     createTrains();
     welcomeMessage();
@@ -142,6 +141,10 @@ public class UserInterface {
     station.createTrainDeparture("4", 4, "L4", "Stavanger", LocalTime.of(3, 17), station);
     station.createTrainDeparture("2", 5, "L5", "Kristiansand", LocalTime.of(5, 0), station);
     station.createTrainDeparture("3", 6, "L2", "Trondheim", LocalTime.of(4, 20), station);
+  }
+
+  public static Station getStation() {
+    return station;
   }
 
   private void welcomeMessage() {

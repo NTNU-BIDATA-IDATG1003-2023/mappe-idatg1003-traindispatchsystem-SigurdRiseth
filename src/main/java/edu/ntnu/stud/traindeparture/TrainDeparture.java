@@ -1,6 +1,7 @@
 package edu.ntnu.stud.traindeparture;
 
 import edu.ntnu.stud.station.Station;
+import edu.ntnu.stud.userinterface.UserInterface;
 import java.time.LocalTime;
 import java.util.Objects;
 
@@ -34,8 +35,8 @@ public class TrainDeparture {
    * @param departureTime the time the train is set to depart
    */
   public TrainDeparture(String track, int trainNumber, String line, String destination,
-      LocalTime departureTime, Station station) {
-    this.station = station;
+      LocalTime departureTime) {
+    this.station = UserInterface.getStation();
     this.setTrack(track);
     this.setTrainNumber(trainNumber);
     this.setLine(line);
