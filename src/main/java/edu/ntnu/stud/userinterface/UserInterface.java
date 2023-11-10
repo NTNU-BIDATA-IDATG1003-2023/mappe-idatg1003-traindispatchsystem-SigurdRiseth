@@ -57,7 +57,8 @@ public class UserInterface {
           System.out.println(
               "Please enter a track (type \"none\" if you do not wish to assign one):");
           String track = scanner.nextLine();
-          station.addTrainDeparture(new TrainDeparture(track, trainNumber, line, destination3, departureTime, station));
+          station.createTrainDeparture(track, trainNumber, line, destination3, departureTime,
+              station);
           System.out.println("Train departure has been added!");
           break;
 
@@ -190,18 +191,12 @@ public class UserInterface {
   }
 
   private void createTrains() {
-    station.addTrainDeparture(new TrainDeparture("1", 1, "L1", "Oslo", LocalTime.of(5, 20),
-        station));
-    station.addTrainDeparture(new TrainDeparture("2", 2, "L2", "Trondheim",
-        LocalTime.of(5, 40), station));
-    station.addTrainDeparture(new TrainDeparture("3", 3, "L3", "Bergen", LocalTime.of(4, 0),
-        station));
-    station.addTrainDeparture(new TrainDeparture("4", 4, "L4", "Stavanger",
-        LocalTime.of(3, 17), station));
-    station.addTrainDeparture(new TrainDeparture("5", 5, "L5", "Kristiansand",
-        LocalTime.of(5, 0), station));
-    station.addTrainDeparture(new TrainDeparture("3", 6, "L2", "Trondheim",
-        LocalTime.of(4, 20), station));
+    station.createTrainDeparture("1", 1, "L1", "Oslo", LocalTime.of(5, 20), station);
+    station.createTrainDeparture("2", 2, "L2", "Trondheim", LocalTime.of(5, 40), station);
+    station.createTrainDeparture("3", 3, "L3", "Bergen", LocalTime.of(4, 0), station);
+    station.createTrainDeparture("4", 4, "L4", "Stavanger", LocalTime.of(3, 17), station);
+    station.createTrainDeparture("2", 5, "L5", "Kristiansand", LocalTime.of(5, 0), station);
+    station.createTrainDeparture("3", 6, "L2", "Trondheim", LocalTime.of(4, 20), station);
   }
 
   private void welcomeMessage() {

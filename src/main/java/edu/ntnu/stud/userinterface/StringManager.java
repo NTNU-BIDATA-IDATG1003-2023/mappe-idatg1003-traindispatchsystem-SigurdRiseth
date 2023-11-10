@@ -91,7 +91,7 @@ public class StringManager {
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
       if (trainDeparture.getDestination().equals(destination)) {
-        String formattedLine = String.format("%-15s%-5s%-20s%-15s%-10s",
+        String formattedLine = String.format("%-15s | %-5s | %-20s | %-15s | %-10s",
             trainDeparture.getTrainNumber(),
             trainDeparture.getLine(),
             trainDeparture.getDestination(),

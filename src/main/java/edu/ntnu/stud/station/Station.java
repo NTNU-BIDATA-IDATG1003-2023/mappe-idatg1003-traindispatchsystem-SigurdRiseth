@@ -28,7 +28,7 @@ public class Station {
    *
    * @param time The time to be set
    */
-  public String setClock(LocalTime time) {
+  public String setClock(LocalTime time) { //TODO : trengs try catch om den mottar LocalTime?
     try {
       if (this.time.isBefore(time)) {
         this.time = time;
@@ -52,11 +52,28 @@ public class Station {
   }
 
   /**
+   * Creates a new TrainDeparture and adds it to the trainDepartures HashMap.
+   *
+   * @param track The track the train will depart from
+   * @param trainNumber The unique train ID
+   * @param line The line the train is driving
+   * @param destination The ends destination of the train
+   * @param departureTime The time the train is set to depart
+   * @param station The station the train is departing from
+   */
+  public void createTrainDeparture(String track, int trainNumber, String line, String destination,
+      LocalTime departureTime, Station station) {
+    TrainDeparture trainDeparture = new TrainDeparture(track, trainNumber, line, destination,
+        departureTime, station);
+    this.addTrainDeparture(trainDeparture);
+  }
+
+  /**
    * Adds a TrainDeparture to the trainDepartures HashMap.
    *
    * @param trainDeparture An instance of the class TrainDeparture
    */
-  public void addTrainDeparture(TrainDeparture trainDeparture) {
+  private void addTrainDeparture(TrainDeparture trainDeparture) {
     this.trainDepartures.put(trainDeparture.getTrainNumber(), trainDeparture);
   }
 
