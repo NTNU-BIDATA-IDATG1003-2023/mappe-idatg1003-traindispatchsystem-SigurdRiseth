@@ -43,6 +43,10 @@ public class StringManager {
     );
   }
 
+  public void print(String string) {
+    System.out.println(string);
+  }
+
 
   /**
    * Prints a String of all departures yet to depart.
@@ -128,5 +132,42 @@ public class StringManager {
 
   public void printDestinationAsk() {
     System.out.println("Please enter a destination: ");
+  }
+
+  public void printTrainNumberAsk() {
+    System.out.println("Please enter a train number: ");
+  }
+
+  public void printLineAsk() {
+    System.out.println("Please enter a line: ");
+  }
+
+  public Station getStation() {
+    return station;
+  }
+
+  public void printTrainNumberInvalid() {
+    System.out.println(
+        "The train number must be a whole number above 0. Please try again.");
+  }
+
+  public void printTrainNumberInUse() {
+    System.out.println("The train number is already in use. Please try again.");
+  }
+
+  public void printTimeAsk() {
+    System.out.println("Please enter time in format (hh:mm): ");
+  }
+
+  public void printTrackAsk() {
+    System.out.println("Please enter a track (type \"none\" if you do not wish to assign one):");
+  }
+
+  public void printTimeInvalid() {
+    System.out.println("Please try again and enter a valid time (in format hh:mm).");
+  }
+
+  public void printTrainNumberNotInUse() {
+    System.out.println("The train number does not exist. Please try again.");
   }
 }

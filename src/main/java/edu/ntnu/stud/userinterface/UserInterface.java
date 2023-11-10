@@ -17,9 +17,9 @@ public class UserInterface {
     boolean running = true;
     while (running) {
       stringManager.printOptions();
-      String input = inputHandler.getStringInput();
+      String choice = inputHandler.getStringInput();
 
-      switch (input) { // TODO: endre navn på casene til private final String PRINT_ALL_UPCOMING_DEPARTURES = "1"; osv.
+      switch (choice) { // TODO: endre navn på casene til private final String PRINT_ALL_UPCOMING_DEPARTURES = "1"; osv.
         // flytte de over til en egen pakke guiutility og klasse ConfigurationOptions og gjøre de static.
         // kan da skrive "case ConfigurationOptions.PRINT_ALL_UPCOMING_DEPARTURES:"
         // skriv og static final når du initialiserer den i UI så du slipper opprette objekt.
@@ -28,49 +28,21 @@ public class UserInterface {
           stringManager.printAllDepartures();
           break;
         case "2":
-          stringManager.printDestinationAsk();
-          String destination1 = inputHandler.getStringInput();
-          stringManager.printAllDeparturesToDestination(destination1);
+          printAllUpcomingDepartures();
           break;
         case "3":
-          stringManager.printDestinationAsk();
-          String destination2 = inputHandler.getStringInput();
-          stringManager.printNextDepartureToDestination(destination2);
+          printNextDeparture();
           break;
         case "4":
-          int trainNumber = getTrainNumberUnused(scanner);
-
-          scanner.nextLine();
-          System.out.println("Please enter a line:");
-          String line = scanner.nextLine();
-          System.out.println(destinationAsk);
-          String destination3 = scanner.nextLine();
-          destination3 = destination3.substring(0, 1).toUpperCase()
-              + destination3.substring(1).toLowerCase();
-
-          LocalTime departureTime = getLocalTimeFromString(scanner);
-
-          System.out.println(
-              "Please enter a track (type \"none\" if you do not wish to assign one):");
-          String track = scanner.nextLine();
-          station.createTrainDeparture(track, trainNumber, line, destination3, departureTime,
-              station);
-          System.out.println("Train departure has been added!");
+          createTrainDeparture();
           break;
-
-        case "5":
-          int trainNumber2 = getTrainNumberInUse(scanner);
-          LocalTime delay = getLocalTimeFromString(scanner);
-          System.out.println(station.changeDelayByTrainNumber(trainNumber2, delay));
+        case "5": //TODO: Hva skjer om man skriver inn en streng til trainnumber?
+          setDelayForTrainDeparture();
           break;
-
         case "6": // TODO: kan ikke være 0 eller negativ
-          System.out.println(trainNumberAsk);
-          int trainNumber4 = scanner.nextInt();
-          scanner.nextLine();
-          System.out.println("Please enter a track:");
-          String track2 = scanner.nextLine();
-          System.out.println(station.changeTrackByTrainNumber(trainNumber4, track2));
+          int trainNumber4 = inputHandler.getTrainNumberInUse();
+          String track2 = inputHandler.getTrack();
+          stringManager.print((station.changeTrackByTrainNumber(trainNumber4, track2)));
           break;
         case "7":
           System.out.println(trainNumberAsk);
@@ -116,66 +88,34 @@ public class UserInterface {
     }
   }
 
-  private LocalTime getLocalTimeFromString(Scanner scanner) {
-    LocalTime departureTime = null;
-    while (departureTime == null) {
-      System.out.println("Please enter time in format (hh:mm): ");
-      String inputDepartureTime = scanner.nextLine();
-      if (departureTimeValid(inputDepartureTime)) {
-        departureTime = LocalTime.parse(inputDepartureTime);
-        return departureTime;
-      } else {
-        System.out.println("Please try again and enter a valid time.");
-      }
-    }
-    return departureTime;
+  private void setDelayForTrainDeparture() {
+    int trainNumber2 = inputHandler.getTrainNumberUnused();
+    LocalTime delay = inputHandler.getLocalTimeFromString();
+    stringManager.print(station.changeDelayByTrainNumber(trainNumber2, delay));
   }
 
-  private int getTrainNumberInUse(Scanner scanner) {
-    int trainNumber = -1;
-
-    while (trainNumber < 1) {
-      System.out.println(trainNumberAsk);
-      trainNumber = scanner.nextInt();
-      scanner.nextLine();
-
-      if (trainNumber < 1) {
-        System.out.println(
-            "The train number must be a whole number above 0. Please try again.");
-      } else if (!station.trainExists(trainNumber)) {
-        System.out.println("The train number does not exist. Please try again.");
-        trainNumber = -1;
-      }
-    }
-    return trainNumber;
+  private void printAllUpcomingDepartures() {
+    stringManager.printDestinationAsk();
+    String destination1 = inputHandler.getStringInput();
+    stringManager.printAllDeparturesToDestination(destination1);
   }
 
-
-  private int getTrainNumberUnused(Scanner scanner) {
-    int trainNumber = -1;
-
-    while (trainNumber < 1) {
-      System.out.println(trainNumberAsk);
-      trainNumber = scanner.nextInt();
-
-      if (trainNumber < 1) {
-        System.out.println(
-            "The train number must be a whole number above 0. Please try again.");
-      } else if (station.trainExists(trainNumber)) {
-        System.out.println("The train number is already in use. Please try again.");
-        trainNumber = -1;
-      }
-    }
-    return trainNumber;
+  private void printNextDeparture() {
+    stringManager.printDestinationAsk();
+    String destination2 = inputHandler.getStringInput();
+    stringManager.printNextDepartureToDestination(destination2);
   }
 
-  private boolean departureTimeValid(String inputDepartureTime) {
-    try {
-      LocalTime.parse(inputDepartureTime);
-      return true;
-    } catch (Exception e) {
-      return false;
-    }
+  private void createTrainDeparture() {
+    int trainNumber = inputHandler.getTrainNumberUnused();
+    String line = inputHandler.getLine();
+    String destination3 = inputHandler.getDestination();
+    LocalTime departureTime = inputHandler.getLocalTimeFromString();
+    String track = inputHandler.getTrack();
+
+    station.createTrainDeparture(track, trainNumber, line, destination3, departureTime,
+        station);
+    stringManager.print("Train departure has been added!");
   }
 
   public void init() {
