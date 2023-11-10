@@ -25,8 +25,8 @@ public class StringManager {
    *
    * @return String
    */
-  public String options() {
-    return String.join("\n",
+  public void printOptions() {
+    System.out.println(String.join("\n",
         "-------------------------------------------",
         "1: Print all upcoming departures",
         "2: Print all upcoming departures to a given destination",
@@ -39,17 +39,16 @@ public class StringManager {
         "9: Remove train by train number",
         "10: Set the clock",
         "0: Exit",
-        "Please enter a number between 0 and 10:"
+        "Please enter a number between 0 and 10:")
     );
   }
 
 
   /**
-   * Returns a String of all departures yet to depart.
+   * Prints a String of all departures yet to depart.
    *
-   * @return String
    */
-  public String getAllDepartures() {
+  public void printAllDepartures() {
     StringBuilder result = new StringBuilder();
     result.append("The time is now " + station.getClock() + "\n");
     result.append("Here is a list of all the trains that are yet to depart:\n");
@@ -67,8 +66,7 @@ public class StringManager {
       );
       result.append(formattedLine).append("\n");
     }
-
-    return String.valueOf(result);
+    System.out.println(result);
   }
 
   /**
@@ -78,16 +76,15 @@ public class StringManager {
    * @param destination
    * @return String
    */
-  public String printAllDeparturesToDestination(String destination) {
+  public void printAllDeparturesToDestination(String destination) {
     destination = destination.substring(0, 1).toUpperCase()
         + destination.substring(1).toLowerCase();
     Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
-    StringBuilder result = new StringBuilder();
     boolean foundDeparture = false;
-    result.append("The time is now " + station.getClock() + "\n");
-    result.append("Here is a list of all the trains that are yet to depart to " + destination
-        + ":\n");
-    result.append("Train number\tLine\tDestination\t\t\tDeparture time\tTrack\n");
+    System.out.println("The time is now " + station.getClock());
+    System.out.println("Here is a list of all the trains that are yet to depart to " + destination
+        + ":");
+    System.out.println("Train number\tLine\tDestination\t\t\tDeparture time\tTrack");
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
       if (trainDeparture.getDestination().equals(destination)) {
@@ -98,14 +95,13 @@ public class StringManager {
             trainDeparture.getDepartureTime(),
             (trainDeparture.getTrack() == -1) ? "-" : String.valueOf(trainDeparture.getTrack())
         );
-        result.append(formattedLine).append("\n");
+        System.out.println(formattedLine);
         foundDeparture = true;
       }
     }
     if (!foundDeparture) {
-      return "No trains to " + destination + " found.";
+      System.out.println("No trains to " + destination + " found.");
     }
-    return String.valueOf(result);
   }
 
   /**
@@ -115,19 +111,18 @@ public class StringManager {
    * @param destination2
    * @return String
    */
-  public String getNextDepartureToDestination(
-      String destination2) { // TODO: Dumt å kalle metoden flere ganger istedet for å lagre trainnumber og heller kalle get funksjonen til det spesifikke toget?
+  public void printNextDepartureToDestination(String destination2) { // TODO: Dumt å kalle metoden flere ganger istedet for å lagre trainnumber og heller kalle get funksjonen til det spesifikke toget?
     destination2 =
         destination2.substring(0, 1).toUpperCase() + destination2.substring(1).toLowerCase();
     try {
-      return (
+      System.out.println(
           "The next train to " + station.getTrainDepartureByDestination(destination2)
               .getDestination()
               + " departs at " + station.getTrainDepartureByDestination(destination2)
               .getDepartureTime() + " from track " + station.getTrainDepartureByDestination(
               destination2).getTrack());
     } catch (Exception e) {
-      return "No train to " + destination2 + " was found.";
+      System.out.println("No train to " + destination2 + " was found.");
     }
   }
 

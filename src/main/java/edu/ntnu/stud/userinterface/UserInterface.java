@@ -20,7 +20,7 @@ public class UserInterface {
 
     boolean running = true;
     while (running) {
-      System.out.println(stringManager.options());
+      stringManager.printOptions();
       String input = scanner.nextLine();
 
       switch (input) { // TODO: endre navn på casene til private final String PRINT_ALL_UPCOMING_DEPARTURES = "1"; osv.
@@ -29,17 +29,17 @@ public class UserInterface {
         // skriv og static final når du initialiserer den i UI så du slipper opprette objekt.
         // kan også ha StringManager i samme pakke og gjøre det samme der. Hvor statiske strings blir lagret.
         case "1":
-          System.out.println(stringManager.getAllDepartures());
+          stringManager.printAllDepartures();
           break;
         case "2":
           System.out.println(destinationAsk);
           String destination1 = scanner.nextLine();
-          System.out.println(stringManager.printAllDeparturesToDestination(destination1));
+          stringManager.printAllDeparturesToDestination(destination1);
           break;
         case "3":
           System.out.println(destinationAsk);
           String destination2 = scanner.nextLine();
-          System.out.println(stringManager.getNextDepartureToDestination(destination2));
+          stringManager.printNextDepartureToDestination(destination2);
           break;
         case "4":
           int trainNumber = getTrainNumberUnused(scanner);
