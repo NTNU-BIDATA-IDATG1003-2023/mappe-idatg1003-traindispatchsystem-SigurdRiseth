@@ -9,7 +9,7 @@ import java.util.Iterator;
  */
 public class StringManager {
 
-  private Station station;
+  private final Station station;
 
   /**
    * Constructor that sets the station.
@@ -126,4 +126,7 @@ public class StringManager {
     }
   }
 
+  public void printDestinationAsk() {
+    System.out.println("Please enter a destination: ");
+  }
 }

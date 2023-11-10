@@ -3,25 +3,21 @@ package edu.ntnu.stud.userinterface;
 import edu.ntnu.stud.station.Station;
 import edu.ntnu.stud.traindeparture.TrainDeparture;
 import java.time.LocalTime;
-import java.util.Scanner;
 
 public class UserInterface {
 
   private Station station;
   private StringManager stringManager;
+  private InputHandler inputHandler;
   private final String trainNumberAsk = "Please enter a train number: ";
 
 
   public void start() {
 
-    Scanner scanner = new Scanner(System.in);
-
-    final String destinationAsk = "Please enter a destination: ";
-
     boolean running = true;
     while (running) {
       stringManager.printOptions();
-      String input = scanner.nextLine();
+      String input = inputHandler.getStringInput();
 
       switch (input) { // TODO: endre navn på casene til private final String PRINT_ALL_UPCOMING_DEPARTURES = "1"; osv.
         // flytte de over til en egen pakke guiutility og klasse ConfigurationOptions og gjøre de static.
@@ -32,13 +28,13 @@ public class UserInterface {
           stringManager.printAllDepartures();
           break;
         case "2":
-          System.out.println(destinationAsk);
-          String destination1 = scanner.nextLine();
+          stringManager.printDestinationAsk();
+          String destination1 = inputHandler.getStringInput();
           stringManager.printAllDeparturesToDestination(destination1);
           break;
         case "3":
-          System.out.println(destinationAsk);
-          String destination2 = scanner.nextLine();
+          stringManager.printDestinationAsk();
+          String destination2 = inputHandler.getStringInput();
           stringManager.printNextDepartureToDestination(destination2);
           break;
         case "4":
@@ -185,6 +181,7 @@ public class UserInterface {
   public void init() {
     this.station = new Station();
     this.stringManager = new StringManager(station);
+    this.inputHandler = new InputHandler(stringManager);
     createTrains();
     welcomeMessage();
 
