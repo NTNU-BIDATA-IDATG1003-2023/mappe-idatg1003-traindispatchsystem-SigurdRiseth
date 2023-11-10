@@ -19,15 +19,20 @@ public class InputHandler {
     int trainNumber = -1;
 
     while (trainNumber < 1) {
-      stringManager.printTrainNumberAsk(); //TODO: PRINT I STRINGMANAGER
-      trainNumber = scanner.nextInt();
-      scanner.nextLine();
+      stringManager.printTrainNumberAsk();
+      try {
+        trainNumber = scanner.nextInt();
+        scanner.nextLine();
 
-      if (trainNumber < 1) {
+        if (trainNumber < 1) {
+          stringManager.printTrainNumberInvalid();
+        } else if (stringManager.getStation().trainExists(trainNumber)) {
+          stringManager.printTrainNumberInUse();
+          trainNumber = -1;
+        }
+      } catch (Exception e) {
         stringManager.printTrainNumberInvalid();
-      } else if (stringManager.getStation().trainExists(trainNumber)) {
-        stringManager.printTrainNumberInUse();
-        trainNumber = -1;
+        scanner.nextLine();
       }
     }
     return trainNumber;
@@ -61,6 +66,15 @@ public class InputHandler {
     return departureTime;
   }
 
+  public LocalTime getLocalTimeFromStringAfterClock() {
+    LocalTime time = getLocalTimeFromString();
+    while (time.isBefore(stringManager.getStation().getClock())) {
+      stringManager.print("You cannot add a train departure before the current time. Please try again.");
+      time = getLocalTimeFromString();
+    }
+    return time;
+  }
+
   private boolean departureTimeValid(String inputDepartureTime) {
     try {
       LocalTime.parse(inputDepartureTime);
@@ -80,14 +94,19 @@ public class InputHandler {
 
     while (trainNumber < 1) {
       stringManager.printTrainNumberAsk();
-      trainNumber = scanner.nextInt();
-      scanner.nextLine();
+      try {
+        trainNumber = scanner.nextInt();
+        scanner.nextLine();
 
-      if (trainNumber < 1) {
+        if (trainNumber < 1) {
+          stringManager.printTrainNumberInvalid();
+        } else if (!stringManager.getStation().trainExists(trainNumber)) {
+          stringManager.printTrainNumberNotInUse();
+          trainNumber = -1;
+        }
+      } catch (Exception e) {
         stringManager.printTrainNumberInvalid();
-      } else if (!stringManager.getStation().trainExists(trainNumber)) {
-        stringManager.printTrainNumberNotInUse();
-        trainNumber = -1;
+        scanner.nextLine();
       }
     }
     return trainNumber;

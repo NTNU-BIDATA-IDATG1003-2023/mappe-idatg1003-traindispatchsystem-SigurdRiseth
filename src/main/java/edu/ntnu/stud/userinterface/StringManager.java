@@ -109,23 +109,25 @@ public class StringManager {
   }
 
   /**
-   * Returns the next departure to a given destination. The destination can be given in any
-   * capitalisation. If no departures are found, a message is returned.
+   * Prints the next departure to a given destination.
+   * If no departures are found, a message is printed.
    *
    * @param destination2
    * @return String
    */
   public void printNextDepartureToDestination(String destination2) { // TODO: Dumt å kalle metoden flere ganger istedet for å lagre trainnumber og heller kalle get funksjonen til det spesifikke toget?
-    destination2 =
-        destination2.substring(0, 1).toUpperCase() + destination2.substring(1).toLowerCase();
-    try {
-      System.out.println(
-          "The next train to " + station.getTrainDepartureByDestination(destination2)
-              .getDestination()
-              + " departs at " + station.getTrainDepartureByDestination(destination2)
-              .getDepartureTime() + " from track " + station.getTrainDepartureByDestination(
-              destination2).getTrack());
-    } catch (Exception e) {
+    if (station.getTrainDepartureByDestination(destination2) != null) {
+      StringBuilder result = new StringBuilder();
+      result.append("The next train to " + station.getTrainDepartureByDestination(destination2).getDestination());
+      result.append(" departs at " + station.getTrainDepartureByDestination(destination2).getDepartureTime());
+      if (station.getTrainDepartureByDestination(destination2).getTrack() == -1) {
+        result.append(" from track (not yet assigned)");
+      } else {
+        result.append(" from track " + station.getTrainDepartureByDestination(destination2)
+            .getTrack());
+      }
+      System.out.println(String.valueOf(result));
+    } else {
       System.out.println("No train to " + destination2 + " was found.");
     }
   }
@@ -169,5 +171,14 @@ public class StringManager {
 
   public void printTrainNumberNotInUse() {
     System.out.println("The train number does not exist. Please try again.");
+  }
+
+  public void printTrainDeparture(TrainDeparture train) {
+    System.out.println("Train number: " + train.getTrainNumber());
+    System.out.println("Line: " + train.getLine());
+    System.out.println("Destination: " + train.getDestination());
+    System.out.println("Departure time: " + train.getDepartureTime());
+    System.out.print("Track: ");
+    System.out.println((train.getTrack() == -1) ? "Not yet assigned" : String.valueOf(train.getTrack()));
   }
 }
