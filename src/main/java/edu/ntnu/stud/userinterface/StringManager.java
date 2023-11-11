@@ -14,16 +14,14 @@ public class StringManager { // TODO: kan metoder være static og la være å op
   /**
    * Constructor that sets the station.
    *
-   * @param station The station to be set
    */
   public StringManager() {
     this.station = UserInterface.getStation();
   }
 
   /**
-   * Returns a String of the menu options.
+   * Prints all the options the user can choose from.
    *
-   * @return String
    */
   public void printOptions() {
     System.out.println(String.join("\n",
@@ -42,6 +40,12 @@ public class StringManager { // TODO: kan metoder være static og la være å op
         "Please enter a number between 0 and 10:")
     );
   }
+
+  /**
+   * Prints a String.
+   *
+   * @param string The string to be printed
+   */
 
   public void print(String string) {
     System.out.println(string);
@@ -74,11 +78,10 @@ public class StringManager { // TODO: kan metoder være static og la være å op
   }
 
   /**
-   * Return all departures to a given destination. The destination can be given in any
-   * capitalisation. If no departures are found, a message is returned.
+   * Prints all departures to a given destination. The destination can be given in any
+   * capitalisation. If no departures are found, a message is printed.
    *
-   * @param destination
-   * @return String
+   * @param destination The destination to search for
    */
   public void printAllDeparturesToDestination(String destination) {
     destination = destination.substring(0, 1).toUpperCase()
@@ -112,8 +115,7 @@ public class StringManager { // TODO: kan metoder være static og la være å op
    * Prints the next departure to a given destination.
    * If no departures are found, a message is printed.
    *
-   * @param destination2
-   * @return String
+   * @param destination2 The destination to search for
    */
   public void printNextDepartureToDestination(String destination2) { // TODO: Dumt å kalle metoden flere ganger istedet for å lagre trainnumber og heller kalle get funksjonen til det spesifikke toget?
     if (station.getTrainDepartureByDestination(destination2) != null) {
@@ -132,47 +134,75 @@ public class StringManager { // TODO: kan metoder være static og la være å op
     }
   }
 
+  /**
+   * Asks the user to enter a destination.
+   */
   public void printDestinationAsk() {
     System.out.println("Please enter a destination: ");
   }
 
+  /**
+   * Asks the user to enter a train number.
+   */
   public void printTrainNumberAsk() {
     System.out.println("Please enter a train number: ");
   }
 
+  /**
+   * Asks the user to enter a line.
+   */
   public void printLineAsk() {
     System.out.println("Please enter a line: ");
   }
 
-  public Station getStation() {
-    return station;
-  }
-
+/**
+   * Prints a message indicating that the train number is invalid.
+   */
   public void printTrainNumberInvalid() {
     System.out.println(
         "The train number must be a whole number above 0. Please try again.");
   }
 
+  /**
+   * Prints a message indicating that the train number is already in use.
+   */
   public void printTrainNumberInUse() {
     System.out.println("The train number is already in use. Please try again.");
   }
 
+  /**
+   * Asks the user to enter a time in format hh:mm.
+   */
   public void printTimeAsk() {
     System.out.println("Please enter time in format (hh:mm): ");
   }
 
+  /**
+   * Asks the user to input a track or type none.
+   */
   public void printTrackAsk() {
     System.out.println("Please enter a track (type \"none\" if you do not wish to assign one):");
   }
 
+  /**
+   * Prints a message indicating that the time is invalid.
+   */
   public void printTimeInvalid() {
     System.out.println("Please try again and enter a valid time (in format hh:mm).");
   }
 
+  /**
+   * Tells the user that the train does not exist.
+   */
   public void printTrainNumberNotInUse() {
     System.out.println("The train number does not exist. Please try again.");
   }
 
+  /**
+   * Prints information about a train departure.
+   *
+   * @param train The train departure to be printed
+   */
   public void printTrainDeparture(TrainDeparture train) {
     System.out.println("Train number: " + train.getTrainNumber());
     System.out.println("Line: " + train.getLine());

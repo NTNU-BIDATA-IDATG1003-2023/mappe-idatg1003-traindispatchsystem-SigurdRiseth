@@ -7,18 +7,35 @@ public class InputHandler {
   private final StringManager stringManager;
   private final Scanner scanner = new Scanner(System.in);
 
+  /**
+   * Constructor for the InputHandler class.
+   * <p>Initializes the stringManager field.</p>
+   *
+   * @param stringManager The StringManager object
+   */
   public InputHandler(StringManager stringManager) {
     this.stringManager = stringManager;
   }
 
+  /**
+   * Gets the user input as a String.
+   *
+   * @return The user input as a String
+   */
   public String getStringInput() {
     return scanner.nextLine();
   }
 
+  /**
+   * Asks the user for a train number.
+   * Will keep asking until the user inputs an unused and valid train number.
+   *
+   * @return The train number
+   */
   public int getTrainNumberUnused() {
-    int trainNumber = -1;
+    int trainNumber;
 
-    while (trainNumber < 1) {
+    do {
       stringManager.printTrainNumberAsk();
       try {
         trainNumber = scanner.nextInt();
@@ -26,7 +43,7 @@ public class InputHandler {
 
         if (trainNumber < 1) {
           stringManager.printTrainNumberInvalid();
-        } else if (stringManager.getStation().trainExists(trainNumber)) {
+        } else if (UserInterface.getStation().trainExists(trainNumber)) {
           stringManager.printTrainNumberInUse();
           trainNumber = -1;
         }
@@ -34,16 +51,26 @@ public class InputHandler {
         stringManager.printTrainNumberInvalid();
         scanner.nextLine();
       }
-    }
+    } while (trainNumber < 1);
     return trainNumber;
   }
 
-
+  /**
+   * Runs StringManagers method printLineAsk() and returns the user input.
+   *
+   * @return The line
+   */
   public String getLine() {
     stringManager.printLineAsk();
     return scanner.nextLine();
   }
 
+  /**
+   * Runs StringManagers method printDestinationAsk() and stores the user input.
+   * Capitalizes the first letter and lowercases the rest before returning.
+   *
+   * @return The destination
+   */
   public String getDestination() {
     stringManager.printDestinationAsk();
     String destination = scanner.nextLine();
@@ -51,6 +78,12 @@ public class InputHandler {
         + destination.substring(1).toLowerCase();
   }
 
+  /**
+   * Runs StringManagers method printTimeAsk() and stores the user input.
+   * Will keep asking until the user inputs a valid time.
+   *
+   * @return The departure time
+   */
   public LocalTime getLocalTimeFromString() {
     LocalTime departureTime = null;
     while (departureTime == null) {
@@ -66,15 +99,27 @@ public class InputHandler {
     return departureTime;
   }
 
+  /**
+   * Runs StringManagers method getLocalTimeFromStringAfterClock() and stores the user input.
+   * Will keep asking until the user inputs a valid time after the current time.
+   *
+   * @return The departure time
+   */
   public LocalTime getLocalTimeFromStringAfterClock() {
     LocalTime time = getLocalTimeFromString();
-    while (time.isBefore(stringManager.getStation().getClock())) {
+    while (time.isBefore(UserInterface.getStation().getClock())) {
       stringManager.print("You cannot add a train departure before the current time. Please try again.");
       time = getLocalTimeFromString();
     }
     return time;
   }
 
+  /**
+   * Checks if the user input is a String that can be parsed to a LocalTime object.
+   *
+   * @param inputDepartureTime The input to be checked
+   * @return True if the input is a valid time, false otherwise
+   */
   private boolean departureTimeValid(String inputDepartureTime) {
     try {
       LocalTime.parse(inputDepartureTime);
@@ -84,15 +129,25 @@ public class InputHandler {
     }
   }
 
+  /**
+   * Runs StringManagers method printTrackAsk() and stores the user input.
+   *
+   * @return The track
+   */
   public String getTrack() {
     stringManager.printTrackAsk();
     return scanner.nextLine();
   }
 
+  /**
+   * Asks the user for a train number.
+   * Will keep asking until the user inputs a used and valid train number.
+   *
+   * @return The train number
+   */
   public int getTrainNumberInUse() {
-    int trainNumber = -1;
-
-    while (trainNumber < 1) {
+    int trainNumber;
+    do {
       stringManager.printTrainNumberAsk();
       try {
         trainNumber = scanner.nextInt();
@@ -100,7 +155,7 @@ public class InputHandler {
 
         if (trainNumber < 1) {
           stringManager.printTrainNumberInvalid();
-        } else if (!stringManager.getStation().trainExists(trainNumber)) {
+        } else if (!UserInterface.getStation().trainExists(trainNumber)) {
           stringManager.printTrainNumberNotInUse();
           trainNumber = -1;
         }
@@ -108,7 +163,7 @@ public class InputHandler {
         stringManager.printTrainNumberInvalid();
         scanner.nextLine();
       }
-    }
+    } while (trainNumber < 1);
     return trainNumber;
   }
 

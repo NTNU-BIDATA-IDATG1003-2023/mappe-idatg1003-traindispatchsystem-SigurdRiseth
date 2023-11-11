@@ -62,7 +62,7 @@ public class Station {
    * @param station The station the train is departing from
    */
   public void createTrainDeparture(String track, int trainNumber, String line, String destination,
-      LocalTime departureTime, Station station) {
+      LocalTime departureTime) {
     TrainDeparture trainDeparture = new TrainDeparture(track, trainNumber, line, destination,
         departureTime);
     this.addTrainDeparture(trainDeparture);
@@ -120,8 +120,8 @@ public class Station {
    * Changes the track of a train with the given train number. Returns a string indicating whether
    * the track was changed or not.
    *
-   * @param trainNumber
-   * @param track
+   * @param trainNumber The train number of the train to be changed
+   * @param track The track to be set
    * @return String
    */
   public String changeTrackByTrainNumber(int trainNumber, String track) {
@@ -137,14 +137,13 @@ public class Station {
    * Changes the delay of a train with the given train number. Returns a string indicating whether
    * the delay was changed or not.
    *
-   * @param trainNumber
-   * @param delay
+   * @param trainNumber The train number of the train to be changed
+   * @param delay The delay to be set
    * @return String
    */
   public String changeDelayByTrainNumber(int trainNumber, LocalTime delay) {
     if (trainExists(trainNumber)) {
       trainDepartures.get(trainNumber).setDelay(delay);
-      //TODO: bruk parse() for å få LocalTime fra String på formatet "HH:MM"
       return "Delay changed.";
     } else {
       return "Train does not exist. Please try again.";
@@ -154,8 +153,8 @@ public class Station {
   /**
    * Returns a TrainDeparture with the given train number.
    *
-   * @param trainNumber
-   * @return
+   * @param trainNumber The train number of the train to be returned
+   * @return TrainDeparture
    */
   public TrainDeparture getTrainDepartureByTrainNumber(int trainNumber) {
     if (trainExists(trainNumber)) {
@@ -168,8 +167,8 @@ public class Station {
   /**
    * Returns the first train departure with the provided destination.
    *
-   * @param destination
-   * @return
+   * @param destination The destination of the train to be returned
+   * @return TrainDeparture
    */
   public TrainDeparture getTrainDepartureByDestination(String destination) {
     Iterator<TrainDeparture> iterator = getTrainDeparturesSorted().iterator();
@@ -185,7 +184,7 @@ public class Station {
   /**
    * Removes a train departure with the given train number from the trainDepartures HashMap.
    *
-   * @param trainNumber
+   * @param trainNumber The train number of the train to be removed
    */
   public void removeTrainDepartureByTrainNumber(int trainNumber) {
     if (trainExists(trainNumber)) {
