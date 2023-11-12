@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 /**
  * Class for the train station.
  * <p>In charge of keeping track of the time and a list of all TrainDepartures yet to depart.</p>
+ *
+ * @Author Sigurd Riseth
+ * @version 0.0.1
+ * @since 14.10.2023
  */
 public class Station {
 
@@ -54,12 +58,11 @@ public class Station {
   /**
    * Creates a new TrainDeparture and adds it to the trainDepartures HashMap.
    *
-   * @param track The track the train will depart from
-   * @param trainNumber The unique train ID
-   * @param line The line the train is driving
-   * @param destination The ends destination of the train
+   * @param track         The track the train will depart from
+   * @param trainNumber   The unique train ID
+   * @param line          The line the train is driving
+   * @param destination   The ends destination of the train
    * @param departureTime The time the train is set to depart
-   * @param station The station the train is departing from
    */
   public void createTrainDeparture(String track, int trainNumber, String line, String destination,
       LocalTime departureTime) {
@@ -121,7 +124,7 @@ public class Station {
    * the track was changed or not.
    *
    * @param trainNumber The train number of the train to be changed
-   * @param track The track to be set
+   * @param track       The track to be set
    * @return String
    */
   public String changeTrackByTrainNumber(int trainNumber, String track) {
@@ -138,7 +141,7 @@ public class Station {
    * the delay was changed or not.
    *
    * @param trainNumber The train number of the train to be changed
-   * @param delay The delay to be set
+   * @param delay       The delay to be set
    * @return String
    */
   public String changeDelayByTrainNumber(int trainNumber, LocalTime delay) {

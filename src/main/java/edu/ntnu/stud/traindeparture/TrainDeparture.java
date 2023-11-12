@@ -65,7 +65,8 @@ public class TrainDeparture {
    * <p>Also checks if the trainNumber is above 0 and not already stored in Stations HashMap.
    * If a train already exists with that number or it is under 1 the value is set to -1.</p>
    */
-  public void setTrainNumber(int trainNumber) { // TODO: Denne og andre metoder brukes bare av konstruktøren. Kan jeg da sette den til private?
+  public void setTrainNumber(
+      int trainNumber) { // TODO: Denne og andre metoder brukes bare av konstruktøren. Kan jeg da sette den til private?
     if ((trainNumber > 0) && !this.station.trainExists(trainNumber)) {
       this.trainNumber = trainNumber;
     } else {

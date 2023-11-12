@@ -3,7 +3,15 @@ package edu.ntnu.stud.userinterface;
 import java.time.LocalTime;
 import java.util.Scanner;
 
+/**
+ * Class for handling user input.
+ * <p>Handles all user input and calls the needed methods in the StringManager class.</p>
+ *
+ * @Author Sigurd Riseth
+ * @version 0.0.1
+ */
 public class InputHandler {
+
   private final StringManager stringManager;
   private final Scanner scanner = new Scanner(System.in);
 
@@ -27,13 +35,13 @@ public class InputHandler {
   }
 
   /**
-   * Asks the user for a train number.
-   * Will keep asking until the user inputs an unused and valid train number.
+   * Asks the user for a train number. Will keep asking until the user inputs an unused and valid
+   * train number.
    *
    * @return The train number
    */
   public int getTrainNumberUnused() {
-    int trainNumber;
+    int trainNumber = 0;
 
     do {
       stringManager.printTrainNumberAsk();
@@ -66,8 +74,8 @@ public class InputHandler {
   }
 
   /**
-   * Runs StringManagers method printDestinationAsk() and stores the user input.
-   * Capitalizes the first letter and lowercases the rest before returning.
+   * Runs StringManagers method printDestinationAsk() and stores the user input. Capitalizes the
+   * first letter and lowercase the rest before returning.
    *
    * @return The destination
    */
@@ -79,8 +87,8 @@ public class InputHandler {
   }
 
   /**
-   * Runs StringManagers method printTimeAsk() and stores the user input.
-   * Will keep asking until the user inputs a valid time.
+   * Runs StringManagers method printTimeAsk() and stores the user input. Will keep asking until the
+   * user inputs a valid time.
    *
    * @return The departure time
    */
@@ -100,15 +108,16 @@ public class InputHandler {
   }
 
   /**
-   * Runs StringManagers method getLocalTimeFromStringAfterClock() and stores the user input.
-   * Will keep asking until the user inputs a valid time after the current time.
+   * Runs StringManagers method getLocalTimeFromStringAfterClock() and stores the user input. Will
+   * keep asking until the user inputs a valid time after the current time.
    *
    * @return The departure time
    */
   public LocalTime getLocalTimeFromStringAfterClock() {
     LocalTime time = getLocalTimeFromString();
     while (time.isBefore(UserInterface.getStation().getClock())) {
-      stringManager.print("You cannot add a train departure before the current time. Please try again.");
+      stringManager.print(
+          "You cannot add a train departure before the current time. Please try again.");
       time = getLocalTimeFromString();
     }
     return time;
@@ -140,13 +149,13 @@ public class InputHandler {
   }
 
   /**
-   * Asks the user for a train number.
-   * Will keep asking until the user inputs a used and valid train number.
+   * Asks the user for a train number. Will keep asking until the user inputs a used and valid train
+   * number.
    *
    * @return The train number
    */
   public int getTrainNumberInUse() {
-    int trainNumber;
+    int trainNumber = 0;
     do {
       stringManager.printTrainNumberAsk();
       try {

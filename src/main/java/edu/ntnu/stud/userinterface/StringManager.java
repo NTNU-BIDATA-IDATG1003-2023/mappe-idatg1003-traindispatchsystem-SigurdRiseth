@@ -6,6 +6,9 @@ import java.util.Iterator;
 
 /**
  * Class for managing all the methods creating strings used in the UI.
+ *
+ * @Author Sigurd Riseth
+ * @version 0.0.1
  */
 public class StringManager { // TODO: kan metoder være static og la være å opprette denne klassen?
 
@@ -13,7 +16,6 @@ public class StringManager { // TODO: kan metoder være static og la være å op
 
   /**
    * Constructor that sets the station.
-   *
    */
   public StringManager() {
     this.station = UserInterface.getStation();
@@ -21,7 +23,6 @@ public class StringManager { // TODO: kan metoder være static og la være å op
 
   /**
    * Prints all the options the user can choose from.
-   *
    */
   public void printOptions() {
     System.out.println(String.join("\n",
@@ -54,7 +55,6 @@ public class StringManager { // TODO: kan metoder være static og la være å op
 
   /**
    * Prints a String of all departures yet to depart.
-   *
    */
   public void printAllDepartures() {
     StringBuilder result = new StringBuilder();
@@ -112,16 +112,19 @@ public class StringManager { // TODO: kan metoder være static og la være å op
   }
 
   /**
-   * Prints the next departure to a given destination.
-   * If no departures are found, a message is printed.
+   * Prints the next departure to a given destination. If no departures are found, a message is
+   * printed.
    *
    * @param destination2 The destination to search for
    */
-  public void printNextDepartureToDestination(String destination2) { // TODO: Dumt å kalle metoden flere ganger istedet for å lagre trainnumber og heller kalle get funksjonen til det spesifikke toget?
+  public void printNextDepartureToDestination(
+      String destination2) { // TODO: Dumt å kalle metoden flere ganger istedet for å lagre trainnumber og heller kalle get funksjonen til det spesifikke toget?
     if (station.getTrainDepartureByDestination(destination2) != null) {
       StringBuilder result = new StringBuilder();
-      result.append("The next train to " + station.getTrainDepartureByDestination(destination2).getDestination());
-      result.append(" departs at " + station.getTrainDepartureByDestination(destination2).getDepartureTime());
+      result.append("The next train to " + station.getTrainDepartureByDestination(destination2)
+          .getDestination());
+      result.append(
+          " departs at " + station.getTrainDepartureByDestination(destination2).getDepartureTime());
       if (station.getTrainDepartureByDestination(destination2).getTrack() == -1) {
         result.append(" from track (not yet assigned)");
       } else {
@@ -155,7 +158,7 @@ public class StringManager { // TODO: kan metoder være static og la være å op
     System.out.println("Please enter a line: ");
   }
 
-/**
+  /**
    * Prints a message indicating that the train number is invalid.
    */
   public void printTrainNumberInvalid() {
@@ -209,6 +212,7 @@ public class StringManager { // TODO: kan metoder være static og la være å op
     System.out.println("Destination: " + train.getDestination());
     System.out.println("Departure time: " + train.getDepartureTime());
     System.out.print("Track: ");
-    System.out.println((train.getTrack() == -1) ? "Not yet assigned" : String.valueOf(train.getTrack()));
+    System.out.println(
+        (train.getTrack() == -1) ? "Not yet assigned" : String.valueOf(train.getTrack()));
   }
 }

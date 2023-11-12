@@ -6,7 +6,11 @@ import java.time.LocalTime;
 
 /**
  * Main class of the user interface.
- * <p>Handles the switch case and calls the needed methods in the StringManager and InputHandler classes.</p>
+ * <p>Handles the switch case and calls the needed methods in the StringManager and InputHandler
+ * classes.</p>
+ *
+ * @Author Sigurd Riseth
+ * @version 0.0.1
  */
 public class UserInterface {
 
@@ -63,7 +67,8 @@ public class UserInterface {
           stringManager.print("The application has now been terminated.");
           break;
         default:
-          stringManager.print(("Please enter a valid number. The number should be between 0 and 10"));
+          stringManager.print(
+              ("Please enter a valid number. The number should be between 0 and 10"));
           break;
       }
     }
@@ -160,8 +165,8 @@ public class UserInterface {
   /**
    * First method to be called when the application starts.
    * <p>
-   *   Initializes the StringManager and InputHandler classes.
-   *   Creates some train departures and prints a welcome message
+   * Initializes the StringManager and InputHandler classes. Creates some train departures and
+   * prints a welcome message
    * </p>
    */
   public void init() {
