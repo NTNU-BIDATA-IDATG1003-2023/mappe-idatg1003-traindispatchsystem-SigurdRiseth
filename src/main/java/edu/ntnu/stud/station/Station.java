@@ -81,33 +81,30 @@ public class Station {
   }
 
   /**
-   * Returns a list of all TrainDepartures yet to depart, sorted by departure time.
+   * Returns a list of all TrainDepartures yet to depart.
+   * Done by running the sortByDepartureTime method.
    *
    * @return trainDeparturesSorted
    */
   public List<TrainDeparture> getTrainDeparturesSorted() {
-    this.sortByDepartureTime();
-    Iterator<TrainDeparture> iterator = this.trainDeparturesSorted.iterator();
-    while (iterator.hasNext()) {
-      TrainDeparture trainDeparture = iterator.next();
-      if (trainDeparture.getDepartureTime().isBefore(this.time)) {
-        iterator.remove();
-      }
-    }
+    sortByDepartureTime(); // Now, sorting includes filtering
     return this.trainDeparturesSorted;
   }
 
   /**
-   * Sorts the trainDepartures HashMap by departure time and stores the sorted list in
-   * trainDeparturesSorted.
+   * Sorts the trainDepartures HashMap by departure time and filters out departures
+   * that have already departed based on the current time.
+   * Saves the result in the trainDeparturesSorted list.
    */
-  public void sortByDepartureTime() { // TODO: filter out departures that have already departed here?
+  private void sortByDepartureTime() {
     this.trainDeparturesSorted = this.trainDepartures
         .values()
         .stream()
+        .filter(trainDeparture -> trainDeparture.getDepartureTime().isAfter(this.time))
         .sorted(Comparator.comparing(TrainDeparture::getDepartureTime))
         .collect(Collectors.toList());
   }
+
 
   /**
    * Returns a boolean value indicating whether a train with the given train number exists.
