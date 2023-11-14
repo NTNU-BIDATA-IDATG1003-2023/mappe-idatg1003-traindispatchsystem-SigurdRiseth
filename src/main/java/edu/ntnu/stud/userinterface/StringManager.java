@@ -7,8 +7,8 @@ import java.util.Iterator;
 /**
  * Class for managing all the methods creating strings used in the UI.
  *
- * @Author Sigurd Riseth
  * @version 0.0.1
+ * @Author Sigurd Riseth
  */
 public class StringManager { // TODO: kan metoder være static og la være å opprette denne klassen?
 
@@ -17,8 +17,8 @@ public class StringManager { // TODO: kan metoder være static og la være å op
   /**
    * Constructor that sets the station.
    */
-  public StringManager() {
-    this.station = UserInterface.getStation();
+  public StringManager(Station station) {
+    this.station = station;
   }
 
   /**
@@ -86,12 +86,12 @@ public class StringManager { // TODO: kan metoder være static og la være å op
   public void printAllDeparturesToDestination(String destination) {
     destination = destination.substring(0, 1).toUpperCase()
         + destination.substring(1).toLowerCase();
-    Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
     boolean foundDeparture = false;
     System.out.println("The time is now " + station.getClock());
     System.out.println("Here is a list of all the trains that are yet to depart to " + destination
         + ":");
     System.out.println("Train number\tLine\tDestination\t\t\tDeparture time\tTrack");
+    Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
       if (trainDeparture.getDestination().equals(destination)) {

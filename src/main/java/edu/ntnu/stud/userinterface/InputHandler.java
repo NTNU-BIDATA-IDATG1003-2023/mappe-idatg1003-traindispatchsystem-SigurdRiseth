@@ -1,5 +1,6 @@
 package edu.ntnu.stud.userinterface;
 
+import edu.ntnu.stud.station.Station;
 import java.time.LocalTime;
 import java.util.Scanner;
 
@@ -13,6 +14,7 @@ import java.util.Scanner;
 public class InputHandler {
 
   private final StringManager stringManager;
+  private final Station station;
   private final Scanner scanner = new Scanner(System.in);
 
   /**
@@ -21,8 +23,9 @@ public class InputHandler {
    *
    * @param stringManager The StringManager object
    */
-  public InputHandler(StringManager stringManager) {
+  public InputHandler(StringManager stringManager, Station station) {
     this.stringManager = stringManager;
+    this.station = station;
   }
 
   /**
@@ -51,7 +54,7 @@ public class InputHandler {
 
         if (trainNumber < 1) {
           stringManager.printTrainNumberInvalid();
-        } else if (UserInterface.getStation().trainExists(trainNumber)) {
+        } else if (station.trainExists(trainNumber)) {
           stringManager.printTrainNumberInUse();
           trainNumber = -1;
         }
@@ -115,7 +118,7 @@ public class InputHandler {
    */
   public LocalTime getLocalTimeFromStringAfterClock() {
     LocalTime time = getLocalTimeFromString();
-    while (time.isBefore(UserInterface.getStation().getClock())) {
+    while (time.isBefore(station.getClock())) {
       stringManager.print(
           "You cannot add a train departure before the current time. Please try again.");
       time = getLocalTimeFromString();
@@ -164,7 +167,7 @@ public class InputHandler {
 
         if (trainNumber < 1) {
           stringManager.printTrainNumberInvalid();
-        } else if (!UserInterface.getStation().trainExists(trainNumber)) {
+        } else if (!station.trainExists(trainNumber)) {
           stringManager.printTrainNumberNotInUse();
           trainNumber = -1;
         }

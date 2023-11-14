@@ -67,7 +67,7 @@ public class Station {
   public void createTrainDeparture(String track, int trainNumber, String line, String destination,
       LocalTime departureTime) {
     TrainDeparture trainDeparture = new TrainDeparture(track, trainNumber, line, destination,
-        departureTime);
+        departureTime, this);
     this.addTrainDeparture(trainDeparture);
   }
 
@@ -85,7 +85,7 @@ public class Station {
    *
    * @return trainDeparturesSorted
    */
-  public List getTrainDeparturesSorted() {
+  public List<TrainDeparture> getTrainDeparturesSorted() {
     this.sortByDepartureTime();
     Iterator<TrainDeparture> iterator = this.trainDeparturesSorted.iterator();
     while (iterator.hasNext()) {

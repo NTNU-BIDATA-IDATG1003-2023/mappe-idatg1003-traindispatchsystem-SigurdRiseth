@@ -53,7 +53,7 @@ class StationTest {
   @Test
   public void createTrainDeparture() {
     Station station = new Station();
-    TrainDeparture expected = new TrainDeparture("3", 1, "L3", "Bergen", LocalTime.of(12, 0));
+    TrainDeparture expected = new TrainDeparture("3", 1, "L3", "Bergen", LocalTime.of(12, 0), station);
     station.createTrainDeparture("3", 1, "L3", "Bergen", LocalTime.of(12, 0));
     TrainDeparture actual = station.getTrainDepartureByTrainNumber(1);
 

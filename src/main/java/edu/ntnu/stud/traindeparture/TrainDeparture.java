@@ -17,7 +17,7 @@ import java.util.Objects;
 public class TrainDeparture {
 
   private int track;
-  private int trainNumber;
+  private int trainNumber; // TODO: FINAL
   private String line;
   private String destination;
   private LocalTime departureTime; // use a Clock class to store departureTime and delay.
@@ -35,8 +35,8 @@ public class TrainDeparture {
    * @param departureTime the time the train is set to depart
    */
   public TrainDeparture(String track, int trainNumber, String line, String destination,
-      LocalTime departureTime) {
-    this.station = UserInterface.getStation();
+      LocalTime departureTime, Station station) {
+    this.station = station;
     this.setTrack(track);
     this.setTrainNumber(trainNumber);
     this.setLine(line);
@@ -67,7 +67,7 @@ public class TrainDeparture {
    */
   public void setTrainNumber(
       int trainNumber) { // TODO: Denne og andre metoder brukes bare av konstruktøren. Kan jeg da sette den til private?
-    if ((trainNumber > 0) && !this.station.trainExists(trainNumber)) {
+    if ((trainNumber > 0) && !station.trainExists(trainNumber)) {
       this.trainNumber = trainNumber;
     } else {
       this.trainNumber = -1;

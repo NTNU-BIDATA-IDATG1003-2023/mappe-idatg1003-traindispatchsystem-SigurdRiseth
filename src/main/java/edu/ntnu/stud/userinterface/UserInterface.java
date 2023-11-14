@@ -14,7 +14,7 @@ import java.time.LocalTime;
  */
 public class UserInterface {
 
-  private static final Station station = new Station();
+  private Station station;
   private StringManager stringManager;
   private InputHandler inputHandler;
 
@@ -170,8 +170,9 @@ public class UserInterface {
    * </p>
    */
   public void init() {
-    this.stringManager = new StringManager();
-    this.inputHandler = new InputHandler(stringManager);
+    this.station = new Station();
+    this.stringManager = new StringManager(station);
+    this.inputHandler = new InputHandler(stringManager, station);
     createTrains();
     welcomeMessage();
 
@@ -194,7 +195,7 @@ public class UserInterface {
    *
    * @return station
    */
-  public static Station getStation() {
+  public Station getStation() {
     return station;
   }
 

@@ -4,17 +4,26 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import edu.ntnu.stud.station.Station;
 import java.time.LocalTime;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class TrainDepartureTest {
 
-  private Station station = new Station();
-  private TrainDeparture trainDeparture1 = new TrainDeparture("1", 1, "L1", "Oslo", LocalTime.of(5, 20));
+  private Station station;
+  private TrainDeparture trainDeparture1;
 
   /**
    * Test that track is set to the parameter when it is above 0.
    * @result Track is set to the parameter
    */
+
+  @BeforeEach
+  void setUp() {
+    station = new Station();
+    station.createTrainDeparture("1", 1, "L1", "Oslo", LocalTime.of(5, 20));
+    station.createTrainDeparture("2", 2, "L2", "Trondheim", LocalTime.of(5, 40));
+    trainDeparture1 = station.getTrainDepartureByTrainNumber(1);
+  }
   @Test
   void setTrackValid() {
     trainDeparture1.setTrack("2");
@@ -37,8 +46,8 @@ class TrainDepartureTest {
    */
   @Test
   void setTrainNumberValid() {
-    trainDeparture1.setTrainNumber(2);
-    assertEquals(2, trainDeparture1.getTrainNumber(), "Train number should be 2");
+    trainDeparture1.setTrainNumber(3);
+    assertEquals(3, trainDeparture1.getTrainNumber(), "Train number should be 2");
   }
 
   /**
@@ -57,9 +66,8 @@ class TrainDepartureTest {
    */
   @Test
   void setTrainNumberAlreadyExists() {
-    station.createTrainDeparture("2", 2, "L2", "Trondheim", LocalTime.of(5, 40));
     trainDeparture1.setTrainNumber(2);
-    assertEquals(-1, trainDeparture1.getTrainNumber(), "Train number should be -1");
+    assertEquals(-1, station.getTrainDepartureByDestination("Oslo").getTrainNumber(), "Train number should be -1");
   }
 
   /**
