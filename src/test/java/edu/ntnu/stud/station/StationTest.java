@@ -2,7 +2,6 @@ package edu.ntnu.stud.station;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import edu.ntnu.stud.TrainDispatchApp;
 import edu.ntnu.stud.traindeparture.TrainDeparture;
 import java.time.LocalTime;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,17 +44,16 @@ class StationTest {
 
   @Test // Skrevet med chatgpt. forbedret siste del fra flere asserequals til en assertall
   void createTrainDeparture() {
-    TrainDeparture expected = new TrainDeparture("3", 1, "L3", "Bergen", LocalTime.of(12, 0), station);
-    station.createTrainDeparture("3", 1, "L3", "Bergen", LocalTime.of(12, 0));
-    TrainDeparture actual = station.getTrainDepartureByTrainNumber(1);
+    station.createTrainDeparture("3", 3, "L3", "Bergen", LocalTime.of(12, 0));
+    TrainDeparture actual = station.getTrainDepartureByTrainNumber(3);
 
     assertAll("Train Departure Attributes",
-        () -> assertEquals(expected.getTrainNumber(), actual.getTrainNumber(), "Train Number should be equal"),
-        () -> assertEquals(expected.getDepartureTime(), actual.getDepartureTime(), "Departure Time should be equal"),
-        () -> assertEquals(expected.getTrack(), actual.getTrack(), "Track should be equal"),
-        () -> assertEquals(expected.getDestination(), actual.getDestination(), "Destination should be equal"),
-        () -> assertEquals(expected.getLine(), actual.getLine(), "Line should be equal"),
-        () -> assertEquals(expected.getDelay(), actual.getDelay(), "Delay should be equal")
+        () -> assertEquals(3, actual.getTrainNumber(), "Train Number should be equal"),
+        () -> assertEquals(LocalTime.of(12,0), actual.getDepartureTime(), "Departure Time should be equal"),
+        () -> assertEquals(3, actual.getTrack(), "Track should be equal"),
+        () -> assertEquals("Bergen", actual.getDestination(), "Destination should be equal"),
+        () -> assertEquals("L3", actual.getLine(), "Line should be equal"),
+        () -> assertEquals(LocalTime.of(0,0), actual.getDelay(), "Delay should be equal")
     );
   }
   /* private method
@@ -82,6 +80,79 @@ class StationTest {
     assertEquals(2, station.getTrainDeparturesSorted().get(0).getTrainNumber(), "Should be train number 2");
   }
 
+  @Test
+  void trainExistsTrue() {
+    assertEquals(true, station.trainExists(1), "Should be true");
+  }
+
+  @Test
+  void trainExistsFalse() {
+    assertEquals(false, station.trainExists(3), "Should be false");
+  }
+
+  @Test
+  void changeTrackByTrainNumberInUse() {
+    assertEquals("Track changed.", station.changeTrackByTrainNumber(1, "3"), "Should be \"Track changed.\"");
+    assertEquals(3, station.getTrainDepartureByTrainNumber(1).getTrack(), "Should be 3");
+  }
+
+  @Test
+  void changeTrackByTrainNumberUnUsed() {
+    assertEquals("Train does not exist.", station.changeTrackByTrainNumber(3, "3"), "Should be \"Train does not exist.\"");
+  }
+
+  @Test
+  void changeDelayByTrainNumberInUse() {
+    assertEquals("Delay changed.", station.changeDelayByTrainNumber(1, LocalTime.of(12, 0)), "Should be \"Delay changed.\"");
+    assertEquals(LocalTime.of(12, 0), station.getTrainDepartureByTrainNumber(1).getDelay(), "Should be 12:00");
+  }
+
+  @Test
+  void changeDelayByTrainNumberUnUsed() {
+    assertEquals("Train does not exist. Please try again.", station.changeDelayByTrainNumber(3, LocalTime.of(12, 0)), "Should be \"Train does not exist. Please try again.\"");
+  }
+
+  @Test
+  void getTrainDepartureByTrainNumberInUse() {
+    TrainDeparture actual = station.getTrainDepartureByTrainNumber(1);
+    assertAll("Train Departure Attributes",
+        () -> assertEquals(1, actual.getTrainNumber(), "Train Number should be equal"),
+        () -> assertEquals(LocalTime.of(5, 20), actual.getDepartureTime(), "Departure Time should be equal"),
+        () -> assertEquals(1, actual.getTrack(), "Track should be equal"),
+        () -> assertEquals("Oslo", actual.getDestination(), "Destination should be equal"),
+        () -> assertEquals("L1", actual.getLine(), "Line should be equal"),
+        () -> assertEquals(LocalTime.of(0,0), actual.getDelay(), "Delay should be equal")
+    );
+  }
+
+  @Test
+  void getTrainDepartureByTrainNumberNotInUse() {
+    assertEquals(null, station.getTrainDepartureByTrainNumber(3), "Should be null");
+  }
+
+  @Test
+  void getTrainDepartureByDestinationInUse() {
+    TrainDeparture actual = station.getTrainDepartureByDestination("Oslo");
+    assertAll("Train Departure Attributes",
+        () -> assertEquals(1, actual.getTrainNumber(), "Train Number should be equal"),
+        () -> assertEquals(LocalTime.of(5, 20), actual.getDepartureTime(), "Departure Time should be equal"),
+        () -> assertEquals(1, actual.getTrack(), "Track should be equal"),
+        () -> assertEquals("Oslo", actual.getDestination(), "Destination should be equal"),
+        () -> assertEquals("L1", actual.getLine(), "Line should be equal"),
+        () -> assertEquals(LocalTime.of(0,0), actual.getDelay(), "Delay should be equal")
+    );
+  }
+
+  @Test
+  void getTrainDepartureByDestinationNotInUse() {
+    assertEquals(null, station.getTrainDepartureByDestination("Bergen"), "Should be null");
+  }
+
+  @Test
+  void removeTrainDepartureByTrainNumber() {
+    station.removeTrainDepartureByTrainNumber(1);
+    assertEquals(null, station.getTrainDepartureByTrainNumber(1), "Should be null");
+  }
 
 
 }

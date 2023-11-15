@@ -84,9 +84,9 @@ public class Station {
    * Returns a list of all TrainDepartures yet to depart.
    * Done by running the sortByDepartureTime method.
    *
-   * @return trainDeparturesSorted
+   * @return a list of all TrainDepartures yet to depart
    */
-  public List<TrainDeparture> getTrainDeparturesSorted() {
+  public List<TrainDeparture> getTrainDeparturesSorted() { // TODO: bedre å returnere en iterator?
     sortByDepartureTime(); // Now, sorting includes filtering
     return this.trainDeparturesSorted;
   }
