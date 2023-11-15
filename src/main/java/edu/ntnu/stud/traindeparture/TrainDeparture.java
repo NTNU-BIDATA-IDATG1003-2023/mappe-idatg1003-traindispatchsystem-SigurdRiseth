@@ -18,8 +18,8 @@ public class TrainDeparture {
 
   private int track;
   private int trainNumber; // TODO: FINAL
-  private String line;
-  private String destination;
+  private String line; // TODO: FINAL
+  private String destination; // TODO: FINAL
   private LocalTime departureTime; // use a Clock class to store departureTime and delay.
   private LocalTime delay;
   private final Station station;

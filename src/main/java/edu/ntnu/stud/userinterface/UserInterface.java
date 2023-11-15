@@ -43,7 +43,7 @@ public class UserInterface {
         case "4":
           createTrainDeparture();
           break;
-        case "5": //TODO: Hva skjer om man skriver inn en streng til trainnumber?
+        case "5":
           setDelayForTrainDeparture();
           break;
         case "6":

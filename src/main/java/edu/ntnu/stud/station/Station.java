@@ -1,8 +1,8 @@
 package edu.ntnu.stud.station;
 
 import edu.ntnu.stud.traindeparture.TrainDeparture;
-import java.util.*;
 import java.time.LocalTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -32,13 +32,13 @@ public class Station {
    *
    * @param time The time to be set
    */
-  public String setClock(LocalTime time) { //TODO : trengs try catch om den mottar LocalTime?
-      if (this.time.isBefore(time)) {
-        this.time = time;
-        return "Time set to " + time.toString();
-      } else {
-        return "Time cannot be set to a time before the current time.";
-      }
+  public String setClock(LocalTime time) {
+    if (this.time.isBefore(time)) {
+      this.time = time;
+      return "Time set to " + time.toString();
+    } else {
+      return "Time cannot be set to a time before the current time.";
+    }
   }
 
 

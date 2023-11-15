@@ -119,8 +119,8 @@ public class InputHandler {
   public LocalTime getLocalTimeFromStringAfterClock() {
     LocalTime time = getLocalTimeFromString();
     while (time.isBefore(station.getClock())) {
-      stringManager.print(
-          "You can not input a time before " + station.getClock().toString() + ". Please try again.");
+      stringManager.print("You can not input a time before "
+          + station.getClock().toString() + ". Please try again.");
       time = getLocalTimeFromString();
     }
     return time;

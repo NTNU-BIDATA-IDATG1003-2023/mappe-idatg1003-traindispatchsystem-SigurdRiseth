@@ -11,7 +11,7 @@ import java.util.Iterator;
  * @version 0.0.1
  * @Author Sigurd Riseth
  */
-public class StringManager { // TODO: kan metoder være static og la være å opprette denne klassen?
+public class StringManager {
 
   private final Station station; //TODO: Riktig å kalle denne for final? den kan endres ved å legge til/endre togavganger.
 
@@ -61,8 +61,8 @@ public class StringManager { // TODO: kan metoder være static og la være å op
     StringBuilder result = new StringBuilder();
     result.append("The time is now " + station.getClock() + "\n");
     result.append("Here is a list of all the trains that are yet to depart:\n");
-    result.append("\033[1m" + String.format("%-15s %-10s %-20s %-20s %-15s %-15s \n", "Train number", "Line",
-        "Destination", "Departure time", "Track", "Delay") + "\033[0m");
+    result.append("\033[1m" + String.format("%-15s %-10s %-20s %-20s %-15s %-15s \n",
+        "Train number", "Line", "Destination", "Departure time", "Track", "Delay") + "\033[0m");
     Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
@@ -91,8 +91,8 @@ public class StringManager { // TODO: kan metoder være static og la være å op
     System.out.println("The time is now " + station.getClock());
     System.out.println("Here is a list of all the trains that are yet to depart to " + destination
         + ":");
-    System.out.println(("\033[1m" + String.format("%-15s %-10s %-20s %-20s %-15s %-15s", "Train number", "Line",
-        "Destination", "Departure time", "Track", "Delay") + "\033[0m"));
+    System.out.println(("\033[1m" + String.format("%-15s %-10s %-20s %-20s %-15s %-15s",
+        "Train number", "Line", "Destination", "Departure time", "Track", "Delay") + "\033[0m"));
     Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
@@ -120,7 +120,7 @@ public class StringManager { // TODO: kan metoder være static og la være å op
    * @param destination2 The destination to search for
    */
   public void printNextDepartureToDestination(
-      String destination2) { // TODO: Dumt å kalle metoden flere ganger istedet for å lagre trainnumber og heller kalle get funksjonen til det spesifikke toget?
+      String destination2) {
     if (station.getTrainDepartureByDestination(destination2) != null) {
       StringBuilder result = new StringBuilder();
       result.append("The next train to " + station.getTrainDepartureByDestination(destination2)
