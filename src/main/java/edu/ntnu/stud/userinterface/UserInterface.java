@@ -69,7 +69,6 @@ public class UserInterface {
         default:
           stringManager.print(
               ("Please enter a valid number. The number should be between 0 and 10"));
-          break;
       }
     }
   }
