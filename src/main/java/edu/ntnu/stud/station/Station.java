@@ -82,9 +82,9 @@ public class Station {
    *
    * @return a list of all TrainDepartures yet to depart
    */
-  public List<TrainDeparture> getTrainDeparturesSorted() { // TODO: bedre å returnere en iterator?
-    sortByDepartureTime(); // Now, sorting includes filtering
-    return this.trainDeparturesSorted;
+  public Iterator<TrainDeparture> getTrainDeparturesSorted() { // TODO: bedre å returnere en iterator?
+    sortByDepartureTime();
+    return this.trainDeparturesSorted.iterator();
   }
 
   /**
@@ -167,7 +167,7 @@ public class Station {
    * @return TrainDeparture
    */
   public TrainDeparture getTrainDepartureByDestination(String destination) {
-    Iterator<TrainDeparture> iterator = getTrainDeparturesSorted().iterator();
+    Iterator<TrainDeparture> iterator = getTrainDeparturesSorted();
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
       if (trainDeparture.getDestination().equals(destination)) {

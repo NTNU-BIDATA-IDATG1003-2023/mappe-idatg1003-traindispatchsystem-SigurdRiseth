@@ -63,7 +63,7 @@ public class StringManager {
     result.append("Here is a list of all the trains that are yet to depart:\n");
     result.append("\033[1m" + String.format("%-15s %-10s %-20s %-20s %-15s %-15s \n",
         "Train number", "Line", "Destination", "Departure time", "Track", "Delay") + "\033[0m");
-    Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
+    Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted();
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
       String formattedLine = String.format("%-15s %-10s %-20s %-20s %-15s %-15s",
@@ -93,7 +93,7 @@ public class StringManager {
         + ":");
     System.out.println(("\033[1m" + String.format("%-15s %-10s %-20s %-20s %-15s %-15s",
         "Train number", "Line", "Destination", "Departure time", "Track", "Delay") + "\033[0m"));
-    Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
+    Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted();
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
       if (trainDeparture.getDestination().equals(destination)) {
