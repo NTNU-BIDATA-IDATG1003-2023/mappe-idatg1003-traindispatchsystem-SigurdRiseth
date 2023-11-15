@@ -171,8 +171,7 @@ public class TrainDeparture {
    * @return The LocalTime object representing the departure time.
    */
   public LocalTime getDepartureTime() {
-    return this.departureTime.plusHours(this.delay.getHour())
-        .plusMinutes(this.delay.getMinute());
+    return departureTime;
   }
 
   /**
