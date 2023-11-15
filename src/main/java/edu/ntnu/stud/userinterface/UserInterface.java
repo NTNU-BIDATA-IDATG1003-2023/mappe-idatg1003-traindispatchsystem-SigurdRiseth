@@ -78,7 +78,7 @@ public class UserInterface {
    * Sets the clock of the station to the user input.
    */
   private void setStationClock() {
-    LocalTime time = inputHandler.getLocalTimeFromString();
+    LocalTime time = inputHandler.getLocalTimeFromStringAfterClock();
     stringManager.print(station.setClock(time));
   }
 

@@ -61,18 +61,18 @@ public class StringManager { // TODO: kan metoder være static og la være å op
     StringBuilder result = new StringBuilder();
     result.append("The time is now " + station.getClock() + "\n");
     result.append("Here is a list of all the trains that are yet to depart:\n");
-    result.append("Train number\tLine\tDestination\t\t\tDeparture time\tTrack\n");
-
+    result.append("\033[1m" + String.format("%-15s %-10s %-20s %-20s %-15s %-15s \n", "Train number", "Line",
+        "Destination", "Departure time", "Track", "Delay") + "\033[0m");
     Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
-      String formattedLine = String.format("%-15s%-5s%-20s%-15s%-10s%-10s",
+      String formattedLine = String.format("%-15s %-10s %-20s %-20s %-15s %-15s",
           trainDeparture.getTrainNumber(),
           trainDeparture.getLine(),
           trainDeparture.getDestination(),
           trainDeparture.getDepartureTime(),
-          (trainDeparture.getTrack() == -1) ? "-" : String.valueOf(trainDeparture.getTrack(),
-          (trainDeparture.getDelay() == LocalTime.of(0, 0)) ? "-" : trainDeparture.getDelay();
+          (trainDeparture.getTrack() == -1) ? "-" : String.valueOf(trainDeparture.getTrack()),
+          (trainDeparture.getDelay() == LocalTime.of(0, 0)) ? "-" : trainDeparture.getDelay());
       result.append(formattedLine).append("\n");
     }
     System.out.println(result);
@@ -91,18 +91,19 @@ public class StringManager { // TODO: kan metoder være static og la være å op
     System.out.println("The time is now " + station.getClock());
     System.out.println("Here is a list of all the trains that are yet to depart to " + destination
         + ":");
-    System.out.println("Train number\tLine\tDestination\t\t\tDeparture time\tTrack");
+    System.out.println(("\033[1m" + String.format("%-15s %-10s %-20s %-20s %-15s %-15s", "Train number", "Line",
+        "Destination", "Departure time", "Track", "Delay") + "\033[0m"));
     Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
       if (trainDeparture.getDestination().equals(destination)) {
-        String formattedLine = String.format("%-15s | %-5s | %-20s | %-15s | %-10s",
+        String formattedLine = String.format("%-15s %-10s %-20s %-20s %-15s %-15s",
             trainDeparture.getTrainNumber(),
             trainDeparture.getLine(),
             trainDeparture.getDestination(),
             trainDeparture.getDepartureTime(),
-            (trainDeparture.getTrack() == -1) ? "-" : String.valueOf(trainDeparture.getTrack())
-        );
+            (trainDeparture.getTrack() == -1) ? "-" : String.valueOf(trainDeparture.getTrack()),
+            (trainDeparture.getDelay() == LocalTime.of(0, 0)) ? "-" : trainDeparture.getDelay());
         System.out.println(formattedLine);
         foundDeparture = true;
       }

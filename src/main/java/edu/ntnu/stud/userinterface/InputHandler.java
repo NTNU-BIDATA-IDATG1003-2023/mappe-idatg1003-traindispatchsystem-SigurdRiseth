@@ -120,7 +120,7 @@ public class InputHandler {
     LocalTime time = getLocalTimeFromString();
     while (time.isBefore(station.getClock())) {
       stringManager.print(
-          "You cannot add a train departure before the current time. Please try again.");
+          "You can not input a time before " + station.getClock().toString() + ". Please try again.");
       time = getLocalTimeFromString();
     }
     return time;
