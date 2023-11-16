@@ -22,7 +22,6 @@ public class TrainDeparture {
   private String destination; // TODO: FINAL
   private LocalTime departureTime; // use a Clock class to store departureTime and delay.
   private LocalTime delay;
-  private final Station station;
 
   /**
    * Constructor that sets all parameters of the class to the given parameter except delay which is
@@ -35,8 +34,7 @@ public class TrainDeparture {
    * @param departureTime the time the train is set to depart
    */
   public TrainDeparture(String track, int trainNumber, String line, String destination,
-      LocalTime departureTime, Station station) {
-    this.station = station;
+      LocalTime departureTime) {
     this.setTrack(track);
     this.setTrainNumber(trainNumber);
     this.setLine(line);
@@ -46,7 +44,7 @@ public class TrainDeparture {
   }
 
   /**
-   * Sets the track. If the track is under 1 the value is set to -1.
+   * Sets the track. If the track is under 1 or text the value is set to -1.
    */
   public void setTrack(String track) {
     try {
@@ -67,11 +65,7 @@ public class TrainDeparture {
    */
   public void setTrainNumber(
       int trainNumber) { // TODO: Denne og andre metoder brukes bare av konstruktøren. Kan jeg da sette den til private?
-    if ((trainNumber > 0) && !station.trainExists(trainNumber)) {
-      this.trainNumber = trainNumber;
-    } else {
-      this.trainNumber = -1;
-    }
+    this.trainNumber = trainNumber;
   }
 
   /**
@@ -98,9 +92,7 @@ public class TrainDeparture {
    * @param departureTime departure time to be set
    */
   public void setDepartureTime(LocalTime departureTime) {
-    if (departureTime.isAfter(station.getClock())) {
-      this.departureTime = departureTime;
-    }
+    this.departureTime = departureTime;
   }
 
   /**
@@ -113,12 +105,7 @@ public class TrainDeparture {
     // TODO: delay burde kanskje ikke være 00:00 om man får inn null?
     // TODO: Kan man endre delay slik at reel deparutre time blir før klokken?
     if (delay != null) {
-      if ((this.departureTime.getHour() + delay.getHour()) * 60
-          + this.departureTime.getMinute() + delay.getMinute() >= 1440) {
-        station.removeTrainDepartureByTrainNumber(this.trainNumber);
-      } else {
-        this.delay = delay;
-      }
+      this.delay = delay;
     } else {
       this.delay = LocalTime.of(0, 0);
     }

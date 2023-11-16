@@ -32,7 +32,7 @@ public class UserInterface {
 
       switch (choice) {
         case "1":
-          stringManager.printAllDepartures();
+          printAllDepartures();
           break;
         case "2":
           printAllUpcomingDeparturesToDestination();
@@ -71,6 +71,11 @@ public class UserInterface {
               ("Please enter a valid number. The number should be between 0 and 10"));
       }
     }
+  }
+
+  private void printAllDepartures() {
+    stringManager.print("The time is now " + station.getClock());
+    stringManager.printAllDepartures(station.getTrainDeparturesSorted());
   }
 
   /**
@@ -155,9 +160,9 @@ public class UserInterface {
    * Prints all upcoming departures to the destination the user inputs.
    */
   private void printAllUpcomingDeparturesToDestination() {
-    stringManager.printDestinationAsk();
     String destination1 = getDestination();
-    stringManager.printAllDeparturesToDestination(destination1);
+    stringManager.print("The time is now " + station.getClock());
+    stringManager.printAllDeparturesToDestination(destination1, station.getTrainDeparturesSorted());
   }
 
   /**
@@ -259,7 +264,7 @@ public class UserInterface {
    */
   public void init() {
     this.station = new Station();
-    this.stringManager = new StringManager(station);
+    this.stringManager = new StringManager();
     this.inputHandler = new InputHandler();
     createTrains();
     welcomeMessage();

@@ -47,8 +47,9 @@ public class InputHandler {
    */
 
   public String getStringInputCapitalized() {
-    return scanner.nextLine().substring(0, 1).toUpperCase()
-        + scanner.nextLine().substring(1).toLowerCase();
+    String result = scanner.nextLine();
+    result = result.substring(0, 1).toUpperCase() + result.substring(1).toLowerCase();
+    return result;
   }
 
 

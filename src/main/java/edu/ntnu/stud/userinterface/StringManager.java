@@ -13,13 +13,8 @@ import java.util.Iterator;
  */
 public class StringManager {
 
-  private final Station station; //TODO: Riktig å kalle denne for final? den kan endres ved å legge til/endre togavganger.
 
-  /**
-   * Constructor that sets the station.
-   */
-  public StringManager(Station station) {
-    this.station = station;
+  public StringManager() {
   }
 
   /**
@@ -57,13 +52,11 @@ public class StringManager {
   /**
    * Prints a String of all departures yet to depart.
    */
-  public void printAllDepartures() {
+  public void printAllDepartures(Iterator<TrainDeparture> iterator) {
     StringBuilder result = new StringBuilder();
-    result.append("The time is now " + station.getClock() + "\n");
     result.append("Here is a list of all the trains that are yet to depart:\n");
     result.append("\033[1m" + String.format("%-15s %-10s %-20s %-20s %-15s %-15s \n",
         "Train number", "Line", "Destination", "Departure time", "Track", "Delay") + "\033[0m");
-    Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted();
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
       String formattedLine = String.format("%-15s %-10s %-20s %-20s %-15s %-15s",
@@ -84,14 +77,12 @@ public class StringManager {
    *
    * @param destination The destination to search for
    */
-  public void printAllDeparturesToDestination(String destination) {
+  public void printAllDeparturesToDestination(String destination, Iterator<TrainDeparture> iterator) {
     boolean foundDeparture = false;
-    System.out.println("The time is now " + station.getClock());
     System.out.println("Here is a list of all the trains that are yet to depart to " + destination
         + ":");
     System.out.println(("\033[1m" + String.format("%-15s %-10s %-20s %-20s %-15s %-15s",
         "Train number", "Line", "Destination", "Departure time", "Track", "Delay") + "\033[0m"));
-    Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted();
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
       if (trainDeparture.getDestination().equals(destination)) {
@@ -120,7 +111,7 @@ public class StringManager {
   public void printNextDepartureToDestination(TrainDeparture trainDeparture) {
       StringBuilder result = new StringBuilder();
       result.append("The next train to " + trainDeparture.getDestination());
-      result.append(" departs at " + trainDeparture.getDepartureTime();
+      result.append(" departs at " + trainDeparture.getDepartureTime());
       if (trainDeparture.getTrack() == -1) {
         result.append(" from track (not yet assigned)");
       } else {

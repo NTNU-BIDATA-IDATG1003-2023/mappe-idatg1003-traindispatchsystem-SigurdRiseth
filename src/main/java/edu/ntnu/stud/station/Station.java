@@ -63,7 +63,7 @@ public class Station {
   public void createTrainDeparture(String track, int trainNumber, String line, String destination,
       LocalTime departureTime) {
     TrainDeparture trainDeparture = new TrainDeparture(track, trainNumber, line, destination,
-        departureTime, this);
+        departureTime);
     this.addTrainDeparture(trainDeparture);
   }
 
@@ -96,7 +96,7 @@ public class Station {
     this.trainDeparturesSorted = this.trainDepartures
         .values()
         .stream()
-        .filter(trainDeparture -> trainDeparture.getDepartureTime().isAfter(this.time))
+        .filter(trainDeparture -> !trainDeparture.getDepartureTime().isBefore(this.time))
         .sorted(Comparator.comparing(TrainDeparture::getDepartureTime))
         .collect(Collectors.toList());
   }
@@ -139,8 +139,14 @@ public class Station {
    */
   public String changeDelayByTrainNumber(int trainNumber, LocalTime delay) {
     if (trainExists(trainNumber)) {
-      trainDepartures.get(trainNumber).setDelay(delay);
-      return "Delay changed.";
+      if ((trainDepartures.get(trainNumber).getDepartureTime().getHour() + delay.getHour()) * 60
+          + trainDepartures.get(trainNumber).getDepartureTime().getMinute() + delay.getMinute() >= 1440) {
+          removeTrainDepartureByTrainNumber(trainNumber);
+          return "Train removed as it was delayed over midnight.";
+      } else {
+        trainDepartures.get(trainNumber).setDelay(delay);
+        return "Delay changed.";
+      }
     } else {
       return "Train does not exist. Please try again.";
     }
