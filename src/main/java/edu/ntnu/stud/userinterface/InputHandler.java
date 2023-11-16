@@ -37,34 +37,6 @@ public class InputHandler {
     return scanner.nextLine();
   }
 
-  /**
-   * Asks the user for a train number. Will keep asking until the user inputs an unused and valid
-   * train number.
-   *
-   * @return The train number
-   */
-  public int getTrainNumberUnused() {
-    int trainNumber = 0;
-
-    do {
-      stringManager.printTrainNumberAsk();
-      try {
-        trainNumber = scanner.nextInt();
-        scanner.nextLine();
-
-        if (trainNumber < 1) {
-          stringManager.printTrainNumberInvalid();
-        } else if (station.trainExists(trainNumber)) {
-          stringManager.printTrainNumberInUse();
-          trainNumber = -1;
-        }
-      } catch (Exception e) {
-        stringManager.printTrainNumberInvalid();
-        scanner.nextLine();
-      }
-    } while (trainNumber < 1);
-    return trainNumber;
-  }
 
   /**
    * Runs StringManagers method printLineAsk() and returns the user input.
@@ -82,12 +54,12 @@ public class InputHandler {
    *
    * @return The destination
    */
-  public String getDestination() {
-    stringManager.printDestinationAsk();
-    String destination = scanner.nextLine();
-    return destination.substring(0, 1).toUpperCase()
-        + destination.substring(1).toLowerCase();
+
+  public String getStringInputCapitalized() {
+    return scanner.nextLine().substring(0, 1).toUpperCase()
+        + scanner.nextLine().substring(1).toLowerCase();
   }
+
 
   /**
    * Runs StringManagers method printTimeAsk() and stores the user input. Will keep asking until the
@@ -179,6 +151,11 @@ public class InputHandler {
     return trainNumber;
   }
 
+  public int getInt() {
+    int trainNumber = scanner.nextInt();
+    scanner.nextLine();
+    return trainNumber;
+  }
 }
 
 

@@ -134,6 +134,7 @@ public class UserInterface {
    * Prints all upcoming departures to the destination the user inputs.
    */
   private void printAllUpcomingDeparturesToDestination() {
+    stringManager.printDestinationAsk();
     String destination1 = inputHandler.getDestination();
     stringManager.printAllDeparturesToDestination(destination1);
   }
@@ -142,6 +143,7 @@ public class UserInterface {
    * Prints the next departure to the destination the user inputs.
    */
   private void printNextDepartureToDestination() {
+    stringManager.printDestinationAsk();
     String destination2 = inputHandler.getDestination();
     stringManager.printNextDepartureToDestination(destination2);
   }
@@ -151,14 +153,46 @@ public class UserInterface {
    * <p>User inputs the train number, line, destination, departure time and track</p>
    */
   private void createTrainDeparture() {
-    int trainNumber = inputHandler.getTrainNumberUnused();
-    String line = inputHandler.getLine();
+
+    int trainNumber = getTrainNumberUnused();
+    String line = getLine();
     String destination3 = inputHandler.getDestination();
     LocalTime departureTime = inputHandler.getLocalTimeFromStringAfterClock();
     String track = inputHandler.getTrack();
 
     station.createTrainDeparture(track, trainNumber, line, destination3, departureTime);
     stringManager.print("Train departure has been added!");
+  }
+
+  private String getDestination() {
+    stringManager.printDestinationAsk();
+    return inputHandler.getStringInputCapitalized();
+  }
+
+  private String getLine() {
+    stringManager.printLineAsk();
+    return inputHandler.getStringInput();
+  }
+
+  private int getTrainNumberUnused() {
+    int trainNumber = 0;
+
+    do {
+      stringManager.printTrainNumberAsk();
+      try {
+        trainNumber = inputHandler.getInt()
+
+        if (trainNumber < 1) {
+          stringManager.printTrainNumberInvalid();
+        } else if (station.trainExists(trainNumber)) {
+          stringManager.printTrainNumberInUse();
+          trainNumber = -1;
+        }
+      } catch (Exception e) {
+        stringManager.printTrainNumberInvalid();
+      }
+    } while (trainNumber < 1);
+    return trainNumber;
   }
 
   /**
