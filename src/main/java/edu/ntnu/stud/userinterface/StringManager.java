@@ -117,26 +117,19 @@ public class StringManager {
    * Prints the next departure to a given destination. If no departures are found, a message is
    * printed.
    *
-   * @param destination2 The destination to search for
+   * @param trainDeparture The destination to search for
    */
-  public void printNextDepartureToDestination(
-      String destination2) {
-    if (station.getTrainDepartureByDestination(destination2) != null) {
+  public void printNextDepartureToDestination(TrainDeparture trainDeparture) {
       StringBuilder result = new StringBuilder();
-      result.append("The next train to " + station.getTrainDepartureByDestination(destination2)
-          .getDestination());
-      result.append(
-          " departs at " + station.getTrainDepartureByDestination(destination2).getDepartureTime());
-      if (station.getTrainDepartureByDestination(destination2).getTrack() == -1) {
+      result.append("The next train to " + trainDeparture.getDestination());
+      result.append(" departs at " + trainDeparture.getDepartureTime();
+      if (trainDeparture.getTrack() == -1) {
         result.append(" from track (not yet assigned)");
       } else {
-        result.append(" from track " + station.getTrainDepartureByDestination(destination2)
-            .getTrack());
+        result.append(" from track " + trainDeparture.getTrack());
       }
       System.out.println(String.valueOf(result));
-    } else {
-      System.out.println("No train to " + destination2 + " was found.");
-    }
+
   }
 
   /**

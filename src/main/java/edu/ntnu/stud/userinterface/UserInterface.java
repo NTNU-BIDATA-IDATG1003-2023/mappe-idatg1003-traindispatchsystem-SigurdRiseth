@@ -164,9 +164,13 @@ public class UserInterface {
    * Prints the next departure to the destination the user inputs.
    */
   private void printNextDepartureToDestination() {
-    stringManager.printDestinationAsk();
     String destination2 = getDestination();
-    stringManager.printNextDepartureToDestination(destination2);
+    if (station.getTrainDepartureByDestination(destination2) != null) {
+      stringManager.printNextDepartureToDestination(station.getTrainDepartureByDestination(destination2));
+    } else {
+      stringManager.print("No train to " + destination2 + " was found.");
+    }
+
   }
 
   /**
