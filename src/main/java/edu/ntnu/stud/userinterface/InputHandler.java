@@ -13,8 +13,6 @@ import java.util.Scanner;
  */
 public class InputHandler {
 
-  private final StringManager stringManager;
-  private final Station station;
   private final Scanner scanner = new Scanner(System.in);
 
   /**
@@ -23,9 +21,8 @@ public class InputHandler {
    *
    * @param stringManager The StringManager object
    */
-  public InputHandler(StringManager stringManager, Station station) {
-    this.stringManager = stringManager;
-    this.station = station;
+  public InputHandler() {
+    // TODO document why this constructor is empty
   }
 
   /**
@@ -43,10 +40,6 @@ public class InputHandler {
    *
    * @return The line
    */
-  public String getLine() {
-    stringManager.printLineAsk();
-    return scanner.nextLine();
-  }
 
   /**
    * Runs StringManagers method printDestinationAsk() and stores the user input. Capitalizes the
@@ -67,20 +60,6 @@ public class InputHandler {
    *
    * @return The departure time
    */
-  public LocalTime getLocalTimeFromString() {
-    LocalTime departureTime = null;
-    while (departureTime == null) {
-      stringManager.printTimeAsk();
-      String inputDepartureTime = scanner.nextLine();
-      if (departureTimeValid(inputDepartureTime)) {
-        departureTime = LocalTime.parse(inputDepartureTime);
-        return departureTime;
-      } else {
-        stringManager.printTimeInvalid();
-      }
-    }
-    return departureTime;
-  }
 
   /**
    * Runs StringManagers method getLocalTimeFromStringAfterClock() and stores the user input. Will
@@ -88,15 +67,6 @@ public class InputHandler {
    *
    * @return The departure time
    */
-  public LocalTime getLocalTimeFromStringAfterClock() {
-    LocalTime time = getLocalTimeFromString();
-    while (time.isBefore(station.getClock())) {
-      stringManager.print("You can not input a time before "
-          + station.getClock().toString() + ". Please try again.");
-      time = getLocalTimeFromString();
-    }
-    return time;
-  }
 
   /**
    * Checks if the user input is a String that can be parsed to a LocalTime object.
@@ -104,7 +74,7 @@ public class InputHandler {
    * @param inputDepartureTime The input to be checked
    * @return True if the input is a valid time, false otherwise
    */
-  private boolean departureTimeValid(String inputDepartureTime) {
+  public boolean departureTimeValid(String inputDepartureTime) {
     try {
       LocalTime.parse(inputDepartureTime);
       return true;
@@ -118,10 +88,7 @@ public class InputHandler {
    *
    * @return The track
    */
-  public String getTrack() {
-    stringManager.printTrackAsk();
-    return scanner.nextLine();
-  }
+
 
   /**
    * Asks the user for a train number. Will keep asking until the user inputs a used and valid train
@@ -129,27 +96,7 @@ public class InputHandler {
    *
    * @return The train number
    */
-  public int getTrainNumberInUse() {
-    int trainNumber = 0;
-    do {
-      stringManager.printTrainNumberAsk();
-      try {
-        trainNumber = scanner.nextInt();
-        scanner.nextLine();
 
-        if (trainNumber < 1) {
-          stringManager.printTrainNumberInvalid();
-        } else if (!station.trainExists(trainNumber)) {
-          stringManager.printTrainNumberNotInUse();
-          trainNumber = -1;
-        }
-      } catch (Exception e) {
-        stringManager.printTrainNumberInvalid();
-        scanner.nextLine();
-      }
-    } while (trainNumber < 1);
-    return trainNumber;
-  }
 
   public int getInt() {
     int trainNumber = scanner.nextInt();

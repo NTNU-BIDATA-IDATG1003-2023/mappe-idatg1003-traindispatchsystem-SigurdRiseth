@@ -77,7 +77,7 @@ public class UserInterface {
    * Sets the clock of the station to the user input.
    */
   private void setStationClock() {
-    LocalTime time = inputHandler.getLocalTimeFromStringAfterClock();
+    LocalTime time = getLocalTimeFromStringAfterClock();
     stringManager.print(station.setClock(time));
   }
 
@@ -85,7 +85,7 @@ public class UserInterface {
    * Removes a train departure by the train number the user inputs.
    */
   private void removeTrainDepartureByTrainNumber() {
-    int trainNumber5 = inputHandler.getTrainNumberInUse();
+    int trainNumber5 = getTrainNumberInUse();
     station.removeTrainDepartureByTrainNumber(trainNumber5);
     stringManager.print(("Train has been removed."));
   }
@@ -94,7 +94,7 @@ public class UserInterface {
    * Prints the train departure with the train number the user inputs.
    */
   private void getTrainByTrainNumber() {
-    int trainNumber3 = inputHandler.getTrainNumberInUse();
+    int trainNumber3 = getTrainNumberInUse();
     TrainDeparture train = station.getTrainDepartureByTrainNumber(trainNumber3);
     if (train != null) {
       stringManager.printTrainDeparture(train);
@@ -107,7 +107,7 @@ public class UserInterface {
    * Removes the track for the train departure with the train number the user inputs.
    */
   private void removeTrackForTrainDeparture() {
-    int trainNumber6 = inputHandler.getTrainNumberInUse();
+    int trainNumber6 = getTrainNumberInUse();
     stringManager.print(station.changeTrackByTrainNumber(trainNumber6, "-1"));
   }
 
@@ -115,8 +115,8 @@ public class UserInterface {
    * Sets the track for the train departure with the train number the user inputs.
    */
   private void setTrackForTrainDeparture() {
-    int trainNumber4 = inputHandler.getTrainNumberInUse();
-    String track2 = inputHandler.getTrack();
+    int trainNumber4 = getTrainNumberInUse();
+    String track2 = getTrack();
     stringManager.print((station.changeTrackByTrainNumber(trainNumber4, track2)));
   }
 
@@ -125,9 +125,30 @@ public class UserInterface {
    * <p>User inputs the train number and the delay</p>
    */
   private void setDelayForTrainDeparture() {
-    int trainNumber2 = inputHandler.getTrainNumberInUse();
-    LocalTime delay = inputHandler.getLocalTimeFromString();
+    int trainNumber2 = getTrainNumberInUse();
+    LocalTime delay = getLocalTimeFromString();
     stringManager.print(station.changeDelayByTrainNumber(trainNumber2, delay));
+  }
+
+  private int getTrainNumberInUse() {
+    int trainNumber = 0;
+    do {
+      stringManager.printTrainNumberAsk();
+      try {
+        trainNumber = inputHandler.getInt();
+
+        if (trainNumber < 1) {
+          stringManager.printTrainNumberInvalid();
+        } else if (!station.trainExists(trainNumber)) {
+          stringManager.printTrainNumberNotInUse();
+          trainNumber = -1;
+        }
+      } catch (Exception e) {
+        stringManager.printTrainNumberInvalid();
+      }
+    } while (trainNumber < 1);
+    return trainNumber;
+
   }
 
   /**
@@ -135,7 +156,7 @@ public class UserInterface {
    */
   private void printAllUpcomingDeparturesToDestination() {
     stringManager.printDestinationAsk();
-    String destination1 = inputHandler.getDestination();
+    String destination1 = getDestination();
     stringManager.printAllDeparturesToDestination(destination1);
   }
 
@@ -144,7 +165,7 @@ public class UserInterface {
    */
   private void printNextDepartureToDestination() {
     stringManager.printDestinationAsk();
-    String destination2 = inputHandler.getDestination();
+    String destination2 = getDestination();
     stringManager.printNextDepartureToDestination(destination2);
   }
 
@@ -156,12 +177,42 @@ public class UserInterface {
 
     int trainNumber = getTrainNumberUnused();
     String line = getLine();
-    String destination3 = inputHandler.getDestination();
-    LocalTime departureTime = inputHandler.getLocalTimeFromStringAfterClock();
-    String track = inputHandler.getTrack();
+    String destination3 = getDestination();
+    LocalTime departureTime = getLocalTimeFromStringAfterClock();
+    String track = getTrack();
 
     station.createTrainDeparture(track, trainNumber, line, destination3, departureTime);
     stringManager.print("Train departure has been added!");
+  }
+
+  private String getTrack() {
+    stringManager.printTrackAsk();
+    return inputHandler.getStringInput();
+  }
+
+  private LocalTime getLocalTimeFromString() {
+    LocalTime departureTime = null;
+    while (departureTime == null) {
+      stringManager.printTimeAsk();
+      String inputDepartureTime = inputHandler.getStringInput();
+      if (inputHandler.departureTimeValid(inputDepartureTime)) {
+        departureTime = LocalTime.parse(inputDepartureTime);
+        return departureTime;
+      } else {
+        stringManager.printTimeInvalid();
+      }
+    }
+    return departureTime;
+  }
+
+  private LocalTime getLocalTimeFromStringAfterClock() {
+    LocalTime time = getLocalTimeFromString();
+    while (time.isBefore(station.getClock())) {
+      stringManager.print("You can not input a time before "
+          + station.getClock().toString() + ". Please try again.");
+      time = getLocalTimeFromString();
+    }
+    return time;
   }
 
   private String getDestination() {
@@ -180,7 +231,7 @@ public class UserInterface {
     do {
       stringManager.printTrainNumberAsk();
       try {
-        trainNumber = inputHandler.getInt()
+        trainNumber = inputHandler.getInt();
 
         if (trainNumber < 1) {
           stringManager.printTrainNumberInvalid();
@@ -205,7 +256,7 @@ public class UserInterface {
   public void init() {
     this.station = new Station();
     this.stringManager = new StringManager(station);
-    this.inputHandler = new InputHandler(stringManager, station);
+    this.inputHandler = new InputHandler();
     createTrains();
     welcomeMessage();
 
@@ -221,15 +272,6 @@ public class UserInterface {
     station.createTrainDeparture("4", 4, "L4", "Stavanger", LocalTime.of(3, 17));
     station.createTrainDeparture("2", 5, "L5", "Kristiansand", LocalTime.of(5, 0));
     station.createTrainDeparture("3", 6, "L2", "Trondheim", LocalTime.of(4, 20));
-  }
-
-  /**
-   * Returns the station.
-   *
-   * @return station
-   */
-  public Station getStation() {
-    return station;
   }
 
   /**
