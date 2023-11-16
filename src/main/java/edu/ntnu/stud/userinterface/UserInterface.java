@@ -9,8 +9,8 @@ import java.time.LocalTime;
  * <p>Handles the switch case and calls the needed methods in the StringManager and InputHandler
  * classes.</p>
  *
- * @Author Sigurd Riseth
  * @version 0.0.1
+ * @Author Sigurd Riseth
  */
 public class UserInterface {
 
@@ -171,7 +171,8 @@ public class UserInterface {
   private void printNextDepartureToDestination() {
     String destination2 = getDestination();
     if (station.getTrainDepartureByDestination(destination2) != null) {
-      stringManager.printNextDepartureToDestination(station.getTrainDepartureByDestination(destination2));
+      stringManager.printNextDepartureToDestination(
+          station.getTrainDepartureByDestination(destination2));
     } else {
       stringManager.print("No train to " + destination2 + " was found.");
     }

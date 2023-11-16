@@ -1,6 +1,5 @@
 package edu.ntnu.stud.userinterface;
 
-import edu.ntnu.stud.station.Station;
 import edu.ntnu.stud.traindeparture.TrainDeparture;
 import java.time.LocalTime;
 import java.util.Iterator;
@@ -12,10 +11,6 @@ import java.util.Iterator;
  * @Author Sigurd Riseth
  */
 public class StringManager {
-
-
-  public StringManager() {
-  }
 
   /**
    * Prints all the options the user can choose from.
@@ -77,7 +72,8 @@ public class StringManager {
    *
    * @param destination The destination to search for
    */
-  public void printAllDeparturesToDestination(String destination, Iterator<TrainDeparture> iterator) {
+  public void printAllDeparturesToDestination(String destination,
+      Iterator<TrainDeparture> iterator) {
     boolean foundDeparture = false;
     System.out.println("Here is a list of all the trains that are yet to depart to " + destination
         + ":");
@@ -109,15 +105,15 @@ public class StringManager {
    * @param trainDeparture The destination to search for
    */
   public void printNextDepartureToDestination(TrainDeparture trainDeparture) {
-      StringBuilder result = new StringBuilder();
-      result.append("The next train to " + trainDeparture.getDestination());
-      result.append(" departs at " + trainDeparture.getDepartureTime());
-      if (trainDeparture.getTrack() == -1) {
-        result.append(" from track (not yet assigned)");
-      } else {
-        result.append(" from track " + trainDeparture.getTrack());
-      }
-      System.out.println(String.valueOf(result));
+    StringBuilder result = new StringBuilder();
+    result.append("The next train to " + trainDeparture.getDestination());
+    result.append(" departs at " + trainDeparture.getDepartureTime());
+    if (trainDeparture.getTrack() == -1) {
+      result.append(" from track (not yet assigned)");
+    } else {
+      result.append(" from track " + trainDeparture.getTrack());
+    }
+    System.out.println(result);
 
   }
 

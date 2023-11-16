@@ -1,7 +1,5 @@
 package edu.ntnu.stud.traindeparture;
 
-import edu.ntnu.stud.station.Station;
-import edu.ntnu.stud.userinterface.UserInterface;
 import java.time.LocalTime;
 import java.util.Objects;
 
@@ -44,6 +42,16 @@ public class TrainDeparture {
   }
 
   /**
+   * Retrieves the track number as an integer.
+   *
+   * @return An integer representing the track number.
+   */
+
+  public int getTrack() {
+    return track;
+  }
+
+  /**
    * Sets the track. If the track is under 1 or text the value is set to -1.
    */
   public void setTrack(String track) {
@@ -59,6 +67,15 @@ public class TrainDeparture {
   }
 
   /**
+   * Retrieves the train number as an integer.
+   *
+   * @return An integer representing the train number.
+   */
+  public int getTrainNumber() {
+    return trainNumber;
+  }
+
+  /**
    * Sets the train number.
    * <p>Also checks if the trainNumber is above 0 and not already stored in Stations HashMap.
    * If a train already exists with that number or it is under 1 the value is set to -1.</p>
@@ -66,6 +83,15 @@ public class TrainDeparture {
   public void setTrainNumber(
       int trainNumber) { // TODO: Denne og andre metoder brukes bare av konstruktøren. Kan jeg da sette den til private?
     this.trainNumber = trainNumber;
+  }
+
+  /**
+   * Retrieves the line information as a String.
+   *
+   * @return A String containing information about the line.
+   */
+  public String getLine() {
+    return line;
   }
 
   /**
@@ -78,6 +104,15 @@ public class TrainDeparture {
   }
 
   /**
+   * Retrieves the destination of this entity as a String.
+   *
+   * @return A String representing the destination.
+   */
+  public String getDestination() {
+    return destination;
+  }
+
+  /**
    * Sets the destination. If destination is null, it will be set to "Invalid destination".
    *
    * @param destination destination to be set
@@ -87,12 +122,30 @@ public class TrainDeparture {
   }
 
   /**
+   * Retrieves the departure time (delay included) as a LocalTime object.
+   *
+   * @return The LocalTime object representing the departure time.
+   */
+  public LocalTime getDepartureTime() {
+    return departureTime;
+  }
+
+  /**
    * Sets the departure time. Can only be set to a time after the current time.
    *
    * @param departureTime departure time to be set
    */
   public void setDepartureTime(LocalTime departureTime) {
     this.departureTime = departureTime;
+  }
+
+  /**
+   * Retrieves the delay represented as a LocalTime.
+   *
+   * @return The LocalTime object representing the delay.
+   */
+  public LocalTime getDelay() {
+    return delay;
   }
 
   /**
@@ -109,64 +162,5 @@ public class TrainDeparture {
     } else {
       this.delay = LocalTime.of(0, 0);
     }
-  }
-
-  /**
-   * Retrieves the track number as an integer.
-   *
-   * @return An integer representing the track number.
-   */
-
-  public int getTrack() {
-    return track;
-  }
-
-
-  /**
-   * Retrieves the train number as an integer.
-   *
-   * @return An integer representing the train number.
-   */
-  public int getTrainNumber() {
-    return trainNumber;
-  }
-
-
-  /**
-   * Retrieves the line information as a String.
-   *
-   * @return A String containing information about the line.
-   */
-  public String getLine() {
-    return line;
-  }
-
-
-  /**
-   * Retrieves the destination of this entity as a String.
-   *
-   * @return A String representing the destination.
-   */
-  public String getDestination() {
-    return destination;
-  }
-
-
-  /**
-   * Retrieves the departure time (delay included) as a LocalTime object.
-   *
-   * @return The LocalTime object representing the departure time.
-   */
-  public LocalTime getDepartureTime() {
-    return departureTime;
-  }
-
-  /**
-   * Retrieves the delay represented as a LocalTime.
-   *
-   * @return The LocalTime object representing the delay.
-   */
-  public LocalTime getDelay() {
-    return delay;
   }
 }

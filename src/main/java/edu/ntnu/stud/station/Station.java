@@ -2,21 +2,24 @@ package edu.ntnu.stud.station;
 
 import edu.ntnu.stud.traindeparture.TrainDeparture;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * Class for the train station.
  * <p>In charge of keeping track of the time and a list of all TrainDepartures yet to depart.</p>
  *
- * @Author Sigurd Riseth
  * @version 0.0.1
+ * @Author Sigurd Riseth
  * @since 14.10.2023
  */
 public class Station {
 
   private LocalTime time;
-  private HashMap<Integer, TrainDeparture> trainDepartures;
+  private final HashMap<Integer, TrainDeparture> trainDepartures;
   private List<TrainDeparture> trainDeparturesSorted;
 
   /**
@@ -77,20 +80,20 @@ public class Station {
   }
 
   /**
-   * Returns a list of all TrainDepartures yet to depart.
-   * Done by running the sortByDepartureTime method.
+   * Returns a list of all TrainDepartures yet to depart. Done by running the sortByDepartureTime
+   * method.
    *
    * @return a list of all TrainDepartures yet to depart
    */
-  public Iterator<TrainDeparture> getTrainDeparturesSorted() { // TODO: bedre å returnere en iterator?
+  public Iterator<TrainDeparture> getTrainDeparturesSorted() {
     sortByDepartureTime();
     return this.trainDeparturesSorted.iterator();
   }
 
   /**
-   * Sorts the trainDepartures HashMap by departure time and filters out departures
-   * that have already departed based on the current time.
-   * Saves the result in the trainDeparturesSorted list.
+   * Sorts the trainDepartures HashMap by departure time and filters out departures that have
+   * already departed based on the current time. Saves the result in the trainDeparturesSorted
+   * list.
    */
   private void sortByDepartureTime() {
     this.trainDeparturesSorted = this.trainDepartures
@@ -140,9 +143,10 @@ public class Station {
   public String changeDelayByTrainNumber(int trainNumber, LocalTime delay) {
     if (trainExists(trainNumber)) {
       if ((trainDepartures.get(trainNumber).getDepartureTime().getHour() + delay.getHour()) * 60
-          + trainDepartures.get(trainNumber).getDepartureTime().getMinute() + delay.getMinute() >= 1440) {
-          removeTrainDepartureByTrainNumber(trainNumber);
-          return "Train removed as it was delayed over midnight.";
+          + trainDepartures.get(trainNumber).getDepartureTime().getMinute() + delay.getMinute()
+          >= 1440) {
+        removeTrainDepartureByTrainNumber(trainNumber);
+        return "Train removed as it was delayed over midnight.";
       } else {
         trainDepartures.get(trainNumber).setDelay(delay);
         return "Delay changed.";

@@ -1,6 +1,5 @@
 package edu.ntnu.stud.userinterface;
 
-import edu.ntnu.stud.station.Station;
 import java.time.LocalTime;
 import java.util.Scanner;
 
@@ -8,20 +7,12 @@ import java.util.Scanner;
  * Class for handling user input.
  * <p>Handles all user input and calls the needed methods in the StringManager class.</p>
  *
- * @Author Sigurd Riseth
  * @version 0.0.1
+ * @Author Sigurd Riseth
  */
 public class InputHandler {
 
   private final Scanner scanner = new Scanner(System.in);
-
-  /**
-   * Constructor for the InputHandler class.
-   * <p>Initializes the stringManager field.</p>
-   */
-  public InputHandler() {
-    // TODO document why this constructor is empty
-  }
 
   /**
    * Gets the user input as a String.
@@ -31,7 +22,6 @@ public class InputHandler {
   public String getStringInput() {
     return scanner.nextLine();
   }
-
 
   /**
    * Runs StringManagers method printLineAsk() and returns the user input.
@@ -51,7 +41,6 @@ public class InputHandler {
     result = result.substring(0, 1).toUpperCase() + result.substring(1).toLowerCase();
     return result;
   }
-
 
   /**
    * Runs StringManagers method printTimeAsk() and stores the user input. Will keep asking until the
