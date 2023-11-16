@@ -18,8 +18,6 @@ public class InputHandler {
   /**
    * Constructor for the InputHandler class.
    * <p>Initializes the stringManager field.</p>
-   *
-   * @param stringManager The StringManager object
    */
   public InputHandler() {
     // TODO document why this constructor is empty
