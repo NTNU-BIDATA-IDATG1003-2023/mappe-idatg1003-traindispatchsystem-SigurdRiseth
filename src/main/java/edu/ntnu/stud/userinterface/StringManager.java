@@ -85,8 +85,6 @@ public class StringManager {
    * @param destination The destination to search for
    */
   public void printAllDeparturesToDestination(String destination) {
-    destination = destination.substring(0, 1).toUpperCase()
-        + destination.substring(1).toLowerCase();
     boolean foundDeparture = false;
     System.out.println("The time is now " + station.getClock());
     System.out.println("Here is a list of all the trains that are yet to depart to " + destination
