@@ -99,25 +99,6 @@ public class Printer {
   }
 
   /**
-   * Prints the next departure to a given destination. If no departures are found, a message is
-   * printed.
-   *
-   * @param trainDeparture The destination to search for
-   */
-  public void printNextDepartureToDestination(TrainDeparture trainDeparture) {
-    StringBuilder result = new StringBuilder();
-    result.append("The next train to " + trainDeparture.getDestination());
-    result.append(" departs at " + trainDeparture.getDepartureTime());
-    if (trainDeparture.getTrack() == -1) {
-      result.append(" from track (not yet assigned)");
-    } else {
-      result.append(" from track " + trainDeparture.getTrack());
-    }
-    System.out.println(result);
-
-  }
-
-  /**
    * Asks the user to enter a destination.
    */
   public void printDestinationAsk() {

@@ -171,7 +171,7 @@ public class UserInterface {
   private void printNextDepartureToDestination() {
     String destination2 = getDestination();
     if (station.getTrainDepartureByDestination(destination2) != null) {
-      printer.printNextDepartureToDestination(
+      printer.printTrainDeparture(
           station.getTrainDepartureByDestination(destination2));
     } else {
       printer.print("No train to " + destination2 + " was found.");
