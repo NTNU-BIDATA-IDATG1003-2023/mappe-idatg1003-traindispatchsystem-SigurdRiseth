@@ -15,7 +15,7 @@ import java.time.LocalTime;
 public class UserInterface {
 
   private Station station;
-  private StringManager stringManager;
+  private Printer printer;
   private InputHandler inputHandler;
 
 
@@ -27,7 +27,7 @@ public class UserInterface {
 
     boolean running = true;
     while (running) {
-      stringManager.printOptions();
+      printer.printOptions();
       String choice = inputHandler.getStringInput();
 
       switch (choice) {
@@ -63,19 +63,19 @@ public class UserInterface {
           break;
         case "0":
           running = false;
-          stringManager.print("Thank you for using the train dispatch app!");
-          stringManager.print("The application has now been terminated.");
+          printer.print("Thank you for using the train dispatch app!");
+          printer.print("The application has now been terminated.");
           break;
         default:
-          stringManager.print(
+          printer.print(
               ("Please enter a valid number. The number should be between 0 and 10"));
       }
     }
   }
 
   private void printAllDepartures() {
-    stringManager.print("The time is now " + station.getClock());
-    stringManager.printAllDepartures(station.getTrainDeparturesSorted());
+    printer.print("The time is now " + station.getClock());
+    printer.printAllDepartures(station.getTrainDeparturesSorted());
   }
 
   /**
@@ -83,7 +83,7 @@ public class UserInterface {
    */
   private void setStationClock() {
     LocalTime time = getLocalTimeFromStringAfterClock();
-    stringManager.print(station.setClock(time));
+    printer.print(station.setClock(time));
   }
 
   /**
@@ -92,7 +92,7 @@ public class UserInterface {
   private void removeTrainDepartureByTrainNumber() {
     int trainNumber5 = getTrainNumberInUse();
     station.removeTrainDepartureByTrainNumber(trainNumber5);
-    stringManager.print(("Train has been removed."));
+    printer.print(("Train has been removed."));
   }
 
   /**
@@ -102,9 +102,9 @@ public class UserInterface {
     int trainNumber3 = getTrainNumberInUse();
     TrainDeparture train = station.getTrainDepartureByTrainNumber(trainNumber3);
     if (train != null) {
-      stringManager.printTrainDeparture(train);
+      printer.printTrainDeparture(train);
     } else {
-      stringManager.printTrainNumberNotInUse();
+      printer.printTrainNumberNotInUse();
     }
   }
 
@@ -113,7 +113,7 @@ public class UserInterface {
    */
   private void removeTrackForTrainDeparture() {
     int trainNumber6 = getTrainNumberInUse();
-    stringManager.print(station.changeTrackByTrainNumber(trainNumber6, "-1"));
+    printer.print(station.changeTrackByTrainNumber(trainNumber6, "-1"));
   }
 
   /**
@@ -122,7 +122,7 @@ public class UserInterface {
   private void setTrackForTrainDeparture() {
     int trainNumber4 = getTrainNumberInUse();
     String track2 = getTrack();
-    stringManager.print((station.changeTrackByTrainNumber(trainNumber4, track2)));
+    printer.print((station.changeTrackByTrainNumber(trainNumber4, track2)));
   }
 
   /**
@@ -132,24 +132,24 @@ public class UserInterface {
   private void setDelayForTrainDeparture() {
     int trainNumber2 = getTrainNumberInUse();
     LocalTime delay = getLocalTimeFromString();
-    stringManager.print(station.changeDelayByTrainNumber(trainNumber2, delay));
+    printer.print(station.changeDelayByTrainNumber(trainNumber2, delay));
   }
 
   private int getTrainNumberInUse() {
     int trainNumber = 0;
     do {
-      stringManager.printTrainNumberAsk();
+      printer.printTrainNumberAsk();
       try {
         trainNumber = inputHandler.getInt();
 
         if (trainNumber < 1) {
-          stringManager.printTrainNumberInvalid();
+          printer.printTrainNumberInvalid();
         } else if (!station.trainExists(trainNumber)) {
-          stringManager.printTrainNumberNotInUse();
+          printer.printTrainNumberNotInUse();
           trainNumber = -1;
         }
       } catch (Exception e) {
-        stringManager.printTrainNumberInvalid();
+        printer.printTrainNumberInvalid();
       }
     } while (trainNumber < 1);
     return trainNumber;
@@ -161,8 +161,8 @@ public class UserInterface {
    */
   private void printAllUpcomingDeparturesToDestination() {
     String destination1 = getDestination();
-    stringManager.print("The time is now " + station.getClock());
-    stringManager.printAllDeparturesToDestination(destination1, station.getTrainDeparturesSorted());
+    printer.print("The time is now " + station.getClock());
+    printer.printAllDeparturesToDestination(destination1, station.getTrainDeparturesSorted());
   }
 
   /**
@@ -171,10 +171,10 @@ public class UserInterface {
   private void printNextDepartureToDestination() {
     String destination2 = getDestination();
     if (station.getTrainDepartureByDestination(destination2) != null) {
-      stringManager.printNextDepartureToDestination(
+      printer.printNextDepartureToDestination(
           station.getTrainDepartureByDestination(destination2));
     } else {
-      stringManager.print("No train to " + destination2 + " was found.");
+      printer.print("No train to " + destination2 + " was found.");
     }
 
   }
@@ -192,24 +192,24 @@ public class UserInterface {
     String track = getTrack();
 
     station.createTrainDeparture(track, trainNumber, line, destination3, departureTime);
-    stringManager.print("Train departure has been added!");
+    printer.print("Train departure has been added!");
   }
 
   private String getTrack() {
-    stringManager.printTrackAsk();
+    printer.printTrackAsk();
     return inputHandler.getStringInput();
   }
 
   private LocalTime getLocalTimeFromString() {
     LocalTime departureTime = null;
     while (departureTime == null) {
-      stringManager.printTimeAsk();
+      printer.printTimeAsk();
       String inputDepartureTime = inputHandler.getStringInput();
       if (inputHandler.departureTimeValid(inputDepartureTime)) {
         departureTime = LocalTime.parse(inputDepartureTime);
         return departureTime;
       } else {
-        stringManager.printTimeInvalid();
+        printer.printTimeInvalid();
       }
     }
     return departureTime;
@@ -218,7 +218,7 @@ public class UserInterface {
   private LocalTime getLocalTimeFromStringAfterClock() {
     LocalTime time = getLocalTimeFromString();
     while (time.isBefore(station.getClock())) {
-      stringManager.print("You can not input a time before "
+      printer.print("You can not input a time before "
           + station.getClock().toString() + ". Please try again.");
       time = getLocalTimeFromString();
     }
@@ -226,12 +226,12 @@ public class UserInterface {
   }
 
   private String getDestination() {
-    stringManager.printDestinationAsk();
+    printer.printDestinationAsk();
     return inputHandler.getStringInputCapitalized();
   }
 
   private String getLine() {
-    stringManager.printLineAsk();
+    printer.printLineAsk();
     return inputHandler.getStringInput();
   }
 
@@ -239,18 +239,18 @@ public class UserInterface {
     int trainNumber = 0;
 
     do {
-      stringManager.printTrainNumberAsk();
+      printer.printTrainNumberAsk();
       try {
         trainNumber = inputHandler.getInt();
 
         if (trainNumber < 1) {
-          stringManager.printTrainNumberInvalid();
+          printer.printTrainNumberInvalid();
         } else if (station.trainExists(trainNumber)) {
-          stringManager.printTrainNumberInUse();
+          printer.printTrainNumberInUse();
           trainNumber = -1;
         }
       } catch (Exception e) {
-        stringManager.printTrainNumberInvalid();
+        printer.printTrainNumberInvalid();
       }
     } while (trainNumber < 1);
     return trainNumber;
@@ -265,7 +265,7 @@ public class UserInterface {
    */
   public void init() {
     this.station = new Station();
-    this.stringManager = new StringManager();
+    this.printer = new Printer();
     this.inputHandler = new InputHandler();
     createTrains();
     welcomeMessage();
@@ -288,9 +288,9 @@ public class UserInterface {
    * Prints a welcome message and the current time.
    */
   private void welcomeMessage() {
-    stringManager.print("-------------------------------------------");
-    stringManager.print("Welcome to the train dispatch app!");
-    stringManager.print("The time is now " + station.getClock());
+    printer.print("-------------------------------------------");
+    printer.print("Welcome to the train dispatch app!");
+    printer.print("The time is now " + station.getClock());
   }
 
 }

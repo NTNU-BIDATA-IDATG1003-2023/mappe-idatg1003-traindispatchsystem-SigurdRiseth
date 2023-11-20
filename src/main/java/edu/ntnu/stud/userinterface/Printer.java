@@ -10,7 +10,7 @@ import java.util.Iterator;
  * @version 0.0.1
  * @Author Sigurd Riseth
  */
-public class StringManager {
+public class Printer {
 
   /**
    * Prints all the options the user can choose from.
@@ -50,7 +50,7 @@ public class StringManager {
   public void printAllDepartures(Iterator<TrainDeparture> iterator) {
     StringBuilder result = new StringBuilder();
     result.append("Here is a list of all the trains that are yet to depart:\n");
-    result.append("\033[1m" + String.format("%-15s %-10s %-20s %-20s %-15s %-15s \n",
+    result.append("\033[1m" + String.format("%-15s %-10s %-20s %-20s %-15s %-15s %n",
         "Train number", "Line", "Destination", "Departure time", "Track", "Delay") + "\033[0m");
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
