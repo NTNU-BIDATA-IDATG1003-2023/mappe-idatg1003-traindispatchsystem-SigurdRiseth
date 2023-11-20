@@ -123,8 +123,7 @@ public class Printer {
    * Prints a message indicating that the train number is invalid.
    */
   public void printTrainNumberInvalid() {
-    System.out.println(
-        "The train number must be a whole number above 0. Please try again.");
+    System.err.println("The train number must be a whole number above 0. Please try again.");
   }
 
   /**
@@ -152,14 +151,14 @@ public class Printer {
    * Prints a message indicating that the time is invalid.
    */
   public void printTimeInvalid() {
-    System.out.println("Please try again and enter a valid time (in format hh:mm).");
+    System.err.println("Please try again and enter a valid time (in format hh:mm).");
   }
 
   /**
    * Tells the user that the train does not exist.
    */
   public void printTrainNumberNotInUse() {
-    System.out.println("The train number does not exist. Please try again.");
+    System.err.println("The train number does not exist. Please try again.");
   }
 
   /**

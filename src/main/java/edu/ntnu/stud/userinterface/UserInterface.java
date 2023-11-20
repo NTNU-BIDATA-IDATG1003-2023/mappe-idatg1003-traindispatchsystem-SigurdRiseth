@@ -143,21 +143,16 @@ public class UserInterface {
     int trainNumber = 0;
     do {
       printer.printTrainNumberAsk();
-      try {
-        trainNumber = inputHandler.getInt();
+      trainNumber = inputHandler.getInt();
 
-        if (trainNumber < 1) {
-          printer.printTrainNumberInvalid();
-        } else if (!station.trainExists(trainNumber)) {
-          printer.printTrainNumberNotInUse();
-          trainNumber = -1;
-        }
-      } catch (Exception e) {
+      if (trainNumber < 1) {
         printer.printTrainNumberInvalid();
+      } else if (!station.trainExists(trainNumber)) {
+        printer.printTrainNumberNotInUse();
+        trainNumber = -1;
       }
     } while (trainNumber < 1);
     return trainNumber;
-
   }
 
   /**
@@ -244,17 +239,14 @@ public class UserInterface {
 
     do {
       printer.printTrainNumberAsk();
-      try {
-        trainNumber = inputHandler.getInt();
 
-        if (trainNumber < 1) {
-          printer.printTrainNumberInvalid();
-        } else if (station.trainExists(trainNumber)) {
-          printer.printTrainNumberInUse();
-          trainNumber = -1;
-        }
-      } catch (Exception e) {
+      trainNumber = inputHandler.getInt();
+
+      if (trainNumber < 1) {
         printer.printTrainNumberInvalid();
+      } else if (station.trainExists(trainNumber)) {
+        printer.printTrainNumberInUse();
+        trainNumber = -1;
       }
     } while (trainNumber < 1);
     return trainNumber;

@@ -55,9 +55,12 @@ public class InputHandler {
    * @return
    */
   public int getInt() {
-    int trainNumber = scanner.nextInt();
-    scanner.nextLine();
-    return trainNumber;
+    try {
+      return scanner.nextInt();
+    } catch (Exception e) {
+      scanner.nextLine();
+      return -1;
+    }
   }
 }
 
