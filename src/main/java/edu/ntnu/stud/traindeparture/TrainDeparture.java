@@ -1,7 +1,6 @@
 package edu.ntnu.stud.traindeparture;
 
 import java.time.LocalTime;
-import java.util.Objects;
 
 /**
  * Class for the train departures.
@@ -15,9 +14,9 @@ import java.util.Objects;
 public class TrainDeparture {
 
   private int track;
-  private int trainNumber; // TODO: FINAL
-  private String line; // TODO: FINAL
-  private String destination; // TODO: FINAL
+  private final int trainNumber;
+  private final String line;
+  private final String destination;
   private LocalTime departureTime; // use a Clock class to store departureTime and delay.
   private LocalTime delay;
 
@@ -34,9 +33,9 @@ public class TrainDeparture {
   public TrainDeparture(String track, int trainNumber, String line, String destination,
       LocalTime departureTime) {
     this.setTrack(track);
-    this.setTrainNumber(trainNumber);
-    this.setLine(line);
-    this.setDestination(destination);
+    this.trainNumber = trainNumber;
+    this.line = line;
+    this.destination = destination;
     this.setDepartureTime(departureTime);
     this.delay = LocalTime.of(0, 0);
   }
@@ -76,16 +75,6 @@ public class TrainDeparture {
   }
 
   /**
-   * Sets the train number.
-   * <p>Also checks if the trainNumber is above 0 and not already stored in Stations HashMap.
-   * If a train already exists with that number or it is under 1 the value is set to -1.</p>
-   */
-  public void setTrainNumber(
-      int trainNumber) { // TODO: Denne og andre metoder brukes bare av konstruktøren. Kan jeg da sette den til private?
-    this.trainNumber = trainNumber;
-  }
-
-  /**
    * Retrieves the line information as a String.
    *
    * @return A String containing information about the line.
@@ -95,30 +84,12 @@ public class TrainDeparture {
   }
 
   /**
-   * Sets the line. Can also be set to null.
-   *
-   * @param line line to be set
-   */
-  public void setLine(String line) {
-    this.line = line;
-  }
-
-  /**
    * Retrieves the destination of this entity as a String.
    *
    * @return A String representing the destination.
    */
   public String getDestination() {
     return destination;
-  }
-
-  /**
-   * Sets the destination. If destination is null, it will be set to "Invalid destination".
-   *
-   * @param destination destination to be set
-   */
-  public void setDestination(String destination) {
-    this.destination = Objects.requireNonNullElse(destination, "Invalid destination");
   }
 
   /**
