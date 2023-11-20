@@ -198,4 +198,9 @@ public class Station {
     }
   }
 
+  public int getAmountOfTrainDepartures() {
+    sortByDepartureTime();
+    return trainDeparturesSorted.size();
+  }
+
 }

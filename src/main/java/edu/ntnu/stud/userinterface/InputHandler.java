@@ -56,7 +56,9 @@ public class InputHandler {
    */
   public int getInt() {
     try {
-      return scanner.nextInt();
+      int result = scanner.nextInt();
+      scanner.nextLine();
+      return result;
     } catch (Exception e) {
       scanner.nextLine();
       return -1;

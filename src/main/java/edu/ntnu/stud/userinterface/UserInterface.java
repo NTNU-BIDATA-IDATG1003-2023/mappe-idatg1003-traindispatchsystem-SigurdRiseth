@@ -3,6 +3,7 @@ package edu.ntnu.stud.userinterface;
 import edu.ntnu.stud.station.Station;
 import edu.ntnu.stud.traindeparture.TrainDeparture;
 import java.time.LocalTime;
+import java.util.List;
 
 /**
  * Main class of the user interface.
@@ -24,11 +25,15 @@ public class UserInterface {
    * <p>Will keep running until the user exits the application</p>
    */
   public void start() { // TODO: Remove the cases where this class sends a string to the printer class. Makes it harder to translate the application. Beacuse the strings should only be written in one class.
-
     boolean running = true;
     while (running) {
       printer.printOptions();
       String choice = inputHandler.getStringInput();
+
+      if (station.getAmountOfTrainDepartures() == 0 && !List.of("4", "10", "0").contains(choice)) {
+        printer.print("No TrainDepartures created yet. Only option 4, 10, or 0 is allowed.");
+        continue;
+      }
 
       switch (choice) {
         case "1" -> printAllDepartures();
