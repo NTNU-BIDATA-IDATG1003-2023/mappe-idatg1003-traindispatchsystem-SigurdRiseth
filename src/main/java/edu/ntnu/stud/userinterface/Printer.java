@@ -130,7 +130,7 @@ public class Printer {
    * Prints a message indicating that the train number is already in use.
    */
   public void printTrainNumberInUse() {
-    System.out.println("The train number is already in use. Please try again.");
+    System.err.println("The train number is already in use. Please try again.");
   }
 
   /**
@@ -174,5 +174,7 @@ public class Printer {
     System.out.print("Track: ");
     System.out.println(
         (train.getTrack() == -1) ? "Not yet assigned" : String.valueOf(train.getTrack()));
+    System.out.print("Delay: ");
+    System.out.println((train.getDelay() == LocalTime.of(0, 0)) ? "No delay" : train.getDelay());
   }
 }

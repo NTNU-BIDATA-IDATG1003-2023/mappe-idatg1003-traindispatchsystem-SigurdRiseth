@@ -31,42 +31,19 @@ public class UserInterface {
       String choice = inputHandler.getStringInput();
 
       switch (choice) {
-        case "1":
-          printAllDepartures();
-          break;
-        case "2":
-          printAllUpcomingDeparturesToDestination();
-          break;
-        case "3":
-          printNextDepartureToDestination();
-          break;
-        case "4":
-          createTrainDeparture();
-          break;
-        case "5":
-          setDelayForTrainDeparture();
-          break;
-        case "6":
-          setTrackForTrainDeparture();
-          break;
-        case "7":
-          removeTrackForTrainDeparture();
-          break;
-        case "8":
-          getTrainByTrainNumber();
-          break;
-        case "9":
-          removeTrainDepartureByTrainNumber();
-          break;
-        case "10":
-          setStationClock();
-          break;
-        case "0":
-          running = closeApplication();
-          break;
-        default:
-          printer.print(
-              ("Please enter a valid number. The number should be between 0 and 10"));
+        case "1" -> printAllDepartures();
+        case "2" -> printAllUpcomingDeparturesToDestination();
+        case "3" -> printNextDepartureToDestination();
+        case "4" -> createTrainDeparture();
+        case "5" -> setDelayForTrainDeparture();
+        case "6" -> setTrackForTrainDeparture();
+        case "7" -> removeTrackForTrainDeparture();
+        case "8" -> getTrainByTrainNumber();
+        case "9" -> removeTrainDepartureByTrainNumber();
+        case "10" -> setStationClock();
+        case "0" -> running = closeApplication();
+        default -> printer.print(
+            ("Please enter a valid number. The number should be between 0 and 10"));
       }
     }
   }
