@@ -27,6 +27,8 @@ https://github.com/NTNU-BIDATA-IDATG1003-2023/mappe-idatg1003-traindispatchsyste
 [//]: # (TODO: Describe how to run your project here. What is the main class? What is the main method?
 What is the input and output of the program? What is the expected behaviour of the program?)
 
+Run the TrainDispatchApp.java file and you will be prompted with a menu with 10 choices. The program uses textinputs from the user to navigate and interact. 
+
 ## How to run the tests
 
 [//]: # (TODO: Describe how to run the tests here.)

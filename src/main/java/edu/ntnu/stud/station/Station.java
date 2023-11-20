@@ -1,18 +1,25 @@
 package edu.ntnu.stud.station;
 
 import edu.ntnu.stud.traindeparture.TrainDeparture;
-import java.util.*;
 import java.time.LocalTime;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * Class for the train station.
  * <p>In charge of keeping track of the time and a list of all TrainDepartures yet to depart.</p>
+ *
+ * @version 0.0.1
+ * @Author Sigurd Riseth
+ * @since 14.10.2023
  */
 public class Station {
 
   private LocalTime time;
-  private HashMap<Integer, TrainDeparture> trainDepartures;
+  private final HashMap<Integer, TrainDeparture> trainDepartures;
   private List<TrainDeparture> trainDeparturesSorted;
 
   /**
@@ -27,19 +34,13 @@ public class Station {
    * Sets the time.
    *
    * @param time The time to be set
-   *
    */
-  public String setClock(String time) { // TODO: funker ikke for tider før current time?
-    try {
-      LocalTime newTime = LocalTime.parse(time);
-      if (this.time.isBefore(newTime)) {
-        this.time = newTime;
-        return "Time set to " + time;
-      } else {
-        return "Time cannot be set to a time before the current time.";
-      }
-    } catch (Exception e) {
-      return "Please enter a valid time on the format hh:mm";
+  public String setClock(LocalTime time) {
+    if (this.time.isBefore(time)) {
+      this.time = time;
+      return "Time set to " + time.toString();
+    } else {
+      return "Time cannot be set to a time before the current time.";
     }
   }
 
@@ -47,10 +48,26 @@ public class Station {
   /**
    * Returns the time.
    *
-   * @return time
+   * @return the current time
    */
   public LocalTime getClock() {
     return this.time;
+  }
+
+  /**
+   * Creates a new TrainDeparture and adds it to the trainDepartures HashMap.
+   *
+   * @param track         The track the train will depart from
+   * @param trainNumber   The unique train ID
+   * @param line          The line the train is driving
+   * @param destination   The ends destination of the train
+   * @param departureTime The time the train is set to depart
+   */
+  public void createTrainDeparture(String track, int trainNumber, String line, String destination,
+      LocalTime departureTime) {
+    TrainDeparture trainDeparture = new TrainDeparture(track, trainNumber, line, destination,
+        departureTime);
+    this.addTrainDeparture(trainDeparture);
   }
 
   /**
@@ -58,38 +75,35 @@ public class Station {
    *
    * @param trainDeparture An instance of the class TrainDeparture
    */
-  public void addTrainDeparture(TrainDeparture trainDeparture) {
+  private void addTrainDeparture(TrainDeparture trainDeparture) {
     this.trainDepartures.put(trainDeparture.getTrainNumber(), trainDeparture);
   }
 
   /**
-   * Returns a list of all TrainDepartures yet to depart, sorted by departure time.
+   * Returns a list of all TrainDepartures yet to depart. Done by running the sortByDepartureTime
+   * method.
    *
-   * @return trainDeparturesSorted
+   * @return a list of all TrainDepartures yet to depart
    */
-  public List getTrainDeparturesSorted() {
-    this.sortByDepartureTime();
-    Iterator<TrainDeparture> iterator = this.trainDeparturesSorted.iterator();
-    while (iterator.hasNext()) {
-      TrainDeparture trainDeparture = iterator.next();
-      if (trainDeparture.getDepartureTime().isBefore(this.time)) {
-        iterator.remove();
-      }
-    }
-    return this.trainDeparturesSorted;
+  public Iterator<TrainDeparture> getTrainDeparturesSorted() {
+    sortByDepartureTime();
+    return this.trainDeparturesSorted.iterator();
   }
 
   /**
-   * Sorts the trainDepartures HashMap by departure time and stores the sorted
-   * list in trainDeparturesSorted.
+   * Sorts the trainDepartures HashMap by departure time and filters out departures that have
+   * already departed based on the current time. Saves the result in the trainDeparturesSorted
+   * list.
    */
-  public void sortByDepartureTime() {
+  private void sortByDepartureTime() {
     this.trainDeparturesSorted = this.trainDepartures
         .values()
         .stream()
+        .filter(trainDeparture -> !trainDeparture.getDepartureTime().isBefore(this.time))
         .sorted(Comparator.comparing(TrainDeparture::getDepartureTime))
         .collect(Collectors.toList());
   }
+
 
   /**
    * Returns a boolean value indicating whether a train with the given train number exists.
@@ -102,12 +116,12 @@ public class Station {
   }
 
   /**
-   * Changes the track of a train with the given train number.
-   * Returns a string indicating whether the track was changed or not.
+   * Changes the track of a train with the given train number. Returns a string indicating whether
+   * the track was changed or not.
    *
-   * @param trainNumber
-   * @param track
-   * @return
+   * @param trainNumber The train number of the train to be changed
+   * @param track       The track to be set
+   * @return String
    */
   public String changeTrackByTrainNumber(int trainNumber, String track) {
     if (trainExists(trainNumber)) {
@@ -119,18 +133,24 @@ public class Station {
   }
 
   /**
-   * Changes the delay of a train with the given train number.
-   * Returns a string indicating whether the delay was changed or not.
+   * Changes the delay of a train with the given train number. Returns a string indicating whether
+   * the delay was changed or not.
    *
-   * @param trainNumber
-   * @param delay
-   * @return
+   * @param trainNumber The train number of the train to be changed
+   * @param delay       The delay to be set
+   * @return String
    */
-  public String changeDelayByTrainNumber(int trainNumber, LocalTime delay, Station station) {
+  public String changeDelayByTrainNumber(int trainNumber, LocalTime delay) {
     if (trainExists(trainNumber)) {
-      trainDepartures.get(trainNumber).setDelay(delay, station);
-      //TODO: bruk parse() for å få LocalTime fra String på formatet "HH:MM"
-      return "Delay changed.";
+      if ((trainDepartures.get(trainNumber).getDepartureTime().getHour() + delay.getHour()) * 60
+          + trainDepartures.get(trainNumber).getDepartureTime().getMinute() + delay.getMinute()
+          >= 1440) {
+        removeTrainDepartureByTrainNumber(trainNumber);
+        return "Train removed as it was delayed over midnight.";
+      } else {
+        trainDepartures.get(trainNumber).setDelay(delay);
+        return "Delay changed.";
+      }
     } else {
       return "Train does not exist. Please try again.";
     }
@@ -138,11 +158,12 @@ public class Station {
 
   /**
    * Returns a TrainDeparture with the given train number.
-   * @param trainNumber
-   * @return
+   *
+   * @param trainNumber The train number of the train to be returned
+   * @return TrainDeparture
    */
   public TrainDeparture getTrainDepartureByTrainNumber(int trainNumber) {
-    if (trainExists(trainNumber)){
+    if (trainExists(trainNumber)) {
       return trainDepartures.get(trainNumber);
     } else {
       return null;
@@ -151,11 +172,12 @@ public class Station {
 
   /**
    * Returns the first train departure with the provided destination.
-   * @param destination
-   * @return
+   *
+   * @param destination The destination of the train to be returned
+   * @return TrainDeparture
    */
   public TrainDeparture getTrainDepartureByDestination(String destination) {
-    Iterator<TrainDeparture> iterator = this.trainDeparturesSorted.iterator();
+    Iterator<TrainDeparture> iterator = getTrainDeparturesSorted();
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
       if (trainDeparture.getDestination().equals(destination)) {
@@ -167,7 +189,8 @@ public class Station {
 
   /**
    * Removes a train departure with the given train number from the trainDepartures HashMap.
-   * @param trainNumber
+   *
+   * @param trainNumber The train number of the train to be removed
    */
   public void removeTrainDepartureByTrainNumber(int trainNumber) {
     if (trainExists(trainNumber)) {

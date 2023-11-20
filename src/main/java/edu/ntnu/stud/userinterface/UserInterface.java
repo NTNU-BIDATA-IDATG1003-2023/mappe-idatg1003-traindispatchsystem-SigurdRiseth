@@ -3,202 +3,294 @@ package edu.ntnu.stud.userinterface;
 import edu.ntnu.stud.station.Station;
 import edu.ntnu.stud.traindeparture.TrainDeparture;
 import java.time.LocalTime;
-import java.util.Iterator;
-import java.util.Scanner;
 
+/**
+ * Main class of the user interface.
+ * <p>Handles the switch case and calls the needed methods in the StringManager and InputHandler
+ * classes.</p>
+ *
+ * @version 0.0.1
+ * @Author Sigurd Riseth
+ */
 public class UserInterface {
 
   private Station station;
+  private Printer printer;
+  private InputHandler inputHandler;
 
-  public void start(){
 
-    Scanner scanner = new Scanner(System.in);
+  /**
+   * Prints all the options the user can choose from.
+   * <p>Will keep running until the user exits the application</p>
+   */
+  public void start() {
 
     boolean running = true;
     while (running) {
-      System.out.println("-------------------------------------------");
-      System.out.println("1: Print all upcoming departures");
-      System.out.println("2: Print all upcoming departures to a given destination");
-      System.out.println("3: Print the next departure to a given destination");
-      System.out.println("4: Add a new train departure");
-      System.out.println("5: Set delay for a train departure");
-      System.out.println("6: Set track for a train departure");
-      System.out.println("7: Get train by train number");
-      System.out.println("8: Remove train departure");
-      System.out.println("9: Set the clock"); // TODO: Oppdater index her og i switch
-      System.out.println("10: Exit the application");
-      System.out.println("Please enter a number between 1 and 10:");
-      String input = scanner.nextLine();
+      printer.printOptions();
+      String choice = inputHandler.getStringInput();
 
-      switch (input) {
+      switch (choice) {
         case "1":
           printAllDepartures();
           break;
         case "2":
-          System.out.println("Please enter a destination:");
-          String destination = scanner.nextLine();
-          printAllDeparturesToDestination(destination);
+          printAllUpcomingDeparturesToDestination();
           break;
         case "3":
-          System.out.println("Please enter a destination:");
-          String destination2 = scanner.nextLine();
-          System.out.println(
-              "The next train to " + station.getTrainDepartureByDestination(destination2).getDestination()
-                  + " departs at " + station.getTrainDepartureByDestination(destination2)
-                  .getDepartureTime() + " from track " + station.getTrainDepartureByDestination(
-                  destination2).getTrack());
+          printNextDepartureToDestination();
           break;
         case "4":
-          int trainNumber = -1;
-          boolean trainExists = true;
-
-          while (trainExists) {
-            System.out.println("Please enter a train number:");
-            trainNumber = scanner.nextInt();
-
-            if (!station.trainExists(trainNumber)) {
-              trainExists = false;
-            } else {
-              System.out.println("Train number already exists. Please try again.");
-            }
-          }
-
-          scanner.nextLine();
-          System.out.println("Please enter a line:");
-          String line = scanner.nextLine();
-          System.out.println("Please enter a destination:");
-          String destination3 = scanner.nextLine();
-          destination3 = destination3.substring(0, 1).toUpperCase() + destination3.substring(1).toLowerCase();
-          System.out.println("Please enter a departure time:");
-          String departureTime = scanner.nextLine();
-          System.out.println("Please enter a track (type \"none\" if you do not wish to assign one):");
-          String track = scanner.nextLine();
-          TrainDeparture trainDeparture = new TrainDeparture(track, trainNumber, line, destination3,
-              LocalTime.parse(departureTime), station);
-          station.addTrainDeparture(trainDeparture);
-          System.out.println("Train departure has been added!");
+          createTrainDeparture();
           break;
-        case "5": // TODO: må være defensiv!
-          System.out.println("Please enter a train number:");
-          int trainNumber2 = scanner.nextInt();
-          scanner.nextLine();
-          System.out.println("Please enter a delay (hh:mm):");
-          String delay = scanner.nextLine();
-          System.out.println(station.changeDelayByTrainNumber(trainNumber2, LocalTime.parse(delay), station));
+        case "5":
+          setDelayForTrainDeparture();
           break;
         case "6":
-          System.out.println("Please enter a train number:");
-          int trainNumber4 = scanner.nextInt();
-          scanner.nextLine();
-          System.out.println("Please enter a track:");
-          String track2 = scanner.nextLine();
-          System.out.println(station.changeTrackByTrainNumber(trainNumber4, track2));
+          setTrackForTrainDeparture();
           break;
         case "7":
-          System.out.println("Please enter a train number:");
-          int trainNumber3 = scanner.nextInt();
-          scanner.nextLine();
-          TrainDeparture train = station.getTrainDepartureByTrainNumber(trainNumber3);
-          if (train != null) {
-            System.out.println("Train number: " + train.getTrainNumber());
-            System.out.println("Line: " + train.getLine());
-            System.out.println("Destination: " + train.getDestination());
-            System.out.println("Departure time: " + train.getDepartureTime());
-            System.out.println("Track: " + train.getTrack());
-          } else {
-            System.out.println("Train does not exist. Please try again.");
-          }
+          removeTrackForTrainDeparture();
           break;
         case "8":
-          System.out.println("Which train number do you want to remove?");
-          int trainNumber5 = scanner.nextInt();
-          scanner.nextLine();
-          station.removeTrainDepartureByTrainNumber(trainNumber5);
-          System.out.println("Train departure has been removed!");
+          getTrainByTrainNumber();
           break;
         case "9":
-          System.out.println("Please enter a time in the format hh:mm");
-          String time = scanner.nextLine();
-          System.out.println(station.setClock(time));
+          removeTrainDepartureByTrainNumber();
           break;
         case "10":
+          setStationClock();
+          break;
+        case "0":
           running = false;
-          System.out.println("Thank you for using the train dispatch app!");
-          System.out.println("The application has now been terminated.");
+          printer.print("Thank you for using the train dispatch app!");
+          printer.print("The application has now been terminated.");
           break;
         default:
-          System.out.println("Please enter a valid number. The number should be between 1 and 5");
-          break;
-      }
-    }
-  }
-
-  private void printAllDeparturesToDestination(String destination) {
-    destination = destination.substring(0, 1).toUpperCase() + destination.substring(1).toLowerCase(); // Make it so it doesn't matter if the user types "oslo" or "Oslo"
-    Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
-    boolean firstRun = true;
-    while (iterator.hasNext()) {
-      TrainDeparture trainDeparture = iterator.next();
-      if (trainDeparture.getDestination().equals(destination)) {
-        if (firstRun) {
-          System.out.println("Here is a list of all the trains that are yet to depart to " + destination
-              + ":");
-          System.out.println("Train number\tLine\tDestination\t\t\tDeparture time\tTrack");
-          firstRun = false;
-        }
-        String formattedLine = String.format("%-15s%-5s%-20s%-15s%-10s",
-            trainDeparture.getTrainNumber(),
-            trainDeparture.getLine(),
-            trainDeparture.getDestination(),
-            trainDeparture.getDepartureTime(),
-            (trainDeparture.getTrack() == -1) ? "-" : String.valueOf(trainDeparture.getTrack())
-        );
-
-        if (formattedLine.isEmpty()) { // TODO: This does not work
-          formattedLine = "No trains to " + destination + " found.";
-        }
-        System.out.println(formattedLine);
+          printer.print(
+              ("Please enter a valid number. The number should be between 0 and 10"));
       }
     }
   }
 
   private void printAllDepartures() {
-    System.out.println("Here is a list of all the trains that are yet to depart:");
-    System.out.println("Train number\tLine\tDestination\t\t\tDeparture time\tTrack");
-    Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted().iterator();
-    while (iterator.hasNext()) { // TODO: Er dette duplisert kode??? (printAllDeparturesToDestination)
-      TrainDeparture trainDeparture = iterator.next();
-      String formattedLine = String.format("%-15s%-5s%-20s%-15s%-10s",
-          trainDeparture.getTrainNumber(),
-          trainDeparture.getLine(),
-          trainDeparture.getDestination(),
-          trainDeparture.getDepartureTime(),
-          (trainDeparture.getTrack() == -1) ? "-" : String.valueOf(trainDeparture.getTrack())
-      );
-      System.out.println(formattedLine);
+    printer.print("The time is now " + station.getClock());
+    printer.printAllDepartures(station.getTrainDeparturesSorted());
+  }
+
+  /**
+   * Sets the clock of the station to the user input.
+   */
+  private void setStationClock() {
+    LocalTime time = getLocalTimeFromStringAfterClock();
+    printer.print(station.setClock(time));
+  }
+
+  /**
+   * Removes a train departure by the train number the user inputs.
+   */
+  private void removeTrainDepartureByTrainNumber() {
+    int trainNumber5 = getTrainNumberInUse();
+    station.removeTrainDepartureByTrainNumber(trainNumber5);
+    printer.print(("Train has been removed."));
+  }
+
+  /**
+   * Prints the train departure with the train number the user inputs.
+   */
+  private void getTrainByTrainNumber() {
+    int trainNumber3 = getTrainNumberInUse();
+    TrainDeparture train = station.getTrainDepartureByTrainNumber(trainNumber3);
+    if (train != null) {
+      printer.printTrainDeparture(train);
+    } else {
+      printer.printTrainNumberNotInUse();
     }
   }
 
-  public void init(){
+  /**
+   * Removes the track for the train departure with the train number the user inputs.
+   */
+  private void removeTrackForTrainDeparture() {
+    int trainNumber6 = getTrainNumberInUse();
+    printer.print(station.changeTrackByTrainNumber(trainNumber6, "-1"));
+  }
+
+  /**
+   * Sets the track for the train departure with the train number the user inputs.
+   */
+  private void setTrackForTrainDeparture() {
+    int trainNumber4 = getTrainNumberInUse();
+    String track2 = getTrack();
+    printer.print((station.changeTrackByTrainNumber(trainNumber4, track2)));
+  }
+
+  /**
+   * Sets the delay for a train departure.
+   * <p>User inputs the train number and the delay</p>
+   */
+  private void setDelayForTrainDeparture() {
+    int trainNumber2 = getTrainNumberInUse();
+    LocalTime delay = getLocalTimeFromString();
+    printer.print(station.changeDelayByTrainNumber(trainNumber2, delay));
+  }
+
+  private int getTrainNumberInUse() {
+    int trainNumber = 0;
+    do {
+      printer.printTrainNumberAsk();
+      try {
+        trainNumber = inputHandler.getInt();
+
+        if (trainNumber < 1) {
+          printer.printTrainNumberInvalid();
+        } else if (!station.trainExists(trainNumber)) {
+          printer.printTrainNumberNotInUse();
+          trainNumber = -1;
+        }
+      } catch (Exception e) {
+        printer.printTrainNumberInvalid();
+      }
+    } while (trainNumber < 1);
+    return trainNumber;
+
+  }
+
+  /**
+   * Prints all upcoming departures to the destination the user inputs.
+   */
+  private void printAllUpcomingDeparturesToDestination() {
+    String destination1 = getDestination();
+    printer.print("The time is now " + station.getClock());
+    printer.printAllDeparturesToDestination(destination1, station.getTrainDeparturesSorted());
+  }
+
+  /**
+   * Prints the next departure to the destination the user inputs.
+   */
+  private void printNextDepartureToDestination() {
+    String destination2 = getDestination();
+    if (station.getTrainDepartureByDestination(destination2) != null) {
+      printer.printNextDepartureToDestination(
+          station.getTrainDepartureByDestination(destination2));
+    } else {
+      printer.print("No train to " + destination2 + " was found.");
+    }
+
+  }
+
+  /**
+   * Creates a train departure.
+   * <p>User inputs the train number, line, destination, departure time and track</p>
+   */
+  private void createTrainDeparture() {
+
+    int trainNumber = getTrainNumberUnused();
+    String line = getLine();
+    String destination3 = getDestination();
+    LocalTime departureTime = getLocalTimeFromStringAfterClock();
+    String track = getTrack();
+
+    station.createTrainDeparture(track, trainNumber, line, destination3, departureTime);
+    printer.print("Train departure has been added!");
+  }
+
+  private String getTrack() {
+    printer.printTrackAsk();
+    return inputHandler.getStringInput();
+  }
+
+  private LocalTime getLocalTimeFromString() {
+    LocalTime departureTime = null;
+    while (departureTime == null) {
+      printer.printTimeAsk();
+      String inputDepartureTime = inputHandler.getStringInput();
+      if (inputHandler.departureTimeValid(inputDepartureTime)) {
+        departureTime = LocalTime.parse(inputDepartureTime);
+        return departureTime;
+      } else {
+        printer.printTimeInvalid();
+      }
+    }
+    return departureTime;
+  }
+
+  private LocalTime getLocalTimeFromStringAfterClock() {
+    LocalTime time = getLocalTimeFromString();
+    while (time.isBefore(station.getClock())) {
+      printer.print("You can not input a time before "
+          + station.getClock().toString() + ". Please try again.");
+      time = getLocalTimeFromString();
+    }
+    return time;
+  }
+
+  private String getDestination() {
+    printer.printDestinationAsk();
+    return inputHandler.getStringInputCapitalized();
+  }
+
+  private String getLine() {
+    printer.printLineAsk();
+    return inputHandler.getStringInput();
+  }
+
+  private int getTrainNumberUnused() {
+    int trainNumber = 0;
+
+    do {
+      printer.printTrainNumberAsk();
+      try {
+        trainNumber = inputHandler.getInt();
+
+        if (trainNumber < 1) {
+          printer.printTrainNumberInvalid();
+        } else if (station.trainExists(trainNumber)) {
+          printer.printTrainNumberInUse();
+          trainNumber = -1;
+        }
+      } catch (Exception e) {
+        printer.printTrainNumberInvalid();
+      }
+    } while (trainNumber < 1);
+    return trainNumber;
+  }
+
+  /**
+   * First method to be called when the application starts.
+   * <p>
+   * Initializes the StringManager and InputHandler classes. Creates some train departures and
+   * prints a welcome message
+   * </p>
+   */
+  public void init() {
     this.station = new Station();
-    TrainDeparture trainDeparture = new TrainDeparture("1", 1, "L1", "Oslo", LocalTime.of(5, 20), station);
-    station.addTrainDeparture(trainDeparture);
-    TrainDeparture trainDeparture2 = new TrainDeparture("2", 2, "L2", "Trondheim", LocalTime.of(5, 40), station);
-    station.addTrainDeparture(trainDeparture2);
-    TrainDeparture trainDeparture3 = new TrainDeparture("3", 3, "L3", "Bergen", LocalTime.of(4, 0), station);
-    station.addTrainDeparture(trainDeparture3);
-    TrainDeparture trainDeparture4 = new TrainDeparture("4", 4, "L4", "Stavanger", LocalTime.of(3, 17), station);
-    station.addTrainDeparture(trainDeparture4);
-    TrainDeparture trainDeparture5 = new TrainDeparture("5", 5, "L5", "Kristiansand", LocalTime.of(5, 0), station);
-    station.addTrainDeparture(trainDeparture5);
-    trainDeparture2.setDelay(LocalTime.of(0, 20), station);
-    TrainDeparture trainDeparture6 = new TrainDeparture("3", 6, "L2", "Trondheim", LocalTime.of(4, 20), station);
-    station.addTrainDeparture(trainDeparture6);
+    this.printer = new Printer();
+    this.inputHandler = new InputHandler();
+    createTrains();
+    welcomeMessage();
 
-    System.out.println("-------------------------------------------");
-    System.out.println("Welcome to the train dispatch app!");
-    System.out.println("The time is now " + station.getClock());
+  }
 
+  /**
+   * Creates some train departures.
+   */
+  private void createTrains() {
+    station.createTrainDeparture("1", 1, "L1", "Oslo", LocalTime.of(5, 20));
+    station.createTrainDeparture("2", 2, "L2", "Trondheim", LocalTime.of(5, 40));
+    station.createTrainDeparture("3", 3, "L3", "Bergen", LocalTime.of(4, 0));
+    station.createTrainDeparture("4", 4, "L4", "Stavanger", LocalTime.of(3, 17));
+    station.createTrainDeparture("2", 5, "L5", "Kristiansand", LocalTime.of(5, 0));
+    station.createTrainDeparture("3", 6, "L2", "Trondheim", LocalTime.of(4, 20));
+  }
+
+  /**
+   * Prints a welcome message and the current time.
+   */
+  private void welcomeMessage() {
+    printer.print("-------------------------------------------");
+    printer.print("Welcome to the train dispatch app!");
+    printer.print("The time is now " + station.getClock());
   }
 
 }
