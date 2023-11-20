@@ -4,6 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import edu.ntnu.stud.traindeparture.TrainDeparture;
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,13 +17,22 @@ class StationTest {
 
   @BeforeEach
   void setUp() {
+    //ARRANGE
     station = new Station();
     station.createTrainDeparture("1", 1, "L1", "Oslo", LocalTime.of(5, 20));
     station.createTrainDeparture("2", 2, "L2", "Trondheim", LocalTime.of(5, 40));
-
   }
+
+  @AfterEach
+  void tearDown() {
+    station = null;
+  }
+
   @Test
   void setClockValidTime() {
+    // KAN OGSÅ GJØRE ARRANGE HER
+    //ACT
+    //ASSERT
     String expected = "Time set to 12:00";
     String actual = station.setClock(LocalTime.of(12, 0));
     assertEquals(expected, actual, "Should return \"Time set to 12:00\"");
@@ -69,31 +82,61 @@ class StationTest {
 
   @Test
   void getTrainDeparturesSortedAllAfterClock() {
-    assertEquals(2, station.getTrainDeparturesSorted().size(), "Should be 2 in size");
-    assertEquals(1, station.getTrainDeparturesSorted().get(0).getTrainNumber(), "Should be train number 1");
+    List<TrainDeparture> expectedDepartures = Arrays.asList(
+        new TrainDeparture("1", 1, "L1", "Oslo", LocalTime.of(5, 20)),
+        new TrainDeparture("2", 2, "L2", "Trondheim", LocalTime.of(5, 40))
+    );
+    Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted();
+
+    int count = 0;
+    while (iterator.hasNext()) {
+      assertTrue(count < expectedDepartures.size(), "Iterator produced more elements than expected");
+      TrainDeparture actualDeparture = iterator.next();
+      TrainDeparture expectedDeparture = expectedDepartures.get(count);
+      assertEquals(expectedDeparture.getTrainNumber(), actualDeparture.getTrainNumber(), "Element at index " + count + " is not as expected");
+      count++;
+    }
+
+    assertEquals(expectedDepartures.size(), count, "Iterator produced fewer elements than expected");
+
   }
 
   @Test
   void getTrainDeparturesSortedSomeBeforeClock() {
     station.setClock(LocalTime.of(5, 21));
-    assertEquals(1, station.getTrainDeparturesSorted().size(), "Should be 2 in size");
-    assertEquals(2, station.getTrainDeparturesSorted().get(0).getTrainNumber(), "Should be train number 2");
+
+    List<TrainDeparture> expectedDepartures = Arrays.asList(
+        new TrainDeparture("2", 2, "L2", "Trondheim", LocalTime.of(5, 40))
+    );
+    Iterator<TrainDeparture> iterator = station.getTrainDeparturesSorted();
+
+    int count = 0;
+    while (iterator.hasNext()) {
+      assertTrue(count < expectedDepartures.size(), "Iterator produced more elements than expected");
+      TrainDeparture actualDeparture = iterator.next();
+      TrainDeparture expectedDeparture = expectedDepartures.get(count);
+      assertEquals(expectedDeparture.getTrainNumber(), actualDeparture.getTrainNumber(), "Element at index " + count + " is not as expected");
+      count++;
+    }
+
+    assertEquals(expectedDepartures.size(), count, "Iterator produced fewer elements than expected");
+
   }
 
   @Test
   void trainExistsTrue() {
-    assertEquals(true, station.trainExists(1), "Should be true");
+    assertTrue(station.trainExists(1), "Should be true");
   }
 
   @Test
   void trainExistsFalse() {
-    assertEquals(false, station.trainExists(3), "Should be false");
+    assertFalse(station.trainExists(3), "Should be false");
   }
 
   @Test
   void changeTrackByTrainNumberInUse() {
-    assertEquals("Track changed.", station.changeTrackByTrainNumber(1, "3"), "Should be \"Track changed.\"");
-    assertEquals(3, station.getTrainDepartureByTrainNumber(1).getTrack(), "Should be 3");
+    assertEquals("Track changed.", station.changeTrackByTrainNumber(1, "3"), "Wrong string returned. Should be \"Track changed.\"");
+    assertEquals(3, station.getTrainDepartureByTrainNumber(1).getTrack(), "Track changed to wrong value.");
   }
 
   @Test
