@@ -23,38 +23,17 @@ public class InputHandler {
     return scanner.nextLine();
   }
 
-  /**
-   * Runs StringManagers method printLineAsk() and returns the user input.
-   *
-   * @return The line
-   */
 
   /**
-   * Runs StringManagers method printDestinationAsk() and stores the user input. Capitalizes the
-   * first letter and lowercase the rest before returning.
+   * Gets the user input as a String. Capitalizes the first letter and makes the rest lowercase.
    *
-   * @return The destination
+   * @return The user input as a String with the first letter capitalized
    */
-
   public String getStringInputCapitalized() {
     String result = scanner.nextLine();
     result = result.substring(0, 1).toUpperCase() + result.substring(1).toLowerCase();
     return result;
   }
-
-  /**
-   * Runs StringManagers method printTimeAsk() and stores the user input. Will keep asking until the
-   * user inputs a valid time.
-   *
-   * @return The departure time
-   */
-
-  /**
-   * Runs StringManagers method getLocalTimeFromStringAfterClock() and stores the user input. Will
-   * keep asking until the user inputs a valid time after the current time.
-   *
-   * @return The departure time
-   */
 
   /**
    * Checks if the user input is a String that can be parsed to a LocalTime object.
@@ -72,20 +51,9 @@ public class InputHandler {
   }
 
   /**
-   * Runs StringManagers method printTrackAsk() and stores the user input.
-   *
-   * @return The track
+   * Returns the user input as an int.
+   * @return
    */
-
-
-  /**
-   * Asks the user for a train number. Will keep asking until the user inputs a used and valid train
-   * number.
-   *
-   * @return The train number
-   */
-
-
   public int getInt() {
     int trainNumber = scanner.nextInt();
     scanner.nextLine();
