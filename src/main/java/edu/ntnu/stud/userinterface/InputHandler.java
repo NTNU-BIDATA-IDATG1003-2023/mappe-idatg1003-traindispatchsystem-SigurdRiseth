@@ -52,6 +52,7 @@ public class InputHandler {
 
   /**
    * Returns the user input as an int.
+   *
    * @return
    */
   public int getInt() {

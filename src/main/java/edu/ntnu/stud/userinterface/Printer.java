@@ -34,17 +34,6 @@ public class Printer {
   }
 
   /**
-   * Prints a String.
-   *
-   * @param string The string to be printed
-   */
-
-  public void print(String string) {
-    System.out.println(string);
-  }
-
-
-  /**
    * Prints a String of all departures yet to depart.
    */
   public void printAllDepartures(Iterator<TrainDeparture> iterator) {
@@ -94,7 +83,7 @@ public class Printer {
       }
     }
     if (!foundDeparture) {
-      System.out.println("No trains to " + destination + " found.");
+      System.err.println("No trains to " + destination + " found."); // TODO: Hvorfor kommer denne under menyen? En måte å ikke vise tavle hvis denne er sann?
     }
   }
 

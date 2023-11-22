@@ -13,11 +13,11 @@ import java.time.LocalTime;
  */
 public class TrainDeparture {
 
-  private int track;
   private final int trainNumber;
   private final String line;
   private final String destination;
-  private LocalTime departureTime; // use a Clock class to store departureTime and delay.
+  private int track;
+  private LocalTime departureTime;
   private LocalTime delay;
 
   /**

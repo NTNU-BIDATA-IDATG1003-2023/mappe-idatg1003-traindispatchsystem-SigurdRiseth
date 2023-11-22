@@ -1,7 +1,6 @@
 package edu.ntnu.stud.userinterface;
 
 import edu.ntnu.stud.station.Station;
-import edu.ntnu.stud.traindeparture.TrainDeparture;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -233,7 +232,7 @@ public class UserInterface {
   }
 
   private int getTrainNumberUnused() {
-    int trainNumber = 0;
+    int trainNumber;
 
     do {
       printer.printTrainNumberAsk();

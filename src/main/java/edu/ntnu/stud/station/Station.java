@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
  */
 public class Station {
 
-  private LocalTime time;
   private final HashMap<Integer, TrainDeparture> trainDepartures;
+  private LocalTime time;
   private List<TrainDeparture> trainDeparturesSorted;
 
   /**
