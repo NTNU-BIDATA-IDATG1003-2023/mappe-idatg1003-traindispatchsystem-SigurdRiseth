@@ -7,8 +7,6 @@ import edu.ntnu.stud.userinterface.UserInterface;
  */
 public class TrainDispatchApp {
 
-  // TODO: Fill in the main method and any other methods you need.
-
   /**
    * Main method for the train dispatch application.
    * <p>Creates a new instance of the UserInterface class and calls the init and start methods.</p>

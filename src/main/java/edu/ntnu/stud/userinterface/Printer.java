@@ -177,4 +177,67 @@ public class Printer {
     System.out.print("Delay: ");
     System.out.println((train.getDelay() == LocalTime.of(0, 0)) ? "No delay" : train.getDelay());
   }
+
+  public void printInvalidChoice() {
+    System.out.println("Please enter a valid number. The number should be between 0 and 10");
+  }
+
+  public void printNoTrains() {
+    System.out.println("No TrainDepartures created yet. Only option 4, 10, or 0 is allowed.");
+  }
+
+  public void printCloseApp() {
+    System.out.println("Thank you for using the train dispatch app!");
+    System.out.println("The application has now been terminated.");
+  }
+
+  public void printClock(LocalTime clock) {
+    System.out.println("The clock is now " + clock);
+  }
+
+  public void printTrainRemoved() {
+    System.out.println("Train has been removed.");
+  }
+
+  public void printTrainRemovedByDelay() {
+    System.out.println("Train has been removed as it was delayed over midnight.");
+  }
+
+  public void printNoTrainFound(String destination) {
+    System.out.println("No train to " + destination + " was found.");
+  }
+
+  public void printTrainAdded() {
+    System.out.println("Train departure has been added!");
+  }
+
+  public void printBeforeClock(LocalTime clock) {
+    System.out.println("You can not input a time before "
+        + clock + ". Please try again.");
+  }
+
+  public void printWelcomeMessage() {
+    System.out.println("--------------------------------------------------");
+    System.out.println("Welcome to the train dispatch app!");
+  }
+
+  public void printDelayChanged() {
+    System.out.println("Delay changed.");
+  }
+
+  public void printTrackRemoved() {
+    System.out.println("Track removed.");
+  }
+
+  public void printTrackChanged(String track) {
+    System.out.println("Track changed to " + track);
+  }
+
+  public void printClockChanged(LocalTime time) {
+    System.out.println("Clock changed to " + time);
+  }
+
+  public void printClockNotChanged() {
+    System.out.println("Clock was not changed. Can not set clock backwards. Please try again.");
+  }
 }

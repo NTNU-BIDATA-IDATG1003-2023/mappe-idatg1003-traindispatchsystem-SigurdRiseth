@@ -35,12 +35,12 @@ public class Station {
    *
    * @param time The time to be set
    */
-  public String setClock(LocalTime time) {
+  public boolean setClock(LocalTime time) {
     if (this.time.isBefore(time)) {
       this.time = time;
-      return "Time set to " + time.toString();
+      return true;
     } else {
-      return "Time cannot be set to a time before the current time.";
+      return false;
     }
   }
 
@@ -123,12 +123,12 @@ public class Station {
    * @param track       The track to be set
    * @return String
    */
-  public String changeTrackByTrainNumber(int trainNumber, String track) {
+  public boolean changeTrackByTrainNumber(int trainNumber, String track) {
     if (trainExists(trainNumber)) {
       trainDepartures.get(trainNumber).setTrack(track);
-      return "Track changed.";
+      return true;
     } else {
-      return "Train does not exist.";
+      return false;
     }
   }
 
@@ -140,19 +140,19 @@ public class Station {
    * @param delay       The delay to be set
    * @return String
    */
-  public String changeDelayByTrainNumber(int trainNumber, LocalTime delay) {
+  public int changeDelayByTrainNumber(int trainNumber, LocalTime delay) {
     if (trainExists(trainNumber)) {
       if ((trainDepartures.get(trainNumber).getDepartureTime().getHour() + delay.getHour()) * 60
           + trainDepartures.get(trainNumber).getDepartureTime().getMinute() + delay.getMinute()
           >= 1440) {
         removeTrainDepartureByTrainNumber(trainNumber);
-        return "Train removed as it was delayed over midnight.";
+        return 1;
       } else {
         trainDepartures.get(trainNumber).setDelay(delay);
-        return "Delay changed.";
+        return 2;
       }
     } else {
-      return "Train does not exist. Please try again.";
+      return 3;
     }
   }
 

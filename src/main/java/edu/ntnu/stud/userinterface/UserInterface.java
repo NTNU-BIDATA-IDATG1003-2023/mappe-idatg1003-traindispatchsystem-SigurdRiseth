@@ -31,7 +31,7 @@ public class UserInterface {
       String choice = inputHandler.getStringInput();
 
       if (station.getAmountOfTrainDepartures() == 0 && !List.of("4", "10", "0").contains(choice)) {
-        printer.print("No TrainDepartures created yet. Only option 4, 10, or 0 is allowed.");
+        printer.printNoTrains();
         continue;
       }
 
@@ -47,20 +47,18 @@ public class UserInterface {
         case "9" -> removeTrainDepartureByTrainNumber();
         case "10" -> setStationClock();
         case "0" -> running = closeApplication();
-        default -> printer.print(
-            ("Please enter a valid number. The number should be between 0 and 10"));
+        default -> printer.printInvalidChoice();
       }
     }
   }
 
   private boolean closeApplication() {
-    printer.print("Thank you for using the train dispatch app!");
-    printer.print("The application has now been terminated.");
+    printer.printCloseApp();
     return false;
   }
 
   private void printAllDepartures() {
-    printer.print("The time is now " + station.getClock());
+    printer.printClock(station.getClock());
     printer.printAllDepartures(station.getTrainDeparturesSorted());
   }
 
@@ -69,7 +67,11 @@ public class UserInterface {
    */
   private void setStationClock() {
     LocalTime time = getLocalTimeFromStringAfterClock();
-    printer.print(station.setClock(time));
+    if (station.setClock(time)) {
+      printer.printClockChanged(time);
+    } else {
+      printer.printClockNotChanged();
+    }
   }
 
   /**
@@ -78,7 +80,7 @@ public class UserInterface {
   private void removeTrainDepartureByTrainNumber() {
     int trainNumber = getTrainNumberInUse();
     station.removeTrainDepartureByTrainNumber(trainNumber);
-    printer.print(("Train has been removed."));
+    printer.printTrainRemoved();
   }
 
   /**
@@ -86,9 +88,8 @@ public class UserInterface {
    */
   private void getTrainByTrainNumber() {
     int trainNumber = getTrainNumberInUse();
-    TrainDeparture train = station.getTrainDepartureByTrainNumber(trainNumber);
-    if (train != null) {
-      printer.printTrainDeparture(train);
+    if (station.trainExists(trainNumber)) {
+      printer.printTrainDeparture(station.getTrainDepartureByTrainNumber(trainNumber));
     } else {
       printer.printTrainNumberNotInUse();
     }
@@ -99,7 +100,11 @@ public class UserInterface {
    */
   private void removeTrackForTrainDeparture() {
     int trainNumber = getTrainNumberInUse();
-    printer.print(station.changeTrackByTrainNumber(trainNumber, "-1"));
+    if (station.changeTrackByTrainNumber(trainNumber, "-1")) {
+      printer.printTrackRemoved();
+    } else {
+      printer.printTrainNumberNotInUse();
+    }
   }
 
   /**
@@ -108,7 +113,12 @@ public class UserInterface {
   private void setTrackForTrainDeparture() {
     int trainNumber = getTrainNumberInUse();
     String track = getTrack();
-    printer.print((station.changeTrackByTrainNumber(trainNumber, track)));
+    boolean changed = station.changeTrackByTrainNumber(trainNumber, track);
+    if (changed) {
+      printer.printTrackChanged(track);
+    } else {
+      printer.printTrainNumberNotInUse();
+    }
   }
 
   /**
@@ -118,7 +128,14 @@ public class UserInterface {
   private void setDelayForTrainDeparture() {
     int trainNumber = getTrainNumberInUse();
     LocalTime delay = getLocalTimeFromString();
-    printer.print(station.changeDelayByTrainNumber(trainNumber, delay));
+    int result = station.changeDelayByTrainNumber(trainNumber, delay);
+    if (result == 1) {
+      printer.printTrainRemovedByDelay();
+    } else if (result == 2) {
+      printer.printDelayChanged();
+    } else {
+      printer.printTrainNumberNotInUse();
+    }
   }
 
   private int getTrainNumberInUse() {
@@ -142,7 +159,7 @@ public class UserInterface {
    */
   private void printAllUpcomingDeparturesToDestination() {
     String destination = getDestination();
-    printer.print("The time is now " + station.getClock());
+    printer.printClock(station.getClock());
     printer.printAllDeparturesToDestination(destination, station.getTrainDeparturesSorted());
   }
 
@@ -155,7 +172,7 @@ public class UserInterface {
       printer.printTrainDeparture(
           station.getTrainDepartureByDestination(destination));
     } else {
-      printer.print("No train to " + destination + " was found.");
+      printer.printNoTrainFound(destination);
     }
 
   }
@@ -173,7 +190,7 @@ public class UserInterface {
     String track = getTrack();
 
     station.createTrainDeparture(track, trainNumber, line, destination, departureTime);
-    printer.print("Train departure has been added!");
+    printer.printTrainAdded();
   }
 
   private String getTrack() {
@@ -199,8 +216,7 @@ public class UserInterface {
   private LocalTime getLocalTimeFromStringAfterClock() {
     LocalTime time = getLocalTimeFromString();
     while (time.isBefore(station.getClock())) {
-      printer.print("You can not input a time before "
-          + station.getClock().toString() + ". Please try again.");
+      printer.printBeforeClock(station.getClock());
       time = getLocalTimeFromString();
     }
     return time;
@@ -266,9 +282,8 @@ public class UserInterface {
    * Prints a welcome message and the current time.
    */
   private void welcomeMessage() {
-    printer.print("-------------------------------------------");
-    printer.print("Welcome to the train dispatch app!");
-    printer.print("The time is now " + station.getClock());
+    printer.printWelcomeMessage();
+    printer.printClock(station.getClock());
   }
 
 }
