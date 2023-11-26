@@ -15,6 +15,8 @@ public class Printer {
   /**
    * Prints all the options the user can choose from.
    */
+  private final String TABLEFORMAT = "%-15s %-10s %-20s %-20s %-15s %-15s %n";
+
   public void printOptions() {
     System.out.println(String.join("\n",
         "-------------------------------------------",
@@ -39,18 +41,18 @@ public class Printer {
   public void printAllDepartures(Iterator<TrainDeparture> iterator) {
     StringBuilder result = new StringBuilder();
     result.append("Here is a list of all the trains that are yet to depart:\n");
-    result.append("\033[1m" + String.format("%-15s %-10s %-20s %-20s %-15s %-15s %n",
+    result.append("\033[1m" + String.format(TABLEFORMAT,
         "Train number", "Line", "Destination", "Departure time", "Track", "Delay") + "\033[0m");
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
-      String formattedLine = String.format("%-15s %-10s %-20s %-20s %-15s %-15s",
+      String formattedLine = String.format(TABLEFORMAT,
           trainDeparture.getTrainNumber(),
           trainDeparture.getLine(),
           trainDeparture.getDestination(),
           trainDeparture.getDepartureTime(),
           (trainDeparture.getTrack() == -1) ? "-" : String.valueOf(trainDeparture.getTrack()),
           (trainDeparture.getDelay() == LocalTime.of(0, 0)) ? "-" : trainDeparture.getDelay());
-      result.append(formattedLine).append("\n");
+      result.append(formattedLine);
     }
     System.out.println(result);
   }
@@ -64,26 +66,29 @@ public class Printer {
   public void printAllDeparturesToDestination(String destination,
       Iterator<TrainDeparture> iterator) {
     boolean foundDeparture = false;
-    System.out.println("Here is a list of all the trains that are yet to depart to " + destination
-        + ":");
-    System.out.println(("\033[1m" + String.format("%-15s %-10s %-20s %-20s %-15s %-15s",
-        "Train number", "Line", "Destination", "Departure time", "Track", "Delay") + "\033[0m"));
+    StringBuilder result = new StringBuilder();
+    result.append("Here is a list of all the trains that are yet to depart to " + destination
+        + ": \n");
+    result.append("\033[1m" + String.format(TABLEFORMAT,
+        "Train number", "Line", "Destination", "Departure time", "Track", "Delay") + "\033[0m");
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
       if (trainDeparture.getDestination().equals(destination)) {
-        String formattedLine = String.format("%-15s %-10s %-20s %-20s %-15s %-15s",
+        String formattedLine = String.format(TABLEFORMAT,
             trainDeparture.getTrainNumber(),
             trainDeparture.getLine(),
             trainDeparture.getDestination(),
             trainDeparture.getDepartureTime(),
             (trainDeparture.getTrack() == -1) ? "-" : String.valueOf(trainDeparture.getTrack()),
             (trainDeparture.getDelay() == LocalTime.of(0, 0)) ? "-" : trainDeparture.getDelay());
-        System.out.println(formattedLine);
+        result.append(formattedLine);
         foundDeparture = true;
       }
     }
     if (!foundDeparture) {
       System.err.println("No trains to " + destination + " found."); // TODO: Hvorfor kommer denne under menyen? En måte å ikke vise tavle hvis denne er sann?
+    } else {
+      System.out.println(result);
     }
   }
 

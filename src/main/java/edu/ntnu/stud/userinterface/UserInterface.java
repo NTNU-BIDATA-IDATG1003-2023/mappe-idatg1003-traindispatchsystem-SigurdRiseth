@@ -23,7 +23,7 @@ public class UserInterface {
    * Prints all the options the user can choose from.
    * <p>Will keep running until the user exits the application</p>
    */
-  public void start() { // TODO: Remove the cases where this class sends a string to the printer class. Makes it harder to translate the application. Beacuse the strings should only be written in one class.
+  public void start() {
     boolean running = true;
     while (running) {
       printer.printOptions();
@@ -138,7 +138,7 @@ public class UserInterface {
   }
 
   private int getTrainNumberInUse() {
-    int trainNumber = 0;
+    int trainNumber;
     do {
       printer.printTrainNumberAsk();
       trainNumber = inputHandler.getInt();
