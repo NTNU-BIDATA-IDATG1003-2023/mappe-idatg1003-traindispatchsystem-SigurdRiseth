@@ -45,16 +45,19 @@ public class Printer {
         "Train number", "Line", "Destination", "Departure time", "Track", "Delay") + "\033[0m");
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
-      String formattedLine = String.format(TABLEFORMAT,
-          trainDeparture.getTrainNumber(),
-          trainDeparture.getLine(),
-          trainDeparture.getDestination(),
-          trainDeparture.getDepartureTime(),
-          (trainDeparture.getTrack() == -1) ? "-" : String.valueOf(trainDeparture.getTrack()),
-          (trainDeparture.getDelay() == LocalTime.of(0, 0)) ? "-" : trainDeparture.getDelay());
-      result.append(formattedLine);
+      result.append(formatTrainToTable(trainDeparture));
     }
     System.out.println(result);
+  }
+
+  private String formatTrainToTable(TrainDeparture trainDeparture) {
+    return String.format(TABLEFORMAT,
+        trainDeparture.getTrainNumber(),
+        trainDeparture.getLine(),
+        trainDeparture.getDestination(),
+        trainDeparture.getDepartureTime(),
+        (trainDeparture.getTrack() == -1) ? "-" : String.valueOf(trainDeparture.getTrack()),
+        (trainDeparture.getDelay() == LocalTime.of(0, 0)) ? "-" : trainDeparture.getDelay());
   }
 
   /**
@@ -74,19 +77,12 @@ public class Printer {
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
       if (trainDeparture.getDestination().equals(destination)) {
-        String formattedLine = String.format(TABLEFORMAT,
-            trainDeparture.getTrainNumber(),
-            trainDeparture.getLine(),
-            trainDeparture.getDestination(),
-            trainDeparture.getDepartureTime(),
-            (trainDeparture.getTrack() == -1) ? "-" : String.valueOf(trainDeparture.getTrack()),
-            (trainDeparture.getDelay() == LocalTime.of(0, 0)) ? "-" : trainDeparture.getDelay());
-        result.append(formattedLine);
+        result.append(formatTrainToTable(trainDeparture));
         foundDeparture = true;
       }
     }
     if (!foundDeparture) {
-      System.err.println("No trains to " + destination + " found."); // TODO: Hvorfor kommer denne under menyen? En måte å ikke vise tavle hvis denne er sann?
+      printNoTrainFound(destination);
     } else {
       System.out.println(result);
     }
@@ -173,11 +169,11 @@ public class Printer {
   }
 
   public void printInvalidChoice() {
-    System.out.println("Please enter a valid number. The number should be between 0 and 10");
+    System.err.println("Please enter a valid number. The number should be between 0 and 10");
   }
 
   public void printNoTrains() {
-    System.out.println("No TrainDepartures created yet. Only option 4, 10, or 0 is allowed.");
+    System.err.println("No TrainDepartures created yet. Only option 4, 10, or 0 is allowed.");
   }
 
   public void printCloseApp() {
@@ -198,7 +194,7 @@ public class Printer {
   }
 
   public void printNoTrainFound(String destination) {
-    System.out.println("No train to " + destination + " was found.");
+    System.err.println("No train to " + destination + " was found.");
   }
 
   public void printTrainAdded() {
@@ -206,7 +202,7 @@ public class Printer {
   }
 
   public void printBeforeClock(LocalTime clock) {
-    System.out.println("You can not input a time before "
+    System.err.println("You can not input a time before "
         + clock + ". Please try again.");
   }
 
@@ -232,6 +228,6 @@ public class Printer {
   }
 
   public void printClockNotChanged() {
-    System.out.println("Clock was not changed. Can not set clock backwards. Please try again.");
+    System.err.println("Clock was not changed. Can not set clock backwards. Please try again.");
   }
 }

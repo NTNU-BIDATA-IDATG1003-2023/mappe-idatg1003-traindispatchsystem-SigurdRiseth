@@ -247,6 +247,14 @@ public class UserInterface {
       }
     } while (trainNumber < 1);
     return trainNumber;
+
+    /*
+    switch(validator.checkTrainNumber(trainNumber)){
+      case TRAIN_NUMBER_IS_LETTERS -> printer.printErrorMessage(TRAIN_NUMBER_IS_LETTERS.getResponse())
+      case TRAIN_NUMBER_IS_NEGATIVE -> printer.printErrorMessage(TRAIN_NUMBER_IS_NEGATIVE.getResponse())
+      case TRAIN_NUMBER_IS_IN_USE -> printer.printErrorMessage(TRAIN_NUMBER_IS_IN_USE.getResponse())
+    }
+     */
   }
 
   /**
