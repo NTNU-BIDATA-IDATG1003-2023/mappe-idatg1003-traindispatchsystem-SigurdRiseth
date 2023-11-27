@@ -99,7 +99,7 @@ public class Station {
     this.trainDeparturesSorted = this.trainDepartures
         .values()
         .stream()
-        .filter(trainDeparture -> !trainDeparture.getDepartureTime().isBefore(this.time))
+        .filter(trainDeparture -> !trainDeparture.getDepartureTimeWithDelay().isBefore(this.time))
         .sorted(Comparator.comparing(TrainDeparture::getDepartureTime))
         .collect(Collectors.toList());
   }

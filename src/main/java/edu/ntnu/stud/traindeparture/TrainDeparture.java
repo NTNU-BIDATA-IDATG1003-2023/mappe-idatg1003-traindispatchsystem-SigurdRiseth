@@ -118,6 +118,10 @@ public class TrainDeparture {
     return departureTime;
   }
 
+  public LocalTime getDepartureTimeWithDelay() {
+    return departureTime.plusHours(delay.getHour()).plusMinutes(delay.getMinute());
+  }
+
   /**
    * Sets the departure time. Can only be set to a time after the current time.
    *
