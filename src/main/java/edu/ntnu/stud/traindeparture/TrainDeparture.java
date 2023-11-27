@@ -1,6 +1,7 @@
 package edu.ntnu.stud.traindeparture;
 
 import java.time.LocalTime;
+import java.util.Objects;
 
 /**
  * Class for the train departures.
@@ -13,9 +14,9 @@ import java.time.LocalTime;
  */
 public class TrainDeparture {
 
-  private final int trainNumber;
-  private final String line;
-  private final String destination;
+  private int trainNumber;
+  private String line;
+  private String destination;
   private int track;
   private LocalTime departureTime;
   private LocalTime delay;
@@ -33,11 +34,27 @@ public class TrainDeparture {
   public TrainDeparture(String track, int trainNumber, String line, String destination,
       LocalTime departureTime) {
     this.setTrack(track);
-    this.trainNumber = trainNumber;
-    this.line = line;
-    this.destination = destination;
+    this.setTrainNumber(trainNumber);
+    this.setLine(line);
+    this.setDestination(destination);
     this.setDepartureTime(departureTime);
-    this.delay = LocalTime.of(0, 0);
+    this.setDelay(LocalTime.of(0, 0));
+  }
+
+  private void setDestination(String destination) {
+    this.destination = Objects.requireNonNullElse(destination, "Invalid destination");
+  }
+
+  private void setLine(String line) {
+    this.line = Objects.requireNonNullElse(line, "Invalid line");
+  }
+
+  private void setTrainNumber(int trainNumber) {
+    if (trainNumber > 0) {
+      this.trainNumber = trainNumber;
+    } else {
+      this.trainNumber = -1;
+    }
   }
 
   /**
