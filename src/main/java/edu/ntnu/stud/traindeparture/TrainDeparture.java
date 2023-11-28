@@ -41,14 +41,29 @@ public class TrainDeparture {
     this.setDelay(LocalTime.of(0, 0));
   }
 
+  /**
+   * Sets the destination. If the destination is null the destination is set to "Invalid destination"
+   *
+   * @param destination destination to be set
+   */
   private void setDestination(String destination) {
     this.destination = Objects.requireNonNullElse(destination, "Invalid destination");
   }
 
+  /**
+   * Sets the line. If the line is null the line is set to "Invalid line"
+   *
+   * @param line line to be set
+   */
   private void setLine(String line) {
     this.line = Objects.requireNonNullElse(line, "Invalid line");
   }
 
+  /**
+   * Sets the train number. If the train number is under 1 the train number is set to -1.
+   *
+   * @param trainNumber train number to be set
+   */
   private void setTrainNumber(int trainNumber) {
     if (trainNumber > 0) {
       this.trainNumber = trainNumber;
@@ -58,7 +73,7 @@ public class TrainDeparture {
   }
 
   /**
-   * Retrieves the track number as an integer.
+   * Returns the track number as an integer.
    *
    * @return An integer representing the track number.
    */
@@ -68,7 +83,8 @@ public class TrainDeparture {
   }
 
   /**
-   * Sets the track. If the track is under 1 or text the value is set to -1.
+   * Sets the track. If the track is under 1 or a String the value is set to -1.
+   * <p>A track value of -1 represents that no track has been assigned.</p>
    */
   public void setTrack(String track) {
     try {
@@ -83,7 +99,7 @@ public class TrainDeparture {
   }
 
   /**
-   * Retrieves the train number as an integer.
+   * Returns the train number as an integer.
    *
    * @return An integer representing the train number.
    */
@@ -92,16 +108,16 @@ public class TrainDeparture {
   }
 
   /**
-   * Retrieves the line information as a String.
+   * Returns the line as a String.
    *
-   * @return A String containing information about the line.
+   * @return A String representing the line.
    */
   public String getLine() {
     return line;
   }
 
   /**
-   * Retrieves the destination of this entity as a String.
+   * Returns the destination as a String.
    *
    * @return A String representing the destination.
    */
@@ -110,7 +126,7 @@ public class TrainDeparture {
   }
 
   /**
-   * Retrieves the departure time (delay included) as a LocalTime object.
+   * Returns the departure time as a LocalTime object.
    *
    * @return The LocalTime object representing the departure time.
    */
@@ -118,12 +134,17 @@ public class TrainDeparture {
     return departureTime;
   }
 
+  /**
+   * Returns the departure time with the delay added to it.
+   *
+   * @return The LocalTime object representing the departure time with the delay added to it.
+   */
   public LocalTime getDepartureTimeWithDelay() {
     return departureTime.plusHours(delay.getHour()).plusMinutes(delay.getMinute());
   }
 
   /**
-   * Sets the departure time. Can only be set to a time after the current time.
+   * Sets the departure time.
    *
    * @param departureTime departure time to be set
    */
@@ -132,7 +153,7 @@ public class TrainDeparture {
   }
 
   /**
-   * Retrieves the delay represented as a LocalTime.
+   * Returns the delay represented as a LocalTime.
    *
    * @return The LocalTime object representing the delay.
    */
@@ -141,8 +162,7 @@ public class TrainDeparture {
   }
 
   /**
-   * Sets the delay. If the delay is null the delay is set to 00:00. Removed from station if delayed
-   * over midnight
+   * Sets the delay. If the delay is null the delay is set to 00:00.
    *
    * @param delay delay to be set
    */
