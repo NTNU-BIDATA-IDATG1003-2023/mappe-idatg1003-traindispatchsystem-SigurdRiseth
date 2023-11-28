@@ -4,18 +4,23 @@ import java.time.LocalTime;
 import java.util.Scanner;
 
 /**
- * Class for handling user input.
- * <p>Handles all user input and calls the needed methods in the StringManager class.</p>
+ * Class for reading and returning user input.
+ * <p> Uses the Scanner class to read user input. </p>
  *
  * @version 0.0.1
  * @Author Sigurd Riseth
+ * @see Scanner
  */
 public class InputHandler {
 
-  private final Scanner scanner = new Scanner(System.in);
+  private final Scanner scanner;
+
+  public InputHandler() {
+    scanner = new Scanner(System.in);
+  }
 
   /**
-   * Gets the user input as a String.
+   * Returns the user input as a String.
    *
    * @return The user input as a String
    */
@@ -37,9 +42,11 @@ public class InputHandler {
 
   /**
    * Checks if the user input is a String that can be parsed to a LocalTime object.
+   * <p>Returns true if the input is a valid String, false otherwise. A valid string is in the format hh:mm. </p>
    *
    * @param inputDepartureTime The input to be checked
    * @return True if the input is a valid time, false otherwise
+   * @see LocalTime
    */
   public boolean departureTimeValid(String inputDepartureTime) {
     try {
@@ -51,9 +58,9 @@ public class InputHandler {
   }
 
   /**
-   * Returns the user input as an int.
+   * Returns the user input as an int. If the input is not an int, returns -1.
    *
-   * @return
+   * @return The user input as an int
    */
   public int getInt() {
     try {
