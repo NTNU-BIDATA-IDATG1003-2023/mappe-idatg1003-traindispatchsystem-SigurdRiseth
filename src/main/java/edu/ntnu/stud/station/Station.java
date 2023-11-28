@@ -31,9 +31,13 @@ public class Station {
   }
 
   /**
-   * Sets the time.
+   * Method that sets the station clock.
+   * <p>Will only set the time if the given time is after the current time.
+   * Returns a boolean depending on the outcome of the change.
+   * True is returned it the clock was changed, otherwise it returns false. </p>
    *
    * @param time The time to be set
+   * @return boolean indicating whether the clock was changed or not
    */
   public boolean setClock(LocalTime time) {
     if (this.time.isBefore(time)) {
@@ -46,7 +50,7 @@ public class Station {
 
 
   /**
-   * Returns the time.
+   * Returns the station clock.
    *
    * @return the current time
    */
@@ -55,7 +59,7 @@ public class Station {
   }
 
   /**
-   * Creates a new TrainDeparture and adds it to the trainDepartures HashMap.
+   * Creates a new TrainDeparture and adds it to the trainDepartures HashMap using the addTrainDeparture() method.
    *
    * @param track         The track the train will depart from
    * @param trainNumber   The unique train ID
@@ -65,9 +69,8 @@ public class Station {
    */
   public void createTrainDeparture(String track, int trainNumber, String line, String destination,
       LocalTime departureTime) {
-    TrainDeparture trainDeparture = new TrainDeparture(track, trainNumber, line, destination,
-        departureTime);
-    this.addTrainDeparture(trainDeparture);
+    this.addTrainDeparture(new TrainDeparture(track, trainNumber, line, destination,
+        departureTime));
   }
 
   /**
@@ -80,10 +83,9 @@ public class Station {
   }
 
   /**
-   * Returns a list of all TrainDepartures yet to depart. Done by running the sortByDepartureTime
-   * method.
+   * Returns an iterator of all TrainDepartures yet to depart. Done by running the sortByDepartureTime() method.
    *
-   * @return a list of all TrainDepartures yet to depart
+   * @return an iterator of all TrainDepartures yet to depart
    */
   public Iterator<TrainDeparture> getTrainDeparturesSorted() {
     sortByDepartureTime();
@@ -95,7 +97,7 @@ public class Station {
    * already departed based on the current time. Saves the result in the trainDeparturesSorted
    * list.
    */
-  private void sortByDepartureTime() {
+  private void sortByDepartureTime() { // TODO: Hvorfor må denne lagres i klassen og ikke bare returneres direkte uten å lagres? Kunne vært en metode og ikke to?
     this.trainDeparturesSorted = this.trainDepartures
         .values()
         .stream()
@@ -109,19 +111,19 @@ public class Station {
    * Returns a boolean value indicating whether a train with the given train number exists.
    *
    * @param trainNumber The train number to be checked
-   * @return boolean
+   * @return boolean indicating whether the train exists or not
    */
   public boolean trainExists(int trainNumber) {
     return trainDepartures.containsKey(trainNumber);
   }
 
   /**
-   * Changes the track of a train with the given train number. Returns a string indicating whether
+   * Changes the track of a train with the given train number. Returns a boolean indicating whether
    * the track was changed or not.
    *
    * @param trainNumber The train number of the train to be changed
    * @param track       The track to be set
-   * @return String
+   * @return boolean indicating whether the track was changed or not
    */
   public boolean changeTrackByTrainNumber(int trainNumber, String track) {
     if (trainExists(trainNumber)) {
@@ -133,12 +135,11 @@ public class Station {
   }
 
   /**
-   * Changes the delay of a train with the given train number. Returns a string indicating whether
-   * the delay was changed or not.
+   * Changes the delay of a train with the given train number. Returns an int indicating the effect it had on the train departure.
    *
    * @param trainNumber The train number of the train to be changed
    * @param delay       The delay to be set
-   * @return String
+   * @return int indicating the outcome of the result.
    */
   public int changeDelayByTrainNumber(int trainNumber, LocalTime delay) {
     if (trainExists(trainNumber)) {
@@ -171,7 +172,7 @@ public class Station {
   }
 
   /**
-   * Returns the first train departure with the provided destination.
+   * Returns the first train departure with the provided destination. If no train departures are found, null is returned.
    *
    * @param destination The destination of the train to be returned
    * @return TrainDeparture
@@ -198,6 +199,11 @@ public class Station {
     }
   }
 
+  /**
+   * Returns a list of all destinations of the train departures yet to depart.
+   *
+   * @return amount of train departures yet to depart
+   */
   public int getAmountOfTrainDepartures() {
     sortByDepartureTime();
     return trainDeparturesSorted.size();
