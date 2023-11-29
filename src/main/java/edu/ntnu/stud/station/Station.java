@@ -6,14 +6,13 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Class for the train station.
  * <p>In charge of keeping track of the time and a list of all TrainDepartures yet to depart.</p>
  *
  * @version 0.0.1
- * @Author Sigurd Riseth
+ * @author Sigurd Riseth
  * @since 14.10.2023
  */
 public class Station {

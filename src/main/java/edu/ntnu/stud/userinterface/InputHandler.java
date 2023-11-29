@@ -8,7 +8,7 @@ import java.util.Scanner;
  * <p> Uses the Scanner class to read user input. </p>
  *
  * @version 0.0.1
- * @Author Sigurd Riseth
+ * @author Sigurd Riseth
  * @see Scanner
  */
 public class InputHandler {

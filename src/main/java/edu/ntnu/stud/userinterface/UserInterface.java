@@ -13,7 +13,7 @@ import java.util.List;
  * @see InputHandler
  * @see Station
  * @version 0.0.1
- * @Author Sigurd Riseth
+ * @author Sigurd Riseth
  */
 public class UserInterface {
 

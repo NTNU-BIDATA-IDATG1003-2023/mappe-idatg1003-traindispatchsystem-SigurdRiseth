@@ -8,7 +8,7 @@ import java.util.Iterator;
  * Class for managing all the methods creating strings used in the UI.
  *
  * @version 0.0.1
- * @Author Sigurd Riseth
+ * @author Sigurd Riseth
  */
 public class Printer {
 
