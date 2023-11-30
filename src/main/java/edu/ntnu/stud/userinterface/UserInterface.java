@@ -1,6 +1,7 @@
 package edu.ntnu.stud.userinterface;
 
 import edu.ntnu.stud.station.Station;
+import edu.ntnu.stud.utility.Enum;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -151,9 +152,9 @@ public class UserInterface {
     int trainNumber = getTrainNumberInUse();
     LocalTime delay = getLocalTimeFromString();
     int result = station.changeDelayByTrainNumber(trainNumber, delay);
-    if (result == 1) {
+    if (result == Enum.TRAIN_REMOVED_BY_DELAY.getValue()) {
       printer.printTrainRemovedByDelay();
-    } else if (result == 2) {
+    } else if (result == Enum.DELAY_CHANGED_SUCCESSFULLY.getValue()) {
       printer.printDelayChanged();
     } else {
       printer.printTrainNumberNotInUse();

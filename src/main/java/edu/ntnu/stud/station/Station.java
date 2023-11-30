@@ -1,6 +1,7 @@
 package edu.ntnu.stud.station;
 
 import edu.ntnu.stud.traindeparture.TrainDeparture;
+import edu.ntnu.stud.utility.Enum;
 import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -19,10 +20,6 @@ public class Station {
 
   private final HashMap<Integer, TrainDeparture> trainDepartures;
   private LocalTime time;
-
-  private static final int ERROR_MESSAGE_1 = 1;
-  private static final int ERROR_MESSAGE_2 = 2;
-  private static final int ERROR_MESSAGE_3 = 3;
 
   /**
    * Constructor that sets the time to midnight and creates a new HashMap for the train departures.
@@ -147,13 +144,13 @@ public class Station {
           + trainDepartures.get(trainNumber).getDepartureTime().getMinute() + delay.getMinute()
           >= 1440) {
         removeTrainDepartureByTrainNumber(trainNumber);
-        errorMessage = ERROR_MESSAGE_1;
+        errorMessage = Enum.TRAIN_REMOVED_BY_DELAY.getValue();
       } else {
         trainDepartures.get(trainNumber).setDelay(delay);
-        errorMessage = ERROR_MESSAGE_2;
+        errorMessage = Enum.DELAY_CHANGED_SUCCESSFULLY.getValue();
       }
     } else {
-      errorMessage = ERROR_MESSAGE_3;
+      errorMessage = Enum.TRAIN_NUMBER_NOT_IN_USE.getValue();
     }
     return errorMessage;
   }
@@ -176,7 +173,7 @@ public class Station {
    * Returns the first train departure with the provided destination. If no train departures are found, null is returned.
    *
    * @param destination The destination of the train to be returned
-   * @return TrainDeparture
+   * @return TrainDeparture with the given destination
    */
   public TrainDeparture getTrainDepartureByDestination(String destination) {
     TrainDeparture trainDeparture = null;
@@ -196,6 +193,7 @@ public class Station {
    * Removes a train departure with the given train number from the trainDepartures HashMap.
    *
    * @param trainNumber The train number of the train to be removed
+   * @return boolean indicating whether the train was removed or not
    */
   public boolean removeTrainDepartureByTrainNumber(int trainNumber) {
     boolean removed = false;
