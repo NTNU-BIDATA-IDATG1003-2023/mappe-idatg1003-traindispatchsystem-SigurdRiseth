@@ -5,7 +5,6 @@ import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Class for the train station.
@@ -20,11 +19,10 @@ public class Station {
 
   private final HashMap<Integer, TrainDeparture> trainDepartures;
   private LocalTime time;
-  private List<TrainDeparture> trainDeparturesSorted;
 
-  private final static int ERROR_MESSAGE_1 = 1;
-  private final static int ERROR_MESSAGE_2 = 2;
-  private final static int ERROR_MESSAGE_3 = 3;
+  private static final int ERROR_MESSAGE_1 = 1;
+  private static final int ERROR_MESSAGE_2 = 2;
+  private static final int ERROR_MESSAGE_3 = 3;
 
   /**
    * Constructor that sets the time to midnight and creates a new HashMap for the train departures.
@@ -36,9 +34,11 @@ public class Station {
 
   /**
    * Method that sets the station clock.
-   * <p>Will only set the time if the given time is after the current time.
+   * <p>
+   * Will only set the time if the given time is after the current time.
    * Returns a boolean depending on the outcome of the change.
-   * True is returned it the clock was changed, otherwise it returns false. </p>
+   * True is returned it the clock was changed, otherwise it returns false.
+   * </p>
    *
    * @param time The time to be set
    * @return boolean indicating whether the clock was changed or not
@@ -87,27 +87,22 @@ public class Station {
   }
 
   /**
-   * Returns an iterator of all TrainDepartures yet to depart. Done by running the sortByDepartureTime() method.
-   *
-   * @return an iterator of all TrainDepartures yet to depart
-   */
-  public Iterator<TrainDeparture> getTrainDeparturesSorted() {
-    sortByDepartureTime();
-    return this.trainDeparturesSorted.iterator();
-  }
-
-  /**
+   * Returns an iterator of all TrainDepartures yet to depart.
+   * <p>
    * Sorts the trainDepartures HashMap by departure time and filters out departures that have
-   * already departed based on the current time. Saves the result in the trainDeparturesSorted
-   * list.
+   * already departed based on the current time. Returns an iterator of the remaining departures.
+   * </p>
+   *
+   * @return Iterator of all TrainDepartures yet to depart
    */
-  private void sortByDepartureTime() { // TODO: Hvorfor må denne lagres i klassen og ikke bare returneres direkte uten å lagres? Kunne vært en metode og ikke to?
-    this.trainDeparturesSorted = this.trainDepartures
+  public Iterator<TrainDeparture> getTrainDeparturesSorted() { // TODO: Hvorfor må denne lagres i klassen og ikke bare returneres direkte uten å lagres? Kunne vært en metode og ikke to?
+    return this.trainDepartures
         .values()
         .stream()
         .filter(trainDeparture -> !trainDeparture.getDepartureTimeWithDelay().isBefore(this.time))
         .sorted(Comparator.comparing(TrainDeparture::getDepartureTime))
-        .toList();
+        .toList()
+        .iterator();
   }
 
 
@@ -220,8 +215,13 @@ public class Station {
    * @return amount of train departures yet to depart
    */
   public int getAmountOfTrainDepartures() {
-    sortByDepartureTime();
-    return trainDeparturesSorted.size();
+    Iterator<TrainDeparture> iterator = getTrainDeparturesSorted();
+    int amount = 0;
+    while (iterator.hasNext()) {
+      iterator.next();
+      amount++;
+    }
+    return amount;
   }
 
 }

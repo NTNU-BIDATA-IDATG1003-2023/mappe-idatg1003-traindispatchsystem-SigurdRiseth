@@ -56,7 +56,9 @@ public class Printer {
 
   /**
    * Formats a train departure to the table format.
-   * <p>The track will not be shown if it equals -1 and the delay will not be shown if it is 00:00.</p>
+   * <p>
+   *   The track will not be shown if it equals -1 and the delay will not be shown if it is 00:00.
+   * </p>
    *
    * @param trainDeparture The train departure to be formatted
    * @return The formatted train departure
@@ -163,7 +165,9 @@ public class Printer {
 
   /**
    * Prints information about a train departure.
-   * <p>The track will not be showed if it equals -1, and the delay will not be shown if it is 00:00.</p>
+   * <p>
+   *   The track will not be showed if it equals -1, and the delay will not be shown if it is 00:00.
+   * </p>
    *
    * @param train The train departure to be printed
    */
@@ -187,7 +191,8 @@ public class Printer {
   }
 
   /**
-   * Prints a message saying that no train departure has been created yet and only choice 4, 10 and 0 is allowed.
+   * Prints a message saying that no train departure has been created yet
+   * and only choice 4, 10 and 0 is allowed.
    */
   public void printNoTrains() {
     System.err.println("No TrainDepartures created yet. Only option 4, 10, or 0 is allowed.");
