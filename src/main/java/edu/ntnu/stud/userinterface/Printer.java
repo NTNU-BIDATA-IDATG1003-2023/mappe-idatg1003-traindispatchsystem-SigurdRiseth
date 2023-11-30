@@ -13,7 +13,7 @@ import java.util.Iterator;
 public class Printer {
 
 
-  private final String TABLEFORMAT = "%-15s %-10s %-20s %-20s %-15s %-15s %n";
+  private final String TABLE_FORMAT = "%-15s %-10s %-20s %-20s %-15s %-15s %n";
 
   /**
    * Prints all the options the user can choose from.
@@ -39,11 +39,13 @@ public class Printer {
   /**
    * Prints a String of all departures yet to depart.
    * <p>Uses a iterator of train departures as parameter.</p>
+   *
+   * @param iterator The iterator of train departures
    */
   public void printAllDepartures(Iterator<TrainDeparture> iterator) {
     StringBuilder result = new StringBuilder();
     result.append("Here is a list of all the trains that are yet to depart:\n");
-    result.append("\033[1m" + String.format(TABLEFORMAT,
+    result.append("\033[1m" + String.format(TABLE_FORMAT,
         "Train number", "Line", "Destination", "Departure time", "Track", "Delay") + "\033[0m");
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
@@ -60,7 +62,7 @@ public class Printer {
    * @return The formatted train departure
    */
   private String formatTrainToTable(TrainDeparture trainDeparture) {
-    return String.format(TABLEFORMAT,
+    return String.format(TABLE_FORMAT,
         trainDeparture.getTrainNumber(),
         trainDeparture.getLine(),
         trainDeparture.getDestination(),
@@ -80,7 +82,7 @@ public class Printer {
     StringBuilder result = new StringBuilder();
     result.append("Here is a list of all the trains that are yet to depart to " + destination
         + ": \n");
-    result.append("\033[1m" + String.format(TABLEFORMAT,
+    result.append("\033[1m" + String.format(TABLE_FORMAT,
         "Train number", "Line", "Destination", "Departure time", "Track", "Delay") + "\033[0m");
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
@@ -120,7 +122,7 @@ public class Printer {
   /**
    * Prints a message indicating that the train number is invalid.
    */
-  public void printTrainNumberInvalid() {
+  public void printTrainNumberInvalid() { // flush ut error message
     System.err.println("The train number must be a whole number above 0. Please try again.");
   }
 

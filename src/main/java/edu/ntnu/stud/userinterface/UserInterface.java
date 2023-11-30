@@ -29,27 +29,30 @@ public class UserInterface {
   public void start() {
     boolean running = true;
     while (running) {
+      boolean noTrains = false;
       printer.printOptions();
       String choice = inputHandler.getStringInput();
 
       if (station.getAmountOfTrainDepartures() == 0 && !List.of("4", "10", "0").contains(choice)) {
         printer.printNoTrains();
-        continue;
+        noTrains = true;
       }
 
-      switch (choice) {
-        case "1" -> printAllDepartures();
-        case "2" -> printAllUpcomingDeparturesToDestination();
-        case "3" -> printNextDepartureToDestination();
-        case "4" -> createTrainDeparture();
-        case "5" -> setDelayForTrainDeparture();
-        case "6" -> setTrackForTrainDeparture();
-        case "7" -> removeTrackForTrainDeparture();
-        case "8" -> getTrainByTrainNumber();
-        case "9" -> removeTrainDepartureByTrainNumber();
-        case "10" -> setStationClock();
-        case "0" -> running = closeApplication();
-        default -> printer.printInvalidChoice();
+      if (!noTrains) {
+        switch (choice) {
+          case "1" -> printAllDepartures();
+          case "2" -> printAllUpcomingDeparturesToDestination();
+          case "3" -> printNextDepartureToDestination();
+          case "4" -> createTrainDeparture();
+          case "5" -> setDelayForTrainDeparture();
+          case "6" -> setTrackForTrainDeparture();
+          case "7" -> removeTrackForTrainDeparture();
+          case "8" -> getTrainByTrainNumber();
+          case "9" -> removeTrainDepartureByTrainNumber();
+          case "10" -> setStationClock();
+          case "0" -> running = closeApplication();
+          default -> printer.printInvalidChoice();
+        }
       }
     }
   }
@@ -235,21 +238,22 @@ public class UserInterface {
    * Asks the user for a time and returns the input.
    * <p>Checks if the input is valid, and if it is not, the user is asked to input a new time.</p>
    *
-   * @return the user input
+   * @return the user input in LocalTime format
    */
-  private LocalTime getLocalTimeFromString() {
-    LocalTime departureTime = null;
-    while (departureTime == null) {
+  private LocalTime getLocalTimeFromString() { // TODO: forbere denne while loopen
+    LocalTime result = null;
+    String inputDepartureTime = null;
+    while (inputDepartureTime == null) {
       printer.printTimeAsk();
-      String inputDepartureTime = inputHandler.getStringInput();
-      if (inputHandler.departureTimeValid(inputDepartureTime)) {
-        departureTime = LocalTime.parse(inputDepartureTime);
-        return departureTime;
-      } else {
+      inputDepartureTime = inputHandler.getStringInput();
+      try {
+        result = LocalTime.parse(inputDepartureTime);
+      } catch (Exception e){
         printer.printTimeInvalid();
+        inputDepartureTime = null;
       }
     }
-    return departureTime;
+    return result;
   }
 
   /**

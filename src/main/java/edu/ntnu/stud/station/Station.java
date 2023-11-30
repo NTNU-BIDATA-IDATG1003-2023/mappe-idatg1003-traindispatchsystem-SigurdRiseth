@@ -14,12 +14,17 @@ import java.util.List;
  * @version 0.0.1
  * @author Sigurd Riseth
  * @since 14.10.2023
+ * @see TrainDeparture
  */
 public class Station {
 
   private final HashMap<Integer, TrainDeparture> trainDepartures;
   private LocalTime time;
   private List<TrainDeparture> trainDeparturesSorted;
+
+  private final static int ERROR_MESSAGE_1 = 1;
+  private final static int ERROR_MESSAGE_2 = 2;
+  private final static int ERROR_MESSAGE_3 = 3;
 
   /**
    * Constructor that sets the time to midnight and creates a new HashMap for the train departures.
@@ -125,12 +130,12 @@ public class Station {
    * @return boolean indicating whether the track was changed or not
    */
   public boolean changeTrackByTrainNumber(int trainNumber, String track) {
+    boolean trackChanged = false;
     if (trainExists(trainNumber)) {
       trainDepartures.get(trainNumber).setTrack(track);
-      return true;
-    } else {
-      return false;
+      trackChanged = true;
     }
+    return trackChanged;
   }
 
   /**
@@ -140,20 +145,22 @@ public class Station {
    * @param delay       The delay to be set
    * @return int indicating the outcome of the result.
    */
-  public int changeDelayByTrainNumber(int trainNumber, LocalTime delay) {
+  public int changeDelayByTrainNumber(int trainNumber, LocalTime delay) { //TODO: utforsk enum.
+    int errorMessage = 0;
     if (trainExists(trainNumber)) {
       if ((trainDepartures.get(trainNumber).getDepartureTime().getHour() + delay.getHour()) * 60
           + trainDepartures.get(trainNumber).getDepartureTime().getMinute() + delay.getMinute()
           >= 1440) {
         removeTrainDepartureByTrainNumber(trainNumber);
-        return 1;
+        errorMessage = ERROR_MESSAGE_1;
       } else {
         trainDepartures.get(trainNumber).setDelay(delay);
-        return 2;
+        errorMessage = ERROR_MESSAGE_2;
       }
     } else {
-      return 3;
+      errorMessage = ERROR_MESSAGE_3;
     }
+    return errorMessage;
   }
 
   /**
@@ -163,11 +170,11 @@ public class Station {
    * @return TrainDeparture
    */
   public TrainDeparture getTrainDepartureByTrainNumber(int trainNumber) {
+    TrainDeparture td = null;
     if (trainExists(trainNumber)) {
-      return trainDepartures.get(trainNumber);
-    } else {
-      return null;
+      td = trainDepartures.get(trainNumber);
     }
+    return td;
   }
 
   /**
@@ -177,14 +184,17 @@ public class Station {
    * @return TrainDeparture
    */
   public TrainDeparture getTrainDepartureByDestination(String destination) {
+    TrainDeparture trainDeparture = null;
+    boolean trainDepartureFound = false;
     Iterator<TrainDeparture> iterator = getTrainDeparturesSorted();
-    while (iterator.hasNext()) {
-      TrainDeparture trainDeparture = iterator.next();
+
+    while (iterator.hasNext() && !trainDepartureFound) {
+      trainDeparture = iterator.next();
       if (trainDeparture.getDestination().equals(destination)) {
-        return trainDeparture;
+        trainDepartureFound = true;
       }
     }
-    return null;
+    return trainDeparture;
   }
 
   /**
@@ -192,10 +202,16 @@ public class Station {
    *
    * @param trainNumber The train number of the train to be removed
    */
-  public void removeTrainDepartureByTrainNumber(int trainNumber) {
+  public boolean removeTrainDepartureByTrainNumber(int trainNumber) {
+    boolean removed = false;
     if (trainExists(trainNumber)) {
-      trainDepartures.remove(trainNumber);
+      TrainDeparture td = trainDepartures.remove(trainNumber);
+      if(td == null && !trainDepartures.containsValue(td)) {
+        removed = true;
+      }
     }
+    return removed;
+
   }
 
   /**

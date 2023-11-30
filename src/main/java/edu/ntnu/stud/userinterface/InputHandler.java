@@ -1,6 +1,5 @@
 package edu.ntnu.stud.userinterface;
 
-import java.time.LocalTime;
 import java.util.Scanner;
 
 /**
@@ -41,36 +40,20 @@ public class InputHandler {
   }
 
   /**
-   * Checks if the user input is a String that can be parsed to a LocalTime object.
-   * <p>Returns true if the input is a valid String, false otherwise. A valid string is in the format hh:mm. </p>
-   *
-   * @param inputDepartureTime The input to be checked
-   * @return True if the input is a valid time, false otherwise
-   * @see LocalTime
-   */
-  public boolean departureTimeValid(String inputDepartureTime) {
-    try {
-      LocalTime.parse(inputDepartureTime);
-      return true;
-    } catch (Exception e) {
-      return false;
-    }
-  }
-
-  /**
    * Returns the user input as an int. If the input is not an int, returns -1.
    *
    * @return The user input as an int
    */
   public int getInt() {
+    int result;
     try {
-      int result = scanner.nextInt();
+      result = scanner.nextInt();
       scanner.nextLine();
-      return result;
     } catch (Exception e) {
       scanner.nextLine();
-      return -1;
+      result = -1;
     }
+    return result;
   }
 }
 
