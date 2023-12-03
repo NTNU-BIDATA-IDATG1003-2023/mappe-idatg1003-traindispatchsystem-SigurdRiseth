@@ -34,7 +34,7 @@ public class Station {
    * <p>
    * Will only set the time if the given time is after the current time.
    * Returns a boolean depending on the outcome of the change.
-   * True is returned it the clock was changed, otherwise it returns false.
+   * <code>True</code> is returned it the clock was changed, otherwise it returns <code>false</code>.
    * </p>
    *
    * @param time The time to be set

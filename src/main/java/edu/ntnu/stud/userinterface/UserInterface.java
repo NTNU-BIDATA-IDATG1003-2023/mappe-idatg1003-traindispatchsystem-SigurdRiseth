@@ -25,7 +25,10 @@ public class UserInterface {
 
   /**
    * Prints all the options the user can choose from, and runs the corresponding case according to the user input.
-   * <p>If there are no trains created in the station, the only options available to the user will be 4, 10 and 0. This method will keep running until the user exits the application</p>
+   * <p>
+   * If there are no trains created in the station, the only options available to the user will be 4, 10 and 0.
+   * This method will keep running until the user exits the application.
+   * </p>
    */
   public void start() {
     boolean running = true;
@@ -60,6 +63,9 @@ public class UserInterface {
 
   /**
    * Closes the application, and prints a message.
+   * <p>
+   * Returns false to the start() method, which will then stop the while loop and exit the application.
+   * </p>
    *
    * @return false
    */
@@ -78,7 +84,9 @@ public class UserInterface {
 
   /**
    * Sets the clock of the station to the user input.
-   * <p>The clock is only changed if the input time is after the current time.</p>
+   * <p>
+   * The clock is only changed if the input time is after the current time.
+   * </p>
    */
   private void setStationClock() {
     LocalTime time = getLocalTimeFromStringAfterClock();
@@ -90,7 +98,11 @@ public class UserInterface {
   }
 
   /**
-   * Removes a train departure by the train number the user inputs.
+   * Asks for a train number in use and removes the corresponding train departure.
+   * <p>
+   * A message will be printed once the train departure is removed.
+   * </p>
+   *
    */
   private void removeTrainDepartureByTrainNumber() {
     int trainNumber = getTrainNumberInUse();
@@ -99,7 +111,7 @@ public class UserInterface {
   }
 
   /**
-   * Prints the train departure with the train number the user inputs.
+   * Asks the user for a train number in use and prints the corresponding train departure.
    */
   private void getTrainByTrainNumber() {
     int trainNumber = getTrainNumberInUse();
@@ -112,7 +124,9 @@ public class UserInterface {
 
   /**
    * Asks the user for a train number. Then changes the track to -1 for the train departure with the train number.
-   * <p>The track value -1 represents "unassigned track" and will not be showed in the train table.</p>
+   * <p>
+   * The track value -1 represents "unassigned track" and will not be showed in the train table.
+   * </p>
    *
    * @see Station
    */
@@ -126,7 +140,8 @@ public class UserInterface {
   }
 
   /**
-   * Asks the user for a train number and a track. Then calls the method to set the track for a train departure in the Station class.
+   * Asks the user for a train number and a track.
+   * Then calls the method to set the track for a train departure in the Station class.
    *
    * @see Station
    */
