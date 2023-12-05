@@ -1,7 +1,6 @@
 package edu.ntnu.stud.station;
 
 import edu.ntnu.stud.traindeparture.TrainDeparture;
-import edu.ntnu.stud.utility.Enum;
 import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -9,7 +8,9 @@ import java.util.Iterator;
 
 /**
  * Class for the train station.
- * <p>In charge of keeping track of the time and a list of all TrainDepartures yet to depart.</p>
+ * <p>
+ *   In charge of keeping track of the time and a list of all TrainDepartures yet to depart.
+ * </p>
  *
  * @version 0.0.1
  * @author Sigurd Riseth
@@ -33,19 +34,14 @@ public class Station {
    * Method that sets the station clock.
    * <p>
    * Will only set the time if the given time is after the current time.
-   * Returns a boolean depending on the outcome of the change.
-   * <code>True</code> is returned it the clock was changed, otherwise it returns <code>false</code>.
+   * In other words the time can only be set forwards.
    * </p>
    *
    * @param time The time to be set
-   * @return boolean indicating whether the clock was changed or not
    */
-  public boolean setClock(LocalTime time) {
+  public void setClock(LocalTime time) { // TODO: Skal jeg returnere boolean eller ikke???
     if (this.time.isBefore(time)) {
       this.time = time;
-      return true;
-    } else {
-      return false;
     }
   }
 
@@ -98,7 +94,6 @@ public class Station {
         .stream()
         .filter(trainDeparture -> !trainDeparture.getDepartureTimeWithDelay().isBefore(this.time))
         .sorted(Comparator.comparing(TrainDeparture::getDepartureTime))
-        .toList()
         .iterator();
   }
 
@@ -114,45 +109,38 @@ public class Station {
   }
 
   /**
-   * Changes the track of a train with the given train number. Returns a boolean indicating whether
-   * the track was changed or not.
+   * Changes the track of a train with the given train number.
    *
    * @param trainNumber The train number of the train to be changed
    * @param track       The track to be set
-   * @return boolean indicating whether the track was changed or not
    */
-  public boolean changeTrackByTrainNumber(int trainNumber, String track) {
-    boolean trackChanged = false;
+  public void changeTrackByTrainNumber(int trainNumber, String track) {
     if (trainExists(trainNumber)) {
       trainDepartures.get(trainNumber).setTrack(track);
-      trackChanged = true;
     }
-    return trackChanged;
   }
 
   /**
-   * Changes the delay of a train with the given train number. Returns an int indicating the effect it had on the train departure.
+   * Changes the delay of a train with the given train number.
+   *
+   * <p>
+   *   If departure time + delay is greater than 23:59 the train is removed.
+   *   Else the delay is set.
+   * </p>
    *
    * @param trainNumber The train number of the train to be changed
    * @param delay       The delay to be set
-   * @return int indicating the outcome of the result.
    */
-  public int changeDelayByTrainNumber(int trainNumber, LocalTime delay) { //TODO: utforsk enum.
-    int errorMessage = 0;
+  public void changeDelayByTrainNumber(int trainNumber, LocalTime delay) { //TODO: utforsk enum.
     if (trainExists(trainNumber)) {
       if ((trainDepartures.get(trainNumber).getDepartureTime().getHour() + delay.getHour()) * 60
           + trainDepartures.get(trainNumber).getDepartureTime().getMinute() + delay.getMinute()
           >= 1440) {
         removeTrainDepartureByTrainNumber(trainNumber);
-        errorMessage = Enum.TRAIN_REMOVED_BY_DELAY.getValue();
       } else {
         trainDepartures.get(trainNumber).setDelay(delay);
-        errorMessage = Enum.DELAY_CHANGED_SUCCESSFULLY.getValue();
       }
-    } else {
-      errorMessage = Enum.TRAIN_NUMBER_NOT_IN_USE.getValue();
     }
-    return errorMessage;
   }
 
   /**
@@ -193,18 +181,11 @@ public class Station {
    * Removes a train departure with the given train number from the trainDepartures HashMap.
    *
    * @param trainNumber The train number of the train to be removed
-   * @return boolean indicating whether the train was removed or not
    */
-  public boolean removeTrainDepartureByTrainNumber(int trainNumber) {
-    boolean removed = false;
+  public void removeTrainDepartureByTrainNumber(int trainNumber) {
     if (trainExists(trainNumber)) {
-      TrainDeparture td = trainDepartures.remove(trainNumber);
-      if(td == null && !trainDepartures.containsValue(td)) {
-        removed = true;
+      trainDepartures.remove(trainNumber);
       }
-    }
-    return removed;
-
   }
 
   /**

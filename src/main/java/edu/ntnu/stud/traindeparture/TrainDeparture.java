@@ -8,8 +8,8 @@ import java.util.Objects;
  * <p>Will store information such as train number, line, departure time, delay,
  * destination and what track it will depart from.</p>
  *
- * @author Sigurd Riseth
  * @version 0.0.1
+ * @author Sigurd Riseth
  * @since 14.10.2023
  */
 public class TrainDeparture {

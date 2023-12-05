@@ -1,17 +1,16 @@
 package edu.ntnu.stud.userinterface;
 
 import edu.ntnu.stud.station.Station;
-import edu.ntnu.stud.utility.Enum;
 import java.time.LocalTime;
 import java.util.List;
 
 /**
  * Main class of the user interface.
- * <p>Handles the switch case and calls the needed methods in the Printer and InputHandler
+ * <p>Handles the switch case and calls the needed methods in the Printer and InputReader
  * classes.</p>
  *
  * @see Printer
- * @see InputHandler
+ * @see InputReader
  * @see Station
  * @version 0.0.1
  * @author Sigurd Riseth
@@ -20,7 +19,7 @@ public class UserInterface {
 
   private Station station;
   private Printer printer;
-  private InputHandler inputHandler;
+  private InputReader inputReader;
 
 
   /**
@@ -35,7 +34,7 @@ public class UserInterface {
     while (running) {
       boolean noTrains = false;
       printer.printOptions();
-      String choice = inputHandler.getStringInput();
+      String choice = inputReader.getStringInput();
 
       if (station.getAmountOfTrainDepartures() == 0 && !List.of("4", "10", "0").contains(choice)) {
         printer.printNoTrains();
@@ -90,7 +89,8 @@ public class UserInterface {
    */
   private void setStationClock() {
     LocalTime time = getLocalTimeFromStringAfterClock();
-    if (station.setClock(time)) {
+    station.setClock(time);
+    if (station.getClock() == time) {
       printer.printClockChanged(time);
     } else {
       printer.printClockNotChanged();
@@ -100,14 +100,18 @@ public class UserInterface {
   /**
    * Asks for a train number in use and removes the corresponding train departure.
    * <p>
-   * A message will be printed once the train departure is removed.
+   * Checks if the train is removed and prints a message accordingly.
    * </p>
    *
    */
   private void removeTrainDepartureByTrainNumber() {
     int trainNumber = getTrainNumberInUse();
     station.removeTrainDepartureByTrainNumber(trainNumber);
-    printer.printTrainRemoved();
+    if (!station.trainExists(trainNumber)) {
+      printer.printTrainRemoved();
+    } else {
+      printer.printTrainNumberNotInUse();
+    }
   }
 
   /**
@@ -123,16 +127,16 @@ public class UserInterface {
   }
 
   /**
-   * Asks the user for a train number. Then changes the track to -1 for the train departure with the train number.
+   * Removes the track for an existing train departure.
    * <p>
+   * Asks the user for a train number. Then changes the track to -1 for the train departure with the train number.
    * The track value -1 represents "unassigned track" and will not be showed in the train table.
    * </p>
-   *
-   * @see Station
    */
   private void removeTrackForTrainDeparture() { //TODO: blir det sjekket dobbelt om tog finnes?
     int trainNumber = getTrainNumberInUse();
-    if (station.changeTrackByTrainNumber(trainNumber, "-1")) {
+    station.changeTrackByTrainNumber(trainNumber, "-1");
+    if (station.getTrainDepartureByTrainNumber(trainNumber).getTrack() == -1) {
       printer.printTrackRemoved();
     } else {
       printer.printTrainNumberNotInUse();
@@ -142,14 +146,12 @@ public class UserInterface {
   /**
    * Asks the user for a train number and a track.
    * Then calls the method to set the track for a train departure in the Station class.
-   *
-   * @see Station
    */
   private void setTrackForTrainDeparture() { //TODO: blir det sjekket dobbelt om tog finnes?
     int trainNumber = getTrainNumberInUse();
     String track = getTrack();
-    boolean changed = station.changeTrackByTrainNumber(trainNumber, track);
-    if (changed) {
+    station.changeTrackByTrainNumber(trainNumber, track);
+    if (String.valueOf(station.getTrainDepartureByTrainNumber(trainNumber).getTrack()).equals(track)) {
       printer.printTrackChanged(track);
     } else {
       printer.printTrainNumberNotInUse();
@@ -158,18 +160,19 @@ public class UserInterface {
 
   /**
    * Sets the delay for an existing train departure.
-   * <p>User inputs the train number and the delay, the changeDelayByTrainNumber() method in the Station class is then run with these parameters.
-   *    A message is then printed depending on the outcome of the change.</p>
-   *
-   * @see Station
+   * <p>
+   * User inputs the train number and the delay,
+   * the changeDelayByTrainNumber() method in the Station class is then run with these parameters.
+   * A message is then printed depending on the outcome of the change.
+   * </p>
    */
-  private void setDelayForTrainDeparture() {
+  private void setDelayForTrainDeparture() { // TODO: Bedre å ha void i changeDelay og heller sjekke outcome.
     int trainNumber = getTrainNumberInUse();
     LocalTime delay = getLocalTimeFromString();
-    int result = station.changeDelayByTrainNumber(trainNumber, delay);
-    if (result == Enum.TRAIN_REMOVED_BY_DELAY.getValue()) {
+    station.changeDelayByTrainNumber(trainNumber, delay);
+    if (!station.trainExists(trainNumber)) {
       printer.printTrainRemovedByDelay();
-    } else if (result == Enum.DELAY_CHANGED_SUCCESSFULLY.getValue()) {
+    } else if (station.getTrainDepartureByTrainNumber(trainNumber).getDelay().equals(delay)) {
       printer.printDelayChanged();
     } else {
       printer.printTrainNumberNotInUse();
@@ -178,7 +181,7 @@ public class UserInterface {
 
   /**
    * Asks the user for a train number in use.
-   * <p>Checks if the train number is valiud and in use, and if it is not, the user is asked to input a new train number.</p>
+   * <p>Checks if the train number is valid and in use, and if it is not, the user is asked to input a new train number.</p>
    *
    * @return the train number the user inputs
    */
@@ -186,7 +189,7 @@ public class UserInterface {
     int trainNumber;
     do {
       printer.printTrainNumberAsk();
-      trainNumber = inputHandler.getInt();
+      trainNumber = inputReader.getInt();
 
       if (trainNumber < 1) {
         printer.printTrainNumberInvalid();
@@ -247,7 +250,7 @@ public class UserInterface {
    */
   private String getTrack() {
     printer.printTrackAsk();
-    return inputHandler.getStringInput();
+    return inputReader.getStringInput();
   }
 
   /**
@@ -258,15 +261,14 @@ public class UserInterface {
    */
   private LocalTime getLocalTimeFromString() { // TODO: forbere denne while loopen
     LocalTime result = null;
-    String inputDepartureTime = null;
-    while (inputDepartureTime == null) {
+    boolean parseableInput = false;
+    while (!parseableInput) {
       printer.printTimeAsk();
-      inputDepartureTime = inputHandler.getStringInput();
       try {
-        result = LocalTime.parse(inputDepartureTime);
+        result = LocalTime.parse(inputReader.getStringInput());
+        parseableInput = true;
       } catch (Exception e){
         printer.printTimeInvalid();
-        inputDepartureTime = null;
       }
     }
     return result;
@@ -280,7 +282,7 @@ public class UserInterface {
    */
   private LocalTime getLocalTimeFromStringAfterClock() {
     LocalTime time = getLocalTimeFromString();
-    while (time.isBefore(station.getClock())) {
+    while (!time.isAfter(station.getClock())) {
       printer.printBeforeClock(station.getClock());
       time = getLocalTimeFromString();
     }
@@ -295,7 +297,7 @@ public class UserInterface {
    */
   private String getDestination() {
     printer.printDestinationAsk();
-    return inputHandler.getStringInputCapitalized();
+    return inputReader.getStringInputCapitalized();
   }
 
   /**
@@ -304,7 +306,7 @@ public class UserInterface {
    */
   private String getLine() {
     printer.printLineAsk();
-    return inputHandler.getStringInput();
+    return inputReader.getStringInput();
   }
 
   /**
@@ -319,7 +321,7 @@ public class UserInterface {
     do {
       printer.printTrainNumberAsk();
 
-      trainNumber = inputHandler.getInt();
+      trainNumber = inputReader.getInt();
 
       if (trainNumber < 1) {
         printer.printTrainNumberInvalid();
@@ -329,27 +331,19 @@ public class UserInterface {
       }
     } while (trainNumber < 1);
     return trainNumber;
-
-    /*
-    switch(validator.checkTrainNumber(trainNumber)){
-      case TRAIN_NUMBER_IS_LETTERS -> printer.printErrorMessage(TRAIN_NUMBER_IS_LETTERS.getResponse())
-      case TRAIN_NUMBER_IS_NEGATIVE -> printer.printErrorMessage(TRAIN_NUMBER_IS_NEGATIVE.getResponse())
-      case TRAIN_NUMBER_IS_IN_USE -> printer.printErrorMessage(TRAIN_NUMBER_IS_IN_USE.getResponse())
-    }
-     */
   }
 
   /**
    * First method to be called when the application starts.
    * <p>
-   * Initializes the StringManager, Station and InputHandler classes. Creates some train departures and
+   * Initializes the StringManager, Station and InputReader classes. Creates some train departures and
    * prints a welcome message
    * </p>
    */
   public void init() {
     this.station = new Station();
     this.printer = new Printer();
-    this.inputHandler = new InputHandler();
+    this.inputReader = new InputReader();
     createTrains();
     welcomeMessage();
 

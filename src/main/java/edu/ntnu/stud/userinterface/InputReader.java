@@ -4,17 +4,22 @@ import java.util.Scanner;
 
 /**
  * Class for reading and returning user input.
- * <p> Uses the Scanner class to read user input. </p>
+ * <p>
+ *   Uses the Scanner class to read user input.
+ * </p>
  *
  * @version 0.0.1
  * @author Sigurd Riseth
  * @see Scanner
  */
-public class InputHandler {
+public class InputReader {
 
   private final Scanner scanner;
 
-  public InputHandler() {
+  /**
+   * Constructor that creates a new Scanner object.
+   */
+  public InputReader() {
     scanner = new Scanner(System.in);
   }
 
@@ -29,7 +34,8 @@ public class InputHandler {
 
 
   /**
-   * Gets the user input as a String. Capitalizes the first letter and makes the rest lowercase.
+   * Returns the user input as a String with the first letter capitalized.
+   * The rest of the letters will be lowercase.
    *
    * @return The user input as a String with the first letter capitalized
    */
@@ -40,7 +46,8 @@ public class InputHandler {
   }
 
   /**
-   * Returns the user input as an int. If the input is not an int, returns -1.
+   * Returns the user input as an int.
+   * If the input is not an int, returns -1.
    *
    * @return The user input as an int
    */
