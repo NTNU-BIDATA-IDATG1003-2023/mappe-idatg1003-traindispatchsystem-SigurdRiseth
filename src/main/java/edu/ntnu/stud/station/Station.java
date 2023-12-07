@@ -9,13 +9,13 @@ import java.util.Iterator;
 /**
  * Class for the train station.
  * <p>
- *   In charge of keeping track of the time and a list of all TrainDepartures yet to depart.
+ * In charge of keeping track of the time and a list of all TrainDepartures yet to depart.
  * </p>
  *
- * @version 0.0.1
  * @author Sigurd Riseth
- * @since 14.10.2023
+ * @version 0.0.1
  * @see TrainDeparture
+ * @since 14.10.2023
  */
 public class Station {
 
@@ -31,10 +31,19 @@ public class Station {
   }
 
   /**
+   * Returns the station clock.
+   *
+   * @return the current time
+   */
+  public LocalTime getClock() {
+    return this.time;
+  }
+
+  /**
    * Method that sets the station clock.
    * <p>
-   * Will only set the time if the given time is after the current time.
-   * In other words the time can only be set forwards.
+   * Will only set the time if the given time is after the current time. In other words the time can
+   * only be set forwards.
    * </p>
    *
    * @param time The time to be set
@@ -45,18 +54,8 @@ public class Station {
     }
   }
 
-
   /**
-   * Returns the station clock.
-   *
-   * @return the current time
-   */
-  public LocalTime getClock() {
-    return this.time;
-  }
-
-  /**
-   * Creates a new TrainDeparture and adds it to the trainDepartures HashMap using the addTrainDeparture() method.
+   * Creates a new TrainDeparture and adds it to the trainDepartures HashMap.
    *
    * @param track         The track the train will depart from
    * @param trainNumber   The unique train ID
@@ -66,17 +65,11 @@ public class Station {
    */
   public void createTrainDeparture(String track, int trainNumber, String line, String destination,
       LocalTime departureTime) {
-    this.addTrainDeparture(new TrainDeparture(track, trainNumber, line, destination,
-        departureTime));
-  }
-
-  /**
-   * Adds a TrainDeparture to the trainDepartures HashMap.
-   *
-   * @param trainDeparture An instance of the class TrainDeparture
-   */
-  private void addTrainDeparture(TrainDeparture trainDeparture) {
-    this.trainDepartures.put(trainDeparture.getTrainNumber(), trainDeparture);
+    if (!trainExists(trainNumber)) {
+      this.trainDepartures.put(trainNumber,
+          new TrainDeparture(track, trainNumber, line, destination,
+              departureTime));
+    }
   }
 
   /**
@@ -89,7 +82,7 @@ public class Station {
    * @return Iterator of all TrainDepartures yet to depart
    */
   public Iterator<TrainDeparture> getTrainDeparturesSorted() { // TODO: Hvorfor må denne lagres i klassen og ikke bare returneres direkte uten å lagres? Kunne vært en metode og ikke to?
-    return this.trainDepartures
+    return this.trainDepartures // TODO: endre hashmapet og heller returnere iterator etterpå? Slette departures som har gått?
         .values()
         .stream()
         .filter(trainDeparture -> !trainDeparture.getDepartureTimeWithDelay().isBefore(this.time))
@@ -124,8 +117,7 @@ public class Station {
    * Changes the delay of a train with the given train number.
    *
    * <p>
-   *   If departure time + delay is greater than 23:59 the train is removed.
-   *   Else the delay is set.
+   * If departure time + delay is greater than 23:59 the train is removed. Else the delay is set.
    * </p>
    *
    * @param trainNumber The train number of the train to be changed
@@ -158,7 +150,8 @@ public class Station {
   }
 
   /**
-   * Returns the first train departure with the provided destination. If no train departures are found, null is returned.
+   * Returns the first train departure with the provided destination. If no train departures are
+   * found, null is returned.
    *
    * @param destination The destination of the train to be returned
    * @return TrainDeparture with the given destination
@@ -174,6 +167,9 @@ public class Station {
         trainDepartureFound = true;
       }
     }
+    if (!trainDepartureFound) {
+      trainDeparture = null;
+    }
     return trainDeparture;
   }
 
@@ -185,7 +181,7 @@ public class Station {
   public void removeTrainDepartureByTrainNumber(int trainNumber) {
     if (trainExists(trainNumber)) {
       trainDepartures.remove(trainNumber);
-      }
+    }
   }
 
   /**
@@ -193,7 +189,7 @@ public class Station {
    *
    * @return amount of train departures yet to depart
    */
-  public int getAmountOfTrainDepartures() {
+  public int getAmountOfTrainDeparturesToDepart() { //TODO: Gjøre denne til boolean og kalle den isEmpty? Bedre for prossessor?
     Iterator<TrainDeparture> iterator = getTrainDeparturesSorted();
     int amount = 0;
     while (iterator.hasNext()) {

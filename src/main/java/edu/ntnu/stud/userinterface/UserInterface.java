@@ -9,11 +9,11 @@ import java.util.List;
  * <p>Handles the switch case and calls the needed methods in the Printer and InputReader
  * classes.</p>
  *
+ * @author Sigurd Riseth
+ * @version 0.0.1
  * @see Printer
  * @see InputReader
  * @see Station
- * @version 0.0.1
- * @author Sigurd Riseth
  */
 public class UserInterface {
 
@@ -23,10 +23,11 @@ public class UserInterface {
 
 
   /**
-   * Prints all the options the user can choose from, and runs the corresponding case according to the user input.
+   * Prints all the options the user can choose from, and runs the corresponding case according to
+   * the user input.
    * <p>
-   * If there are no trains created in the station, the only options available to the user will be 4, 10 and 0.
-   * This method will keep running until the user exits the application.
+   * If there are no trains created in the station, the only options available to the user will be
+   * 4, 10 and 0. This method will keep running until the user exits the application.
    * </p>
    */
   public void start() {
@@ -36,7 +37,8 @@ public class UserInterface {
       printer.printOptions();
       String choice = inputReader.getStringInput();
 
-      if (station.getAmountOfTrainDepartures() == 0 && !List.of("4", "10", "0").contains(choice)) {
+      if (station.getAmountOfTrainDeparturesToDepart() == 0 && !List.of("4", "10", "0")
+          .contains(choice)) {
         printer.printNoTrains();
         noTrains = true;
       }
@@ -63,7 +65,8 @@ public class UserInterface {
   /**
    * Closes the application, and prints a message.
    * <p>
-   * Returns false to the start() method, which will then stop the while loop and exit the application.
+   * Returns false to the start() method, which will then stop the while loop and exit the
+   * application.
    * </p>
    *
    * @return false
@@ -102,7 +105,6 @@ public class UserInterface {
    * <p>
    * Checks if the train is removed and prints a message accordingly.
    * </p>
-   *
    */
   private void removeTrainDepartureByTrainNumber() {
     int trainNumber = getTrainNumberInUse();
@@ -129,8 +131,9 @@ public class UserInterface {
   /**
    * Removes the track for an existing train departure.
    * <p>
-   * Asks the user for a train number. Then changes the track to -1 for the train departure with the train number.
-   * The track value -1 represents "unassigned track" and will not be showed in the train table.
+   * Asks the user for a train number. Then changes the track to -1 for the train departure with the
+   * train number. The track value -1 represents "unassigned track" and will not be showed in the
+   * train table.
    * </p>
    */
   private void removeTrackForTrainDeparture() { //TODO: blir det sjekket dobbelt om tog finnes?
@@ -144,14 +147,15 @@ public class UserInterface {
   }
 
   /**
-   * Asks the user for a train number and a track.
-   * Then calls the method to set the track for a train departure in the Station class.
+   * Asks the user for a train number and a track. Then calls the method to set the track for a
+   * train departure in the Station class.
    */
   private void setTrackForTrainDeparture() { //TODO: blir det sjekket dobbelt om tog finnes?
     int trainNumber = getTrainNumberInUse();
     String track = getTrack();
     station.changeTrackByTrainNumber(trainNumber, track);
-    if (String.valueOf(station.getTrainDepartureByTrainNumber(trainNumber).getTrack()).equals(track)) {
+    if (String.valueOf(station.getTrainDepartureByTrainNumber(trainNumber).getTrack())
+        .equals(track)) {
       printer.printTrackChanged(track);
     } else {
       printer.printTrainNumberNotInUse();
@@ -161,9 +165,9 @@ public class UserInterface {
   /**
    * Sets the delay for an existing train departure.
    * <p>
-   * User inputs the train number and the delay,
-   * the changeDelayByTrainNumber() method in the Station class is then run with these parameters.
-   * A message is then printed depending on the outcome of the change.
+   * User inputs the train number and the delay, the changeDelayByTrainNumber() method in the
+   * Station class is then run with these parameters. A message is then printed depending on the
+   * outcome of the change.
    * </p>
    */
   private void setDelayForTrainDeparture() { // TODO: Bedre å ha void i changeDelay og heller sjekke outcome.
@@ -181,7 +185,8 @@ public class UserInterface {
 
   /**
    * Asks the user for a train number in use.
-   * <p>Checks if the train number is valid and in use, and if it is not, the user is asked to input a new train number.</p>
+   * <p>Checks if the train number is valid and in use, and if it is not, the user is asked to input
+   * a new train number.</p>
    *
    * @return the train number the user inputs
    */
@@ -228,7 +233,8 @@ public class UserInterface {
   /**
    * Creates a new train departure.
    * <p>User inputs the train number, line, destination, departure time and track.
-   *    A new train departure is then created using the createTrainDeparture() method in the Station class.</p>
+   * A new train departure is then created using the createTrainDeparture() method in the Station
+   * class.</p>
    *
    * @see Station
    */
@@ -246,6 +252,7 @@ public class UserInterface {
 
   /**
    * Asks the user for a track and returns the input.
+   *
    * @return the user input
    */
   private String getTrack() {
@@ -267,7 +274,7 @@ public class UserInterface {
       try {
         result = LocalTime.parse(inputReader.getStringInput());
         parseableInput = true;
-      } catch (Exception e){
+      } catch (Exception e) {
         printer.printTimeInvalid();
       }
     }
@@ -276,7 +283,8 @@ public class UserInterface {
 
   /**
    * Asks the user for a time using the getLocalTimeFromString() method.
-   * <p>Checks if the input time is after the current time, and if it is not, the user is asked to input a new time.</p>
+   * <p>Checks if the input time is after the current time, and if it is not, the user is asked to
+   * input a new time.</p>
    *
    * @return the user input time after the current time
    */
@@ -302,6 +310,7 @@ public class UserInterface {
 
   /**
    * Asks the user for a line and returns the input.
+   *
    * @return the user input
    */
   private String getLine() {
@@ -311,7 +320,8 @@ public class UserInterface {
 
   /**
    * Asks the user for a unique train number and returns the input.
-   * <p>Checks if the input is valid and not in use. If the train number is in use, the user is asked to input a new train number.</p>
+   * <p>Checks if the input is valid and not in use. If the train number is in use, the user is
+   * asked to input a new train number.</p>
    *
    * @return the user input
    */
@@ -336,8 +346,8 @@ public class UserInterface {
   /**
    * First method to be called when the application starts.
    * <p>
-   * Initializes the StringManager, Station and InputReader classes. Creates some train departures and
-   * prints a welcome message
+   * Initializes the StringManager, Station and InputReader classes. Creates some train departures
+   * and prints a welcome message
    * </p>
    */
   public void init() {

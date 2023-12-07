@@ -5,11 +5,11 @@ import java.util.Scanner;
 /**
  * Class for reading and returning user input.
  * <p>
- *   Uses the Scanner class to read user input.
+ * Uses the Scanner class to read user input.
  * </p>
  *
- * @version 0.0.1
  * @author Sigurd Riseth
+ * @version 0.0.1
  * @see Scanner
  */
 public class InputReader {
@@ -34,8 +34,8 @@ public class InputReader {
 
 
   /**
-   * Returns the user input as a String with the first letter capitalized.
-   * The rest of the letters will be lowercase.
+   * Returns the user input as a String with the first letter capitalized. The rest of the letters
+   * will be lowercase.
    *
    * @return The user input as a String with the first letter capitalized
    */
@@ -46,8 +46,7 @@ public class InputReader {
   }
 
   /**
-   * Returns the user input as an int.
-   * If the input is not an int, returns -1.
+   * Returns the user input as an int. If the input is not an int, returns -1.
    *
    * @return The user input as an int
    */
