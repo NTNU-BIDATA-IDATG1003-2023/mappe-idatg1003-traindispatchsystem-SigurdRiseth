@@ -18,7 +18,7 @@ The system is limited by the fact that it does not consider the date or if there
 .
 ├── src
 │   ├── main
-│   │   ├── java
+│   │   └── java
 │   │       └── edu.ntnu.stud
 │   │           ├── station
 │   │           │   └── Station.java
