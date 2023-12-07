@@ -28,6 +28,22 @@ class TrainDepartureTest {
   }
 
   /**
+   * Negative test for setTrainNumber method.
+   * <p>
+   *   Attempts to set the train number to a negative number.
+   *   Expected result is that the train number is -1.
+   * </p>
+   *
+   * @result Train number is -1
+   */
+  @Test
+  void setTrainNumberNegative() {
+    trainDeparture1 = new TrainDeparture("1", -5, "L1", "Oslo", LocalTime.of(5, 20));
+    assertEquals(-1, trainDeparture1.getTrainNumber(), "Expected train number to be -1");
+  }
+
+
+  /**
    * Positive test for setTrack method.
    *
    * @result Track is set to 2
