@@ -27,7 +27,7 @@ The system is limited by the fact that it does not consider the date or if there
 │   │           ├── userinterface
 │   │           │   ├── InputReader.java
 │   │           │   ├── Printer.java
-│   │           │   ├── UserInterface.java
+│   │           │   └── UserInterface.java
 │   │           └── TrainDispatchApp.java
 │   └── test
 │       └── java
