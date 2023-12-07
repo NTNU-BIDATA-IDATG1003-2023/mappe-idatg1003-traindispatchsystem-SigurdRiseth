@@ -14,6 +14,36 @@ The system is limited by the fact that it does not consider the date or if there
 
 ## Project structure
 
+```bash
+.
+├── src
+│   ├── main
+│   │   ├── java
+│   │       └── edu.ntnu.stud
+│   │           ├── station
+│   │           │   └── Station.java
+│   │           ├── traindeparture
+│   │           │   └── TrainDeparture.java
+│   │           ├── userinterface
+│   │           │   ├── InputReader.java
+│   │           │   ├── Printer.java
+│   │           │   ├── UserInterface.java
+│   │           └── TrainDispatchApp.java
+│   └── test
+│       └── java
+│           └── edu.ntnu.stud
+│               ├── station
+│               │   └── StationTest.java
+│               └── traindeparture
+│                   └── TrainDepartureTest.java
+├── target
+│   └── // Compiled bytecode and generated JAR files
+├── .gitignore
+├── pom.xml
+├── README.md
+└── TrainDispatchSystem.iml
+```
+
 [//]: # (TODO: Describe the structure of your project here. How have you used packages in your structure. Where are all sourcefiles stored. Where are all JUnit-test classes stored. etc.)
 
 ## Link to repository
