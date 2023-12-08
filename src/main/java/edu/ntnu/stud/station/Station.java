@@ -9,7 +9,8 @@ import java.util.Iterator;
 /**
  * Class for the train station.
  * <p>
- * In charge of keeping track of the time and a list of all TrainDepartures yet to depart.
+ * In charge of keeping track of the station-clock and a HashMap of all TrainDepartures yet to depart.
+ * Contains methods for editing the train departures, returning train departures and change the clock.
  * </p>
  *
  * @author Sigurd Riseth
@@ -20,37 +21,38 @@ import java.util.Iterator;
 public class Station {
 
   private final HashMap<Integer, TrainDeparture> trainDepartures;
-  private LocalTime time;
+  private LocalTime clock;
 
   /**
-   * Constructor that sets the time to midnight and creates a new HashMap for the train departures.
+   * Constructor that sets the clock to midnight and creates a new HashMap for the train departures.
    */
   public Station() {
-    this.time = LocalTime.of(0, 0);
+    this.clock = LocalTime.of(0, 0);
     this.trainDepartures = new HashMap<>();
   }
 
   /**
    * Returns the station clock.
    *
-   * @return the current time
+   * @return the current clock
    */
   public LocalTime getClock() {
-    return this.time;
+    return this.clock;
   }
 
   /**
    * Method that sets the station clock.
+   *
    * <p>
-   * Will only set the time if the given time is after the current time. In other words the time can
+   * Will only set the clock if the given time is after the current clock. In other words the clock can
    * only be set forwards.
    * </p>
    *
    * @param time The time to be set
    */
-  public void setClock(LocalTime time) { // TODO: Skal jeg returnere boolean eller ikke???
-    if (this.time.isBefore(time)) {
-      this.time = time;
+  public void setClock(LocalTime time) {
+    if (this.clock.isBefore(time)) {
+      this.clock = time;
     }
   }
 
@@ -74,18 +76,19 @@ public class Station {
 
   /**
    * Returns an iterator of all TrainDepartures yet to depart.
+   *
    * <p>
    * Sorts the trainDepartures HashMap by departure time and filters out departures that have
-   * already departed based on the current time. Returns an iterator of the remaining departures.
+   * already departed based on the current station-clock. Returns an iterator of the remaining departures.
    * </p>
    *
    * @return Iterator of all TrainDepartures yet to depart
    */
-  public Iterator<TrainDeparture> getTrainDeparturesSorted() { // TODO: Hvorfor må denne lagres i klassen og ikke bare returneres direkte uten å lagres? Kunne vært en metode og ikke to?
+  public Iterator<TrainDeparture> getTrainDeparturesSorted() {
     return this.trainDepartures // TODO: endre hashmapet og heller returnere iterator etterpå? Slette departures som har gått?
         .values()
         .stream()
-        .filter(trainDeparture -> !trainDeparture.getDepartureTimeWithDelay().isBefore(this.time))
+        .filter(trainDeparture -> !trainDeparture.getDepartureTimeWithDelay().isBefore(this.clock))
         .sorted(Comparator.comparing(TrainDeparture::getDepartureTime))
         .iterator();
   }
@@ -123,7 +126,7 @@ public class Station {
    * @param trainNumber The train number of the train to be changed
    * @param delay       The delay to be set
    */
-  public void changeDelayByTrainNumber(int trainNumber, LocalTime delay) { //TODO: utforsk enum.
+  public void changeDelayByTrainNumber(int trainNumber, LocalTime delay) {
     if (trainExists(trainNumber)) {
       if ((trainDepartures.get(trainNumber).getDepartureTime().getHour() + delay.getHour()) * 60
           + trainDepartures.get(trainNumber).getDepartureTime().getMinute() + delay.getMinute()

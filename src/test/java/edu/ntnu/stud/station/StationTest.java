@@ -31,6 +31,7 @@ class StationTest {
 
   /**
    * Positive test for setClock method.
+   *
    * <p>
    * Attempts to set the clock to a time after the current time. Expected result is that the clock
    * is set to the given time.
@@ -46,6 +47,7 @@ class StationTest {
 
   /**
    * Negative test for setClock method.
+   *
    * <p>
    * Attempts to set the clock to a time before the current time. Expected result is that the clock
    * is not set to the given time.
@@ -62,6 +64,7 @@ class StationTest {
 
   /**
    * Positive test for getClock method.
+   *
    * <p>
    * Attempts to get the clock. Expected result is that the clock is returned.
    * </p>
@@ -75,6 +78,7 @@ class StationTest {
 
   /**
    * Test for getAmountOfTrainDepartures method.
+   *
    * <p>
    * Compares the size of the HashMap to the expected size.
    * </p>
@@ -88,6 +92,7 @@ class StationTest {
 
   /**
    * Positive test for createTrainDeparture method.
+   *
    * <p>
    * Attempts to create a new TrainDeparture. Checks the following:
    *   <ul>
@@ -121,6 +126,7 @@ class StationTest {
 
   /**
    * Negative test for createTrainDeparture method.
+   *
    * <p>
    * Attempts to create a new TrainDeparture with a train number that already exists. Expected
    * result is that the TrainDeparture is not added to the HashMap.
@@ -138,6 +144,7 @@ class StationTest {
 
   /**
    * Positive test for getTrainDeparturesSorted method.
+   *
    * <p>
    * Attempts to get an iterator of all TrainDepartures yet to depart. Checks the following:
    *   <ul>
@@ -162,6 +169,7 @@ class StationTest {
 
   /**
    * Test for trainExists method.
+   *
    * <p>
    * Tests that the method returns true if the train exists and false if it does not.
    * </p>
@@ -176,6 +184,7 @@ class StationTest {
 
   /**
    * Test for changeTrackByTrainNumber method.
+   *
    * <p>
    * Attempts to change the track of a train with the given train number. Checks both positive and
    * negative cases.
@@ -194,6 +203,7 @@ class StationTest {
 
   /**
    * Positive test for changeDelayByTrainNumber method.
+   *
    * <p>
    * Attempts to change the delay of a train with the given train number. TrainDeparture is not
    * delayed over midnight.
@@ -210,6 +220,7 @@ class StationTest {
 
   /**
    * Negative test for changeDelayByTrainNumber method.
+   *
    * <p>
    * Attempts to change the delay of a train with the given train number. TrainDeparture is delayed
    * over midnight.
@@ -225,6 +236,7 @@ class StationTest {
 
   /**
    * Positive for getTrainDepartureByDestination method.
+   *
    * <p>
    * Attempts to get a TrainDeparture with the given destination. Expected result is that the
    * TrainDeparture is returned.
@@ -240,6 +252,7 @@ class StationTest {
 
   /**
    * Negative for getTrainDepartureByDestination method.
+   *
    * <p>
    * Attempts to get a TrainDeparture with the given destination. Expected result is that null is
    * returned.
@@ -254,6 +267,7 @@ class StationTest {
 
   /**
    * Test for removeTrainDepartureByTrainNumber method.
+   *
    * <p>
    * Attempts to remove a TrainDeparture with the given train number. Checks if the train is removed
    * from the HashMap.

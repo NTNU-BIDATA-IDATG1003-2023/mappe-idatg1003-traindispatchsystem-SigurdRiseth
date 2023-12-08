@@ -29,6 +29,7 @@ class TrainDepartureTest {
 
   /**
    * Negative test for setTrainNumber method.
+   *
    * <p>
    *   Attempts to set the train number to a negative number.
    *   Expected result is that the train number is -1.
