@@ -61,6 +61,32 @@ https://github.com/NTNU-BIDATA-IDATG1003-2023/mappe-idatg1003-traindispatchsyste
 [//]: # (TODO: Describe how to run your project here. What is the main class? What is the main method?
 What is the input and output of the program? What is the expected behaviour of the program?)
 
+1. **Compile the Code:**
+  - Ensure you have Java and a compatible build tool (like Maven) installed.
+  - Open a terminal and navigate to the project root directory.
+  - Run the following command to compile the code:
+
+```bash
+mvn compile
+```
+
+2. **Run the TrainDispatchApp:**
+  - After compiling, run the TrainDispatchApp.java file to start the program. Use the following command:
+```bash
+mvn exec:java -Dexec.mainClass="edu.ntnu.stud.TrainDispatchApp"
+```
+  - Alternatively, you can run the main class (edu.ntnu.stud.TrainDispatchApp) using your preferred IDE.
+
+3. **Interact with the Program:**
+  - Once the program is running, you'll be prompted with a menu offering 10 choices.
+  - Navigate through the menu using text inputs to interact with different functionalities.
+
+4. **Exit the Program:**
+  - To exit the program, choose option 0 in the menu. This will gracefully terminate the program.
+
+
+
+
 Run the TrainDispatchApp.java file and you will be prompted with a menu with 10 choices. 
 The program uses textinputs from the user to navigate and interact.
 
