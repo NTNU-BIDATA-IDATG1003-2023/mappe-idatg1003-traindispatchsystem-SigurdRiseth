@@ -85,12 +85,6 @@ mvn exec:java -Dexec.mainClass="edu.ntnu.stud.TrainDispatchApp"
   - To exit the program, choose option 0 in the menu. This will gracefully terminate the program.
 
 
-
-
-Run the TrainDispatchApp.java file and you will be prompted with a menu with 10 choices. 
-The program uses textinputs from the user to navigate and interact.
-
-
 ## How to run the tests
 
 To execute all tests, right-click on the 'java' folder within the 'test' directory and choose 'Run All Tests'.
