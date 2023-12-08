@@ -14,7 +14,7 @@ The system is limited by the fact that it does not consider the date or if there
 
 ## Project structure
 
-The project structure is displayed in the figure below.
+The project structure is displayed in the directory tree below.
 
 ```text
 .
