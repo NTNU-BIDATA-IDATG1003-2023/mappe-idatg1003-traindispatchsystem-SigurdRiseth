@@ -13,9 +13,22 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Test class for Station.
+ *
+ * <p>
+ *   Tests all public methods in Station.
+ *   Uses both negative and positive tests.
+ * </p>
+ *
+ * @see Station
+ * @since 14.10.2023
+ * @version 0.0.1
+ * @author Sigurd Riseth
+ */
 class StationTest {
 
-  private Station station; // ARRANGE ACT ASSERT
+  private Station station;
 
   @BeforeEach
   void setUp() {

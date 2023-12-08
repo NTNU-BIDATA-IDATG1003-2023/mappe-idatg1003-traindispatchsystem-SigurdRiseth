@@ -4,8 +4,10 @@ import java.util.Scanner;
 
 /**
  * Class for reading and returning user input.
+ *
  * <p>
- * Uses the Scanner class to read user input.
+ * Uses the Scanner class to read user inputs.
+ * Contains methods for reading Strings and ints.
  * </p>
  *
  * @author Sigurd Riseth

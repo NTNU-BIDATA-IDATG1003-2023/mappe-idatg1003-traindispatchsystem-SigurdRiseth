@@ -168,8 +168,6 @@ public class TrainDeparture {
    * @param delay delay to be set
    */
   public void setDelay(LocalTime delay) {
-    // TODO: delay burde kanskje ikke være 00:00 om man får inn null?
-    // TODO: Kan man endre delay slik at reel deparutre time blir før klokken?
     if (delay != null) {
       this.delay = delay;
     } else {

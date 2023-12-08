@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.util.Iterator;
 
 /**
- * Class for managing all the methods creating strings used in the UI.
+ * Class for managing all the methods printing to the user.
  *
  * @author Sigurd Riseth
  * @version 0.0.1
@@ -38,7 +38,11 @@ public class Printer {
 
   /**
    * Prints a String of all departures yet to depart.
-   * <p>Uses a iterator of train departures as parameter.</p>
+   *
+   * <p>
+   *   Uses a iterator of train departures as parameter.
+   *   Prints all departures in the table format.
+   * </p>
    *
    * @param iterator The iterator of train departures
    */
@@ -56,6 +60,7 @@ public class Printer {
 
   /**
    * Formats a train departure to the table format.
+   *
    * <p>
    * The track will not be shown if it equals -1 and the delay will not be shown if it is 00:00.
    * </p>
@@ -74,10 +79,16 @@ public class Printer {
   }
 
   /**
-   * Prints all departures to a given destination. If no departures are found, a message is
-   * printed.
+   * Prints all departures to a given destination.
+   *
+   * <p>
+   *   Uses a iterator of train departures as parameter.
+   *   Prints all departures to the given destination in the table format.
+   *   If no departures are found, a message is printed instead.
+   * </p>
    *
    * @param destination The destination to search for
+   * @param iterator The iterator of train departures
    */
   public void printAllDeparturesToDestination(String destination,
       Iterator<TrainDeparture> iterator) {
@@ -165,7 +176,8 @@ public class Printer {
   }
 
   /**
-   * Prints information about a train departure.
+   * Prints information about a single train departure.
+   *
    * <p>
    * The track will not be showed if it equals -1, and the delay will not be shown if it is 00:00.
    * </p>

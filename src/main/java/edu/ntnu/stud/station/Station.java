@@ -85,7 +85,7 @@ public class Station {
    * @return Iterator of all TrainDepartures yet to depart
    */
   public Iterator<TrainDeparture> getTrainDeparturesSorted() {
-    return this.trainDepartures // TODO: endre hashmapet og heller returnere iterator etterpå? Slette departures som har gått?
+    return this.trainDepartures // TODO: endre hashmapet og heller returnere iterator etterpå? Slette departures som har gått? ISÅFALL LEGG TIL I SÅRBARHET AT TOG FJERNES FOR GODT
         .values()
         .stream()
         .filter(trainDeparture -> !trainDeparture.getDepartureTimeWithDelay().isBefore(this.clock))

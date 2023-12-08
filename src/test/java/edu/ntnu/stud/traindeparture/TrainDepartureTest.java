@@ -7,6 +7,20 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
+/**
+ * Test class for TrainDeparture.
+ *
+ * <p>
+ *   Tests all public methods in TrainDeparture.
+ *   Uses both negative and positive tests.
+ * </p>
+ *
+ * @see TrainDeparture
+ * @since 14.10.2023
+ * @version 0.0.1
+ * @author Sigurd Riseth
+ */
 class TrainDepartureTest {
 
   private TrainDeparture trainDeparture1;

@@ -130,6 +130,7 @@ public class UserInterface {
 
   /**
    * Removes the track for an existing train departure.
+   *
    * <p>
    * Asks the user for a train number. Then changes the track to -1 for the train departure with the
    * train number. The track value -1 represents "unassigned track" and will not be showed in the
@@ -164,13 +165,14 @@ public class UserInterface {
 
   /**
    * Sets the delay for an existing train departure.
+   *
    * <p>
    * User inputs the train number and the delay, the changeDelayByTrainNumber() method in the
    * Station class is then run with these parameters. A message is then printed depending on the
    * outcome of the change.
    * </p>
    */
-  private void setDelayForTrainDeparture() { // TODO: Bedre å ha void i changeDelay og heller sjekke outcome.
+  private void setDelayForTrainDeparture() {
     int trainNumber = getTrainNumberInUse();
     LocalTime delay = getLocalTimeFromString();
     station.changeDelayByTrainNumber(trainNumber, delay);
@@ -185,8 +187,11 @@ public class UserInterface {
 
   /**
    * Asks the user for a train number in use.
-   * <p>Checks if the train number is valid and in use, and if it is not, the user is asked to input
-   * a new train number.</p>
+   *
+   * <p>
+   *   Checks if the train number is valid and in use, and if it is not, the user is asked to input
+   *   a new train number.
+   * </p>
    *
    * @return the train number the user inputs
    */
