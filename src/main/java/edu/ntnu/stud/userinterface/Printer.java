@@ -18,7 +18,7 @@ public class Printer {
   /**
    * Prints all the options the user can choose from.
    */
-  public void printOptions() {
+  void printOptions() {
     System.out.println(String.join("\n",
         "-------------------------------------------",
         "1: Print all upcoming departures",
@@ -46,7 +46,7 @@ public class Printer {
    *
    * @param iterator The iterator of train departures
    */
-  public void printAllDepartures(Iterator<TrainDeparture> iterator) {
+  void printAllDepartures(Iterator<TrainDeparture> iterator) {
     StringBuilder result = new StringBuilder();
     result.append("Here is a list of all the trains that are yet to depart:\n");
     result.append("\033[1m" + String.format(TABLE_FORMAT,
@@ -90,7 +90,7 @@ public class Printer {
    * @param destination The destination to search for
    * @param iterator The iterator of train departures
    */
-  public void printAllDeparturesToDestination(String destination,
+  void printAllDeparturesToDestination(String destination,
       Iterator<TrainDeparture> iterator) {
     boolean foundDeparture = false;
     StringBuilder result = new StringBuilder();
@@ -115,63 +115,63 @@ public class Printer {
   /**
    * Asks the user to enter a destination.
    */
-  public void printDestinationAsk() {
+  void printDestinationAsk() {
     System.out.println("Please enter a destination: ");
   }
 
   /**
    * Asks the user to enter a train number.
    */
-  public void printTrainNumberAsk() {
+  void printTrainNumberAsk() {
     System.out.println("Please enter a train number: ");
   }
 
   /**
    * Asks the user to enter a line.
    */
-  public void printLineAsk() {
+  void printLineAsk() {
     System.out.println("Please enter a line: ");
   }
 
   /**
    * Prints a message indicating that the train number is invalid.
    */
-  public void printTrainNumberInvalid() { // flush ut error message
+  void printTrainNumberInvalid() { // flush ut error message
     System.err.println("The train number must be a whole number above 0. Please try again.");
   }
 
   /**
    * Prints a message indicating that the train number is already in use.
    */
-  public void printTrainNumberInUse() {
+  void printTrainNumberInUse() {
     System.err.println("The train number is already in use. Please try again.");
   }
 
   /**
    * Asks the user to enter a time in format hh:mm.
    */
-  public void printTimeAsk() {
+  void printTimeAsk() {
     System.out.println("Please enter time in format (hh:mm): ");
   }
 
   /**
    * Asks the user to input a track or type none.
    */
-  public void printTrackAsk() {
+  void printTrackAsk() {
     System.out.println("Please enter a track (type \"none\" if you do not wish to assign one):");
   }
 
   /**
    * Prints a message indicating that the time is invalid.
    */
-  public void printTimeInvalid() {
+  void printTimeInvalid() {
     System.err.println("Please try again and enter a valid time (in format hh:mm).");
   }
 
   /**
    * Tells the user that the train does not exist.
    */
-  public void printTrainNumberNotInUse() {
+  void printTrainNumberNotInUse() {
     System.err.println("The train number does not exist. Please try again.");
   }
 
@@ -184,7 +184,7 @@ public class Printer {
    *
    * @param train The train departure to be printed
    */
-  public void printTrainDeparture(TrainDeparture train) {
+  void printTrainDeparture(TrainDeparture train) {
     System.out.println("Train number: " + train.getTrainNumber());
     System.out.println("Line: " + train.getLine());
     System.out.println("Destination: " + train.getDestination());
@@ -199,7 +199,7 @@ public class Printer {
   /**
    * Prints a message saying the menu choice is out of bounds.
    */
-  public void printInvalidChoice() {
+  void printInvalidChoice() {
     System.err.println("Please enter a valid number. The number should be between 0 and 10");
   }
 
@@ -207,14 +207,14 @@ public class Printer {
    * Prints a message saying that no train departure has been created yet and only choice 4, 10 and
    * 0 is allowed.
    */
-  public void printNoTrains() {
+  void printNoTrains() {
     System.err.println("No TrainDepartures created yet. Only option 4, 10, or 0 is allowed.");
   }
 
   /**
    * Prints a goodbye message saying the application has been terminated.
    */
-  public void printCloseApp() {
+  void printCloseApp() {
     System.out.println("Thank you for using the train dispatch app!");
     System.out.println("The application has now been terminated.");
   }
@@ -224,21 +224,21 @@ public class Printer {
    *
    * @param clock The clock at the station
    */
-  public void printClock(LocalTime clock) {
+  void printClock(LocalTime clock) {
     System.out.println("The clock is now " + clock);
   }
 
   /**
    * Prints a message that the train has been removed.
    */
-  public void printTrainRemoved() {
+  void printTrainRemoved() {
     System.out.println("Train has been removed.");
   }
 
   /**
    * Prints a message that the train has been removed as it was delayed over midnight.
    */
-  public void printTrainRemovedByDelay() {
+  void printTrainRemovedByDelay() {
     System.out.println("Train has been removed as it was delayed over midnight.");
   }
 
@@ -247,14 +247,14 @@ public class Printer {
    *
    * @param destination The destination that was searched for
    */
-  public void printNoTrainFound(String destination) {
+  void printNoTrainFound(String destination) {
     System.err.println("No train to " + destination + " was found.");
   }
 
   /**
    * Prints a message that the train has been added.
    */
-  public void printTrainAdded() {
+  void printTrainAdded() {
     System.out.println("Train departure has been added!");
   }
 
@@ -263,7 +263,7 @@ public class Printer {
    *
    * @param clock The clock at the station
    */
-  public void printBeforeClock(LocalTime clock) {
+  void printBeforeClock(LocalTime clock) {
     System.err.println("You can not input a time before "
         + clock + ". Please try again.");
   }
@@ -271,7 +271,7 @@ public class Printer {
   /**
    * Prints a welcome message when the application starts.
    */
-  public void printWelcomeMessage() {
+  void printWelcomeMessage() {
     System.out.println("--------------------------------------------------");
     System.out.println("Welcome to the train dispatch app!");
   }
@@ -279,14 +279,14 @@ public class Printer {
   /**
    * Prints a confirmation message that the delay has been changed.
    */
-  public void printDelayChanged() {
+  void printDelayChanged() {
     System.out.println("Delay changed.");
   }
 
   /**
    * Prints a confirmation message that the track has been removed.
    */
-  public void printTrackRemoved() {
+  void printTrackRemoved() {
     System.out.println("Track removed.");
   }
 
@@ -295,7 +295,7 @@ public class Printer {
    *
    * @param track The new track
    */
-  public void printTrackChanged(String track) {
+  void printTrackChanged(String track) {
     System.out.println("Track changed to " + track);
   }
 
@@ -304,14 +304,14 @@ public class Printer {
    *
    * @param time The new time
    */
-  public void printClockChanged(LocalTime time) {
+  void printClockChanged(LocalTime time) {
     System.out.println("Clock changed to " + time);
   }
 
   /**
    * Prints a message that the clock was not changed as the user tried to set it backwards.
    */
-  public void printClockNotChanged() {
+  void printClockNotChanged() {
     System.err.println("Clock was not changed. Can not set clock backwards. Please try again.");
   }
 }

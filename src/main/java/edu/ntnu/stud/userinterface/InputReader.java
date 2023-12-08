@@ -21,7 +21,7 @@ public class InputReader {
   /**
    * Constructor that creates a new Scanner object.
    */
-  public InputReader() {
+  InputReader() {
     scanner = new Scanner(System.in);
   }
 
@@ -30,7 +30,7 @@ public class InputReader {
    *
    * @return The user input as a String
    */
-  public String getStringInput() {
+  String getStringInput() {
     return scanner.nextLine();
   }
 
@@ -41,7 +41,7 @@ public class InputReader {
    *
    * @return The user input as a String with the first letter capitalized
    */
-  public String getStringInputCapitalized() {
+  String getStringInputCapitalized() {
     String result = scanner.nextLine();
     result = result.substring(0, 1).toUpperCase() + result.substring(1).toLowerCase();
     return result;
@@ -52,7 +52,7 @@ public class InputReader {
    *
    * @return The user input as an int
    */
-  public int getInt() {
+  int getInt() {
     int result;
     try {
       result = scanner.nextInt();
