@@ -5,7 +5,16 @@ import java.time.LocalTime;
 import java.util.Iterator;
 
 /**
- * Class for managing all the methods printing to the user.
+ * The Printer class manages methods responsible for printing information to the terminal in the
+ * train departure management system.
+ *
+ * <p>
+ * Methods in this class handle the presentation of options, train departures, error messages, and
+ * user prompts. The class employs proper formatting for displaying train departure details in a
+ * table format, ensuring readability and user-friendly output. It includes methods for handling
+ * various scenarios such as displaying departures to a specific destination or printing a welcome
+ * message.
+ * </p>
  *
  * @author Sigurd Riseth
  * @version 0.0.1
@@ -50,7 +59,7 @@ public class Printer {
     StringBuilder result = new StringBuilder();
     result.append("Here is a list of all the trains that are yet to depart:\n");
     result.append("\033[1m" + String.format(TABLE_FORMAT,
-        "Train number", "Line", "Destination", "Departure time", "Track", "Delay") + "\033[0m");
+        "Departure time", "Line", "Train Number", "Destination", "Delay", "Track") + "\033[0m");
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
       result.append(formatTrainToTable(trainDeparture));
@@ -70,12 +79,12 @@ public class Printer {
    */
   private String formatTrainToTable(TrainDeparture trainDeparture) {
     return String.format(TABLE_FORMAT,
-        trainDeparture.getTrainNumber(),
-        trainDeparture.getLine(),
-        trainDeparture.getDestination(),
         trainDeparture.getDepartureTime(),
-        (trainDeparture.getTrack() == -1) ? "-" : String.valueOf(trainDeparture.getTrack()),
-        (trainDeparture.getDelay() == LocalTime.of(0, 0)) ? "-" : trainDeparture.getDelay());
+        trainDeparture.getLine(),
+        trainDeparture.getTrainNumber(),
+        trainDeparture.getDestination(),
+        (trainDeparture.getDelay() == LocalTime.of(0, 0)) ? "-" : trainDeparture.getDelay(),
+        (trainDeparture.getTrack() == -1) ? "-" : String.valueOf(trainDeparture.getTrack()));
   }
 
   /**
@@ -97,7 +106,7 @@ public class Printer {
     result.append("Here is a list of all the trains that are yet to depart to " + destination
         + ": \n");
     result.append("\033[1m" + String.format(TABLE_FORMAT,
-        "Train number", "Line", "Destination", "Departure time", "Track", "Delay") + "\033[0m");
+        "Departure time", "Line", "Train Number", "Destination", "Delay", "Track") + "\033[0m");
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
       if (trainDeparture.getDestination().equals(destination)) {

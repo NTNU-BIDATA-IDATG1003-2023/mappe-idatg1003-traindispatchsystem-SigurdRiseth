@@ -5,12 +5,23 @@ import java.time.LocalTime;
 import java.util.List;
 
 /**
- * Main class of the user interface.
- * <p>Handles the switch case and calls the needed methods in the Printer and InputReader
- * classes.</p>
+ * The UserInterface class serves as the main interface for user interactions in the Train Dispatch Application.
+ *
+ * <p>
+ * This class leverages the Printer class for output, InputReader for user input,
+ * and Station for managing train-related data. The user interface
+ * features a menu-driven system with a switch case for different user choices, enhancing
+ * user-friendliness.
+ * </p>
+ * <p>
+ * Additionally, the class includes methods for creating, modifying, and displaying train departures
+ * with proper error handling. It emphasizes validation of user inputs and ensures that operations
+ * are executed only under appropriate conditions.
+ * </p>
  *
  * @author Sigurd Riseth
  * @version 0.0.1
+ * @since 14.10.2023
  * @see Printer
  * @see InputReader
  * @see Station

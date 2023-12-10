@@ -5,11 +5,25 @@ import java.util.Objects;
 
 /**
  * Class for the train departures.
- * <p>Will store information such as train number, line, departure time, delay,
- * destination and what track it will depart from.</p>
+ *
+ * <p>
+ * Stores information about the train departures, and contains methods for setting and getting these values.
+ * The TrainDeparture class uses LocalTime to keep track of the departure time and the delay.
+ *
+ * The fields it stores are:
+ * <ul>
+ *   <li>Train number</li>
+ *   <li>Line</li>
+ *   <li>Destination</li>
+ *   <li>Track</li>
+ *   <li>Departure time</li>
+ *   <li>Delay</li>
+ * </ul>
+ * </p>
  *
  * @author Sigurd Riseth
  * @version 0.0.1
+ * @see LocalTime
  * @since 14.10.2023
  */
 public class TrainDeparture {

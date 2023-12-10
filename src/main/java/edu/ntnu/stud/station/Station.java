@@ -8,14 +8,17 @@ import java.util.Iterator;
 
 /**
  * Class for the train station.
+ *
  * <p>
  * In charge of keeping track of the station-clock and a HashMap of all TrainDepartures yet to depart.
  * Contains methods for editing the train departures, returning train departures and change the clock.
+ * The Station class uses LocalTime to keep track of the clock.
  * </p>
  *
  * @author Sigurd Riseth
  * @version 0.0.1
  * @see TrainDeparture
+ * @see LocalTime
  * @since 14.10.2023
  */
 public class Station {
