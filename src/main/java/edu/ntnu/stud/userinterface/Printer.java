@@ -6,11 +6,11 @@ import java.util.Iterator;
 
 /**
  * The Printer class manages methods responsible for printing information to the terminal in the
- * train departure management system.
+ * Train Dispatch System.
  *
  * <p>
  * Methods in this class handle the presentation of options, train departures, error messages, and
- * user prompts. The class employs proper formatting for displaying train departure details in a
+ * user prompts. The class employs formatting for displaying train departure details in a
  * table format, ensuring readability and user-friendly output. It includes methods for handling
  * various scenarios such as displaying departures to a specific destination or printing a welcome
  * message.

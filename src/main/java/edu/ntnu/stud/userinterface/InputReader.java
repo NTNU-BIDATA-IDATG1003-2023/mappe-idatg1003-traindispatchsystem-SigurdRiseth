@@ -3,11 +3,11 @@ package edu.ntnu.stud.userinterface;
 import java.util.Scanner;
 
 /**
- * Class for reading and returning user input.
+ * The InputReader class is used to read user inputs in the terminal.
  *
  * <p>
- * Uses the Scanner class to read user inputs.
- * Contains methods for reading Strings and ints.
+ * The class utilizes the Scanner class to read user inputs.
+ * Methods in this class are used to read both Strings and ints.
  * </p>
  *
  * @author Sigurd Riseth

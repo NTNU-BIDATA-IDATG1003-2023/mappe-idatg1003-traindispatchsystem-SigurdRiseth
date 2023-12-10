@@ -4,12 +4,11 @@ import java.time.LocalTime;
 import java.util.Objects;
 
 /**
- * Class for the train departures.
+ * The TrainDeparture class is the blueprint for the train departures in the Train Dispatch System.
  *
  * <p>
- * Stores information about the train departures, and contains methods for setting and getting these values.
- * The TrainDeparture class uses LocalTime to keep track of the departure time and the delay.
- *
+ * Stores information about the train departure, and contains methods for setting and getting these values.
+ * The TrainDeparture class uses LocalTime to store the departure time and the delay.
  * The fields it stores are:
  * <ul>
  *   <li>Train number</li>

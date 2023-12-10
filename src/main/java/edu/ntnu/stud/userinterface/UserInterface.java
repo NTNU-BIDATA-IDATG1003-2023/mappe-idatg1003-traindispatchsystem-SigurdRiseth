@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 /**
- * The UserInterface class serves as the main interface for user interactions in the Train Dispatch Application.
+ * The UserInterface class serves as the main interface for user interactions in the Train Dispatch System.
  *
  * <p>
  * This class leverages the Printer class for output, InputReader for user input,

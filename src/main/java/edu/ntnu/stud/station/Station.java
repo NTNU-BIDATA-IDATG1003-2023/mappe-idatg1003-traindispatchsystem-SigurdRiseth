@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * Class for the train station.
+ * The Station class manages the train departures in the Train Dispatch System.
  *
  * <p>
- * In charge of keeping track of the station-clock and a HashMap of all TrainDepartures yet to depart.
+ * Responsible for keeping track of the station-clock and a HashMap of all TrainDepartures yet to depart.
  * Contains methods for editing the train departures, returning train departures and change the clock.
  * The Station class uses LocalTime to keep track of the clock.
  * </p>
