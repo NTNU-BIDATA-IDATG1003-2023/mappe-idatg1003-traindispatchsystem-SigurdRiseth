@@ -5,7 +5,8 @@ import java.time.LocalTime;
 import java.util.List;
 
 /**
- * The UserInterface class serves as the main interface for user interactions in the Train Dispatch System.
+ * The UserInterface class serves as the main interface
+ * for user interactions in the Train Dispatch System.
  *
  * <p>
  * This class leverages the Printer class for output, InputReader for user input,
@@ -148,7 +149,7 @@ public class UserInterface {
    * train table.
    * </p>
    */
-  private void removeTrackForTrainDeparture() { //TODO: blir det sjekket dobbelt om tog finnes?
+  private void removeTrackForTrainDeparture() {
     int trainNumber = getTrainNumberInUse();
     station.changeTrackByTrainNumber(trainNumber, "-1");
     if (station.getTrainDepartureByTrainNumber(trainNumber).getTrack() == -1) {
@@ -162,7 +163,7 @@ public class UserInterface {
    * Asks the user for a train number and a track. Then calls the method to set the track for a
    * train departure in the Station class.
    */
-  private void setTrackForTrainDeparture() { //TODO: blir det sjekket dobbelt om tog finnes?
+  private void setTrackForTrainDeparture() {
     int trainNumber = getTrainNumberInUse();
     String track = getTrack();
     station.changeTrackByTrainNumber(trainNumber, track);
@@ -278,11 +279,14 @@ public class UserInterface {
 
   /**
    * Asks the user for a time and returns the input.
-   * <p>Checks if the input is valid, and if it is not, the user is asked to input a new time.</p>
+   *
+   * <p>
+   * Checks if the input is valid, and if it is not, the user is asked to input a new time.
+   * </p>
    *
    * @return the user input in LocalTime format
    */
-  private LocalTime getLocalTimeFromString() { // TODO: forbere denne while loopen
+  private LocalTime getLocalTimeFromString() {
     LocalTime result = null;
     boolean parseableInput = false;
     while (!parseableInput) {
@@ -299,8 +303,11 @@ public class UserInterface {
 
   /**
    * Asks the user for a time using the getLocalTimeFromString() method.
-   * <p>Checks if the input time is after the current time, and if it is not, the user is asked to
-   * input a new time.</p>
+   *
+   * <p>
+   * Checks if the input time is after the current time, and if it is not, the user is asked to
+   * input a new time.
+   * </p>
    *
    * @return the user input time after the current time
    */
@@ -315,7 +322,10 @@ public class UserInterface {
 
   /**
    * Asks the user for a destination and returns the input.
-   * <p>The returned String will have a capitalized first letter and the rest in lowercase.</p>
+   *
+   * <p>
+   * The returned String will have a capitalized first letter and the rest in lowercase.
+   * </p>
    *
    * @return the user input
    */
@@ -336,8 +346,11 @@ public class UserInterface {
 
   /**
    * Asks the user for a unique train number and returns the input.
-   * <p>Checks if the input is valid and not in use. If the train number is in use, the user is
-   * asked to input a new train number.</p>
+   *
+   * <p>
+   * Checks if the input is valid and not in use. If the train number is in use, the user is
+   * asked to input a new train number.
+   * </p>
    *
    * @return the user input
    */
@@ -361,6 +374,7 @@ public class UserInterface {
 
   /**
    * First method to be called when the application starts.
+   *
    * <p>
    * Initializes the StringManager, Station and InputReader classes. Creates some train departures
    * and prints a welcome message

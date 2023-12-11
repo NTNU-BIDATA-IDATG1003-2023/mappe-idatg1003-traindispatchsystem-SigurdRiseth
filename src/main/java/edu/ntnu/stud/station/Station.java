@@ -10,8 +10,10 @@ import java.util.Iterator;
  * The Station class manages the train departures in the Train Dispatch System.
  *
  * <p>
- * Responsible for keeping track of the station-clock and a HashMap of all TrainDepartures yet to depart.
- * Contains methods for editing the train departures, returning train departures and change the clock.
+ * Responsible for keeping track of the station-clock and a HashMap of all
+ * TrainDepartures yet to depart.
+ * Contains methods for editing the train departures,
+ * returning train departures and change the clock.
  * The Station class uses LocalTime to keep track of the clock.
  * </p>
  *
@@ -47,8 +49,8 @@ public class Station {
    * Method that sets the station clock.
    *
    * <p>
-   * Will only set the clock if the given time is after the current clock. In other words the clock can
-   * only be set forwards.
+   * Will only set the clock if the given time is after the current clock.
+   * In other words the clock can only be set forwards.
    * </p>
    *
    * @param time The time to be set
@@ -81,14 +83,16 @@ public class Station {
    * Returns an iterator of all TrainDepartures yet to depart.
    *
    * <p>
-   * Sorts the trainDepartures HashMap by departure time and filters out departures that have
-   * already departed based on the current station-clock. Returns an iterator of the remaining departures.
+   * Sorts the trainDepartures HashMap by departure time and
+   * filters out departures that have
+   * already departed based on the current station-clock.
+   * Returns an iterator of the remaining departures.
    * </p>
    *
    * @return Iterator of all TrainDepartures yet to depart
    */
   public Iterator<TrainDeparture> getTrainDeparturesSorted() {
-    return this.trainDepartures // TODO: endre hashmapet og heller returnere iterator etterpå? Slette departures som har gått? ISÅFALL LEGG TIL I SÅRBARHET AT TOG FJERNES FOR GODT
+    return this.trainDepartures
         .values()
         .stream()
         .filter(trainDeparture -> !trainDeparture.getDepartureTimeWithDelay().isBefore(this.clock))
@@ -191,11 +195,11 @@ public class Station {
   }
 
   /**
-   * Returns a list of all destinations of the train departures yet to depart.
+   * Returns the amount of train departures yet to depart.
    *
    * @return amount of train departures yet to depart
    */
-  public int getAmountOfTrainDeparturesToDepart() { //TODO: Gjøre denne til boolean og kalle den isEmpty? Bedre for prossessor?
+  public int getAmountOfTrainDeparturesToDepart() {
     Iterator<TrainDeparture> iterator = getTrainDeparturesSorted();
     int amount = 0;
     while (iterator.hasNext()) {

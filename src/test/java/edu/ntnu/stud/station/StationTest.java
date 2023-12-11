@@ -70,7 +70,7 @@ class StationTest {
    */
   @Test
   void setClockInvalidTime() {
-    station.setClock(LocalTime.of(5, 10)); // Set up for the test
+    station.setClock(LocalTime.of(5, 10));
     station.setClock(LocalTime.of(3, 0));
     assertEquals(LocalTime.of(5, 10), station.getClock(), "Expected time to be 05:10");
   }

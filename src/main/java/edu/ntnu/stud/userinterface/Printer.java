@@ -11,9 +11,7 @@ import java.util.Iterator;
  * <p>
  * Methods in this class handle the presentation of options, train departures, error messages, and
  * user prompts. The class employs formatting for displaying train departure details in a
- * table format, ensuring readability and user-friendly output. It includes methods for handling
- * various scenarios such as displaying departures to a specific destination or printing a welcome
- * message.
+ * table format, ensuring readability and user-friendly output.
  * </p>
  *
  * @author Sigurd Riseth
@@ -58,8 +56,9 @@ public class Printer {
   void printAllDepartures(Iterator<TrainDeparture> iterator) {
     StringBuilder result = new StringBuilder();
     result.append("Here is a list of all the trains that are yet to depart:\n");
-    result.append("\033[1m" + String.format(TABLE_FORMAT,
-        "Departure time", "Line", "Train Number", "Destination", "Delay", "Track") + "\033[0m");
+    result.append("\033[1m").append(String.format(TABLE_FORMAT,
+            "Departure time", "Line", "Train Number", "Destination", "Delay", "Track"))
+        .append("\033[0m");
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
       result.append(formatTrainToTable(trainDeparture));
@@ -103,10 +102,11 @@ public class Printer {
       Iterator<TrainDeparture> iterator) {
     boolean foundDeparture = false;
     StringBuilder result = new StringBuilder();
-    result.append("Here is a list of all the trains that are yet to depart to " + destination
-        + ": \n");
-    result.append("\033[1m" + String.format(TABLE_FORMAT,
-        "Departure time", "Line", "Train Number", "Destination", "Delay", "Track") + "\033[0m");
+    result.append("Here is a list of all the trains that are yet to depart to ").append(destination)
+        .append(": \n");
+    result.append("\033[1m").append(String.format(TABLE_FORMAT,
+            "Departure time", "Line", "Train Number", "Destination", "Delay", "Track"))
+        .append("\033[0m");
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
       if (trainDeparture.getDestination().equals(destination)) {
