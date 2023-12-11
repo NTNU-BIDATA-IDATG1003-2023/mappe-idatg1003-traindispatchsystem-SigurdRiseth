@@ -22,8 +22,7 @@ import org.junit.jupiter.api.Test;
  * </p>
  *
  * @see Station
- * @since 14.10.2023
- * @version 0.0.1
+ * @version 1.0.0
  * @author Sigurd Riseth
  */
 class StationTest {
@@ -124,9 +123,9 @@ class StationTest {
         "Expected size of HashMap to be 3");
     assertAll("Expected TrainDeparture to have correct values for its fields",
         () -> assertEquals(3, station.getTrainDepartureByTrainNumber(3).getTrainNumber(),
-            "Expected track to be 3"),
-        () -> assertEquals(3, station.getTrainDepartureByTrainNumber(3).getTrack(),
             "Expected train number to be 3"),
+        () -> assertEquals(3, station.getTrainDepartureByTrainNumber(3).getTrack(),
+            "Expected track to be 3"),
         () -> assertEquals("L3", station.getTrainDepartureByTrainNumber(3).getLine(),
             "Expected line to be L3"),
         () -> assertEquals("Bergen", station.getTrainDepartureByTrainNumber(3).getDestination(),
@@ -196,22 +195,33 @@ class StationTest {
   }
 
   /**
-   * Test for changeTrackByTrainNumber method.
+   * Positive test for changeTrackByTrainNumber method.
    *
    * <p>
-   * Attempts to change the track of a train with the given train number. Checks both positive and
-   * negative cases.
+   * Attempts to change the track of a train with the given train number to a valid track.
    * </p>
    *
    * @result Track is changed to correct value
    */
   @Test
-  void changeTrackByTrainNumber() {
+  void changeTrackByTrainNumberPositive() {
     station.changeTrackByTrainNumber(1, "3");
     assertEquals(3, station.getTrainDepartureByTrainNumber(1).getTrack(), "Expected track to be 3");
-    station.changeTrackByTrainNumber(2, "none");
-    assertEquals(-1, station.getTrainDepartureByTrainNumber(2).getTrack(),
-        "Expected track to be -1");
+  }
+
+  /**
+   * Negative test for changeTrackByTrainNumber method.
+   *
+   * <p>
+   * Attempts to change the track of a train with the given train number to an invalid track.
+   * </p>
+   *
+   * @result Track is set to -1
+   */
+  @Test
+  void changeTrackByTrainNumberNegative() {
+    station.changeTrackByTrainNumber(1, "none");
+    assertEquals(-1, station.getTrainDepartureByTrainNumber(1).getTrack(), "Expected track to be -1");
   }
 
   /**

@@ -11,7 +11,7 @@ import java.util.Scanner;
  * </p>
  *
  * @author Sigurd Riseth
- * @version 0.0.1
+ * @version 1.0.0
  * @see Scanner
  */
 public class InputReader {

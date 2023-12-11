@@ -21,8 +21,7 @@ import java.util.List;
  * </p>
  *
  * @author Sigurd Riseth
- * @version 0.0.1
- * @since 14.10.2023
+ * @version 1.0.0
  * @see Printer
  * @see InputReader
  * @see Station
@@ -45,17 +44,11 @@ public class UserInterface {
   public void start() {
     boolean running = true;
     while (running) {
-      boolean noTrains = false;
       printer.printOptions();
       String choice = inputReader.getStringInput();
+      boolean validChoice = choiceCheck(choice);
 
-      if (station.getAmountOfTrainDeparturesToDepart() == 0 && !List.of("4", "10", "0")
-          .contains(choice)) {
-        printer.printNoTrains();
-        noTrains = true;
-      }
-
-      if (!noTrains) {
+      if (validChoice) {
         switch (choice) {
           case "1" -> printAllDepartures();
           case "2" -> printAllUpcomingDeparturesToDestination();
@@ -72,6 +65,29 @@ public class UserInterface {
         }
       }
     }
+  }
+
+  /**
+   * Checks if the user input is valid.
+   *
+   * <p>
+   * If there are no trains created in the station, the only options available to the user will be
+   * 4, 10 and 0.
+   * </p>
+   *
+   * @param choice the user input
+   * @return true if the user input is valid, false if the user input is invalid
+   */
+  private boolean choiceCheck(String choice) {
+    boolean validChoice;
+    if (station.getAmountOfTrainDeparturesToDepart() == 0 && !List.of("4", "10", "0")
+        .contains(choice)) {
+      printer.printNoTrains();
+      validChoice = false;
+    } else {
+      validChoice = true;
+    }
+    return validChoice;
   }
 
   /**

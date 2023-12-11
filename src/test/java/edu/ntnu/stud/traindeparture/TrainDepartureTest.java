@@ -17,8 +17,7 @@ import org.junit.jupiter.api.Test;
  * </p>
  *
  * @see TrainDeparture
- * @since 14.10.2023
- * @version 0.0.1
+ * @version 1.0.0
  * @author Sigurd Riseth
  */
 class TrainDepartureTest {

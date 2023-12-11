@@ -18,10 +18,9 @@ import java.util.Iterator;
  * </p>
  *
  * @author Sigurd Riseth
- * @version 0.0.1
+ * @version 1.0.0
  * @see TrainDeparture
  * @see LocalTime
- * @since 14.10.2023
  */
 public class Station {
 
