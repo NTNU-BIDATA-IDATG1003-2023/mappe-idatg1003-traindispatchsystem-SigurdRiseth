@@ -63,6 +63,7 @@ public class Station {
 
   /**
    * Creates a new TrainDeparture and adds it to the trainDepartures HashMap.
+   * If a train with the given train number already exists, the train is not created.
    *
    * @param track         The track the train will depart from
    * @param trainNumber   The unique train ID

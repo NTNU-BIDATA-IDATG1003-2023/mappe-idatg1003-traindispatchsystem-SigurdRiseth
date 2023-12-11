@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
  * Test class for TrainDeparture.
  *
  * <p>
- *   Tests all public methods in TrainDeparture.
- *   Uses both negative and positive tests.
+ * Tests all public methods in TrainDeparture.
+ * Uses both negative and positive tests.
  * </p>
  *
  * @see TrainDeparture

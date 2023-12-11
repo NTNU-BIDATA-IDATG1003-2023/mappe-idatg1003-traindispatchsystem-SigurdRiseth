@@ -67,7 +67,10 @@ public class TrainDeparture {
 
   /**
    * Sets the track. If the track is under 1 or a String the value is set to -1.
-   * <p>A track value of -1 represents that no track has been assigned.</p>
+   *
+   * <p>
+   * A track value of -1 represents that no track has been assigned.
+   * </p>
    */
   public void setTrack(String track) {
     try {

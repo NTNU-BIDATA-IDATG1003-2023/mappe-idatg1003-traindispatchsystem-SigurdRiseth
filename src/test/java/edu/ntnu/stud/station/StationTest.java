@@ -17,8 +17,8 @@ import org.junit.jupiter.api.Test;
  * Test class for Station.
  *
  * <p>
- *   Tests all public methods in Station.
- *   Uses both negative and positive tests.
+ * Tests all public methods in Station.
+ * Uses both negative and positive tests.
  * </p>
  *
  * @see Station
