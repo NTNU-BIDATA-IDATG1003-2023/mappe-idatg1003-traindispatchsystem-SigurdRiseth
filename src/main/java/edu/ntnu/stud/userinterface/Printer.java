@@ -145,7 +145,7 @@ public class Printer {
   /**
    * Prints a message indicating that the train number is invalid.
    */
-  void printTrainNumberInvalid() { // flush ut error message
+  void printTrainNumberInvalid() {
     System.err.println("The train number must be a whole number above 0. Please try again.");
   }
 
