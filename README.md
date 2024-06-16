@@ -1,8 +1,4 @@
 # Portfolio project IDATA1003 - 2023
-This file uses Mark Down syntax. For more information see [here](https://www.markdownguide.org/basic-syntax/).
-
-STUDENT NAME = Sigurd Riseth  
-STUDENT ID = 106991
 
 ## Project description
 
@@ -11,6 +7,8 @@ A system for displaying traindepartures from a single station. Shows planned dep
 Allows user to create new and edit existing train departures. The system revolves around a "station-clock" and only trains with departure times after it are displayed (unless delayed).
 
 The system is limited by the fact that it does not consider the date or if there are any departures the next day. It only supports one station, and the clock has to be manually updated from the UI.
+
+<img alt="dispatchImage" src="https://github.com/SigurdRiseth/Train-Dispatch-System/assets/147270455/a34d531b-555b-4576-b885-ea1da0d9f078">
 
 ## Project structure
 
